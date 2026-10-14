@@ -202,19 +202,35 @@ body.compact main .wrap { padding-top: 24px; }
 .depth .dl { font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--band-ink-2); font-weight: 600; }
 .depth .dv { font-family: var(--font-mono); font-size: 26px; font-weight: 600; color: var(--amber); font-variant-numeric: tabular-nums; }
 .depth .dt { font-size: 12px; color: var(--band-ink-2); font-family: var(--font-mono); }
+.drill-top { display: flex; justify-content: center; margin-bottom: -8px; position: relative; z-index: 2; }
+.drill-top svg { width: 96px; height: auto; color: var(--ink-2); overflow: visible; }
+.drill-top .beacon { fill: var(--amber); animation: blink 1.8s ease-in-out infinite; }
+.strata-wrap { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
 .strata { list-style: none; margin: 0; padding: 0; display: grid; }
-.strata li { position: relative; }
-.strata li:not(:last-child)::before { content: ""; position: absolute; left: 14px; top: 34px; bottom: -4px; width: 2px; border-radius: 2px; background: var(--line); transition: background .4s var(--ease); }
-.strata li.st-done:not(:last-child)::before { background: var(--amber); }
-.strata button { appearance: none; border: 0; background: transparent; width: 100%; display: flex; align-items: center; gap: 10px; padding: 4px 6px 4px 0; margin: 0 0 6px; text-align: left; border-radius: 10px; cursor: pointer; color: var(--ink-2); font-size: 14px; line-height: 1.25; }
+.strata li { position: relative; transition: background .4s var(--ease); }
+.strata li:nth-child(odd) { background: color-mix(in srgb, var(--amber) 8%, var(--surface)); }
+.strata li:nth-child(even) { background: color-mix(in srgb, var(--accent-2) 7%, var(--surface)); }
+.strata li.st-cur { background: color-mix(in srgb, var(--accent-2) 16%, var(--surface)); }
+.strata li + li { border-top: 1px dashed color-mix(in srgb, var(--muted) 30%, transparent); }
+.strata button { appearance: none; border: 0; background: transparent; width: 100%; min-height: 48px; display: flex; align-items: center; gap: 10px; padding: 8px 10px 8px 52px; margin: 0; text-align: left; cursor: pointer; color: var(--ink-2); font-size: 14px; line-height: 1.25; }
 .strata button:disabled { cursor: default; }
 .strata button:not(:disabled):hover { color: var(--ink); }
-.strata .node { width: 30px; height: 30px; flex: none; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: 12px; font-weight: 600; border: 2px solid var(--line); background: var(--surface); color: var(--muted); transition: all .35s var(--ease); }
-.strata .node .i { width: 15px; height: 15px; stroke-width: 3; }
+.strata .node { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); z-index: 2; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-size: 16px; font-weight: 700; border: 2px solid var(--line); background: var(--surface); color: var(--muted); transition: all .35s var(--ease); }
 .strata li.st-done .node { background: var(--amber); border-color: var(--amber); color: var(--amber-ink); }
 .strata li.st-cur .node { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent); animation: pulse 2s infinite; }
 .strata li.st-cur .sl { color: var(--ink); font-weight: 700; }
 .strata li.st-todo .sl { color: var(--muted); }
+.shaft { position: absolute; left: 23px; top: 0; width: 4px; height: 0; z-index: 1; transition: height .8s var(--ease); pointer-events: none; }
+.shaft .pipe { position: absolute; inset: 0; border-radius: 2px; background: repeating-linear-gradient(180deg, var(--amber) 0 7px, color-mix(in srgb, var(--amber) 45%, var(--band)) 7px 10px); }
+.shaft .bit { position: absolute; left: 50%; bottom: -13px; width: 18px; height: 16px; margin-left: -9px; z-index: 3; }
+.shaft .bit svg { width: 100%; height: 100%; display: block; fill: var(--amber); stroke: var(--amber-ink); stroke-width: 1; transform-origin: 50% 30%; }
+.rail.drilling .shaft .pipe { animation: drillspin .35s linear infinite; }
+.rail.drilling .shaft .bit svg { animation: bitwob .12s linear infinite alternate; }
+@keyframes drillspin { from { background-position: 0 0; } to { background-position: 0 10px; } }
+@keyframes bitwob { from { transform: rotate(-10deg); } to { transform: rotate(10deg); } }
+.cut { position: absolute; z-index: 3; width: 5px; height: 5px; border-radius: 1px; background: var(--amber); pointer-events: none; animation: cut .8s var(--ease) forwards; }
+.cut:nth-child(3n) { background: color-mix(in srgb, var(--amber) 50%, var(--band)); }
+@keyframes cut { from { transform: translate(0, 0) rotate(0); opacity: 1; } to { transform: translate(var(--dx), var(--dy)) rotate(160deg); opacity: 0; } }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); } 70% { box-shadow: 0 0 0 10px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
 
 .mtop { display: none; }
@@ -223,7 +239,12 @@ body.compact main .wrap { padding-top: 24px; }
 .mtop .mono b { color: var(--ink); }
 .mbar { position: relative; height: 8px; margin-top: 10px; border-radius: 999px; background: var(--surface-2); }
 .mbar i { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: linear-gradient(90deg, var(--amber), color-mix(in srgb, var(--amber) 70%, var(--accent-2))); transition: width .6s var(--ease); }
-.mbar b { position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 3px solid var(--amber); transform: translate(-50%, -50%); transition: left .6s var(--ease); }
+.mbar b { position: absolute; top: 50%; width: 20px; height: 18px; transform: translate(-30%, -50%) rotate(-90deg); transition: left .8s var(--ease); }
+.mbar b svg { width: 100%; height: 100%; display: block; fill: var(--amber); stroke: var(--amber-ink); stroke-width: 1; }
+.mbar i { background-image: repeating-linear-gradient(90deg, var(--amber) 0 7px, color-mix(in srgb, var(--amber) 55%, var(--band)) 7px 10px); }
+.mtop.drilling .mbar i { animation: drillspin-x .35s linear infinite; }
+.mtop.drilling .mbar b svg { animation: bitwob .12s linear infinite alternate; }
+@keyframes drillspin-x { from { background-position: 0 0; } to { background-position: 10px 0; } }
 @media (max-width: 900px) {
   .wiz { grid-template-columns: 1fr; gap: 0; }
   .rail { display: none; }
@@ -545,7 +566,7 @@ function stepsExperiencia(adapt, ref, e4, e5) {
     titulo: 'Valoración de la experiencia', ayuda: 'Califique de 1 (muy deficiente) a 5 (excelente).',
     items: [
       M('E1', 'E1. Califique cada aspecto de la visita', ['Organización y logística del viaje', 'Dominio del tema por parte de los guías', adapt, 'Tiempo dedicado a cada parada', 'Oportunidad de hacer preguntas', 'Medidas de seguridad durante el recorrido', 'Calidad de los recursos tecnológicos (asistentes virtuales, simulador, aulas)'], ['Calificación']),
-      S('E2', `E2. ¿En qué medida la visita cumplió la expectativa que marcó en ${ref}?`, E_EXPECT),
+      S('E2', 'E2. ¿En qué medida la visita cumplió sus expectativas?', E_EXPECT),
       S('E3', 'E3. ¿Cuál fue la parada más valiosa para usted?', PARADAS_N),
       S('E4', `E4. ${e4}`, PARADAS_N),
       SC('E5', `E5. ${e5}`, 0, 10, 'Nada probable', 'Muy probable')
@@ -579,8 +600,8 @@ const GRUPOS = {
           S('A3', 'A3. Años de experiencia laboral', ['0–2', '3–5', '6–10', 'Más de 10']),
           S('A4', 'A4. Sector en el que trabaja actualmente', ['Hidrocarburos (operadora)', 'Empresa de servicios petroleros', 'Sector público / regulador', 'Banca, finanzas o consultoría', 'Legal', 'Académico'], { otra: true }),
           S('A5', 'A5. Antes de esta visita, ¿había estado en un taladro de perforación (real o escuela)?', ['Nunca', 'Una vez', 'Varias veces', 'Trabajo o trabajé en uno']),
-          S('A6', 'A6. ¿En qué etapa de la maestría se encuentra?', ['Primer año', 'Segundo año', 'Trabajo de grado']),
-          S('A7', 'A7. ¿Cuál era su principal expectativa antes de la visita?', ['Entender la operación técnica de un taladro', 'Entender costos y modelo de negocio de la perforación', 'Conocer la oferta de formación y certificación del Taladro Escuela', 'Hacer contactos profesionales'], { otra: true })
+          S('A6', 'A6. ¿En qué etapa de la maestría se encuentra?', ['Aspirante', 'Primer año', 'Segundo año', 'Trabajo de grado', 'Egresado']),
+          MU('A7', 'A7. ¿Cuáles eran sus expectativas antes de la visita? (puede marcar varias)', ['Entender la operación técnica de un taladro', 'Entender costos y modelo de negocio de la perforación', 'Conocer la oferta de formación y certificación del Taladro Escuela', 'Hacer contactos profesionales'], { otra: true, req: true })
         ] },
       { titulo: 'Antes y después', ayuda: 'Para cada tema, califique cómo estaba ANTES de la visita y cómo está HOY. 1 = no sabía nada del tema; 5 = podría explicarlo con seguridad a un colega.',
         items: [ M('B', 'Su nivel en cada tema', [
@@ -621,9 +642,10 @@ const GRUPOS = {
           P('D4_der', 'Derecho: ¿Qué aspecto contractual, laboral o regulatorio identificó en la operación de un taladro?'),
           P('D4_eco', 'Economía: ¿Qué variable de la operación incluiría en un modelo de evaluación económica de un pozo?'),
           P('D4_adm', 'Administración: ¿Qué proceso de gestión (compras, personal, logística) le pareció más crítico?'),
-          P('D4_ing', 'Ingeniería: ¿Qué decisión técnica vista en la visita tiene mayor impacto en el costo del pozo?')
+          P('D4_ing', 'Ingeniería: ¿Qué decisión técnica vista en la visita tiene mayor impacto en el costo del pozo?'),
+          P('D4_otra', 'Otra profesión: indique cuál es y qué aspecto de la visita se relaciona más con su trabajo.')
         ] },
-      stepsExperiencia('Adaptación de las explicaciones a un público no solo técnico', 'A7', '¿Cuál fue la parada menos útil para su perfil?', 'Del 0 al 10, ¿qué tan probable es que recomiende esta visita a un colega o a otra cohorte de la maestría?'),
+      stepsExperiencia('Adaptación de las explicaciones a un público no técnico operativo', 'A7', '¿Cuál fue la parada menos útil para su perfil?', 'Del 0 al 10, ¿qué tan probable es que recomiende esta visita a un colega o a otra cohorte de la maestría?'),
       { titulo: 'Insumo, producto y resultado', ayuda: AYUDA_F,
         items: [
           H('Insumo'),
@@ -634,7 +656,6 @@ const GRUPOS = {
           SC('F2_1', 'F2.1 Hoy, ¿cómo calificaría su conocimiento general sobre un taladro de perforación?', 1, 10, 'Nulo', 'Experto'),
           S('F2_2', 'F2.2 ¿Qué porcentaje del contenido presentado siente que comprendió?', F22),
           S('F2_3', 'F2.3 ¿Cuántos conceptos nuevos podría explicar hoy a un colega?', ['0', '1–2', '3–5', 'Más de 5']),
-          S('F2_4', 'F2.4 ¿Estableció nuevos contactos profesionales durante la visita?', ['Ninguno', '1–2', '3 o más']),
           H('Resultado'),
           M('F3_1', 'F3.1 ¿Qué tan probable es que haga lo siguiente en los próximos 6 meses? (1 = nada probable; 5 = muy probable)', [
             'Aplicar lo aprendido en una tarea o decisión de su trabajo',
@@ -646,7 +667,7 @@ const GRUPOS = {
           ], ['Probabilidad']),
           P('F3_2', 'F3.2 ¿Cómo cree que formar profesionales en el Taladro Escuela puede impactar al sector y al país (empleo, producción, seguridad, retención de talento)?')
         ] },
-      stepComentarios('¿Qué tema le hubiera gustado ver con más profundidad (por ejemplo, costos, contratos, financiamiento)?', '¿Qué cambiaría para mejorar la próxima visita de la maestría?')
+      stepComentarios('¿Qué tema le hubiera gustado ver con más profundidad?', '¿Qué cambiaría para mejorar la próxima visita?')
     ]
   },
 
@@ -731,7 +752,7 @@ const GRUPOS = {
           ], ['Probabilidad']),
           P('F3_2', 'F3.2 ¿Cómo cree que formar ingenieros en el Taladro Escuela puede impactar al sector y al país (empleo, producción, seguridad, retención de talento)?')
         ] },
-      stepComentarios('¿Qué equipo o proceso le hubiera gustado ver con más detalle?', '¿Qué cambiaría para mejorar la próxima visita de la Escuela de Petróleo?')
+      stepComentarios('¿Qué equipo o proceso le hubiera gustado ver con más detalle?', '¿Qué cambiaría para mejorar la próxima visita?')
     ]
   }
 };
@@ -848,6 +869,9 @@ const ICON = {
   pumpjack: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M2 28h28"/><path d="M11 28l4.5-14.5L20 28"/><path d="M13 22h5"/><path d="M6 11.2L26 15.6"/><path d="M6 11.2c-2.6.4-3.4 3.6-2.6 6.4"/><path d="M3.6 17.8V26"/><path d="M2 26h3.2"/><path d="M25 15.4l1 5"/><circle cx="26" cy="22" r="2.6"/><path d="M22.5 28v-3.4h7v3.4"/><circle cx="15.5" cy="13.5" r=".9"/></svg>'
 };
 const TOTAL_DEPTH = 3000;
+const LET = 'ABCDEFGHIJKLMNOP';
+const RIG_MINI = '<svg viewBox="0 0 120 70"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M44 66 L57 10 M76 66 L63 10"/><path d="M47 52 H73 M51 34 H69 M54 20 H66"/><path d="M44 66 L69 34 M76 66 L51 34 M47 52 L66 20 M73 52 L54 20" opacity=".45"/><rect x="54" y="5" width="12" height="5" rx="1.5"/><path d="M30 66 H90" stroke-width="3"/></g><circle cx="60" cy="2" r="2.2" class="beacon"/></svg>';
+const BIT = '<svg viewBox="0 0 18 16"><path d="M2 1 H16 L13 9 L9 15 L5 9 Z"/><path d="M9 1 V15" fill="none"/></svg>';
 const nfm = new Intl.NumberFormat('es-VE');
 const reduceMotion = () => { try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { return false; } };
 function buzz(p = 8) { try { if (navigator.vibrate) navigator.vibrate(p); } catch {} }
@@ -892,7 +916,6 @@ function renderResponder(dir = 0) {
   if (!st.grupo) { v.innerHTML = chooserView(); bindChooser(); return; }
   v.innerHTML = stepView(dir);
   bindStep();
-  animateDepth(depthFor(st.paso));
 }
 
 function chooserView() {
@@ -908,7 +931,7 @@ function chooserView() {
       <span class="gc-top"><span class="gc-icon">${k === 'maestria' ? ICON.chart : ICON.pumpjack}</span><span class="gc-tag">${i === 0 ? 'Primer viaje' : 'Segundo viaje'}</span></span>
       <span class="n">${esc(g.nombre)}</span>
       <span class="d">${esc(g.desc)}</span>
-      <span class="gc-meta"><span>${g.pasos.length} pasos</span><span>≈ 15 min</span><span>${allItems(k).length} preguntas</span></span>
+      <span class="gc-meta"><span>${g.pasos.length} etapas (A–${LET[g.pasos.length - 1]})</span><span>≈ 15 min</span><span>${allItems(k).length} preguntas</span></span>
       <span class="gc-cta">Comenzar ${ICON.arrow}</span>
     </button>`).join('');
   return `<div class="choose">
@@ -928,7 +951,7 @@ function bindChooser() {
     setTimeout(() => {
       store.del(DRAFT_KEY);
       Object.assign(st, { grupo: b.dataset.g, paso: 0, maxPaso: 0, r: {}, error: '' });
-      shownDepth = 0; saveDraft(); renderResponder(1); scrollToView();
+      shownDepth = 0; shaftPx = 0; saveDraft(); renderResponder(1); scrollToView();
     }, reduceMotion() ? 0 : 160);
   }));
   const go = $('#draft-go'), drop = $('#draft-drop');
@@ -1004,7 +1027,7 @@ function stepView(dir) {
   const rail = g.pasos.map((p, i) => {
     const cls = i < st.paso ? 'st-done' : i === st.paso ? 'st-cur' : 'st-todo';
     const can = i <= maxP && i !== st.paso;
-    return `<li class="${cls}"><button type="button" ${can ? `data-goto="${i}"` : 'disabled'} ${i === st.paso ? 'aria-current="step"' : ''}><span class="node">${i < st.paso ? ICON.check : i + 1}</span><span class="sl">${esc(p.titulo)}</span></button></li>`;
+    return `<li class="${cls}"><button type="button" ${can ? `data-goto="${i}"` : 'disabled'} ${i === st.paso ? 'aria-current="step"' : ''}><span class="node">${LET[i]}</span><span class="sl">${esc(p.titulo)}</span></button></li>`;
   }).join('');
   const pct = st.paso / total * 100;
   let qi = 0;
@@ -1014,15 +1037,16 @@ function stepView(dir) {
     <aside class="rail" aria-label="Avance del cuestionario">
       <div class="rail-head"><span class="chip">${esc(g.corto)}</span><button type="button" class="btn ghost sm" id="cambiar">Cambiar grupo</button></div>
       <div class="depth"><span class="dl">Profundidad</span><span class="dv"><span id="depth">${nfm.format(shownDepth)}</span> m</span><span class="dt">de ${nfm.format(TOTAL_DEPTH)} m</span></div>
-      <ol class="strata">${rail}</ol>
+      <div class="drill-top" aria-hidden="true">${RIG_MINI}</div>
+      <div class="strata-wrap" id="strata-wrap"><ol class="strata">${rail}</ol><div class="shaft" id="shaft" aria-hidden="true"><i class="pipe"></i><span class="bit">${BIT}</span></div></div>
     </aside>
     <div class="wiz-main">
       <div class="mtop">
         <div class="mtop-row"><span class="chip">${esc(g.corto)}</span><span class="mono"><b id="depth-m">${nfm.format(shownDepth)}</b> / ${nfm.format(TOTAL_DEPTH)} m</span><button type="button" class="btn ghost sm" id="cambiar-m">Cambiar</button></div>
-        <div class="mbar" aria-hidden="true"><i style="width:${pct}%"></i><b style="left:${pct}%"></b></div>
+        <div class="mbar" aria-hidden="true"><i style="width:${pct}%"></i><b style="left:${pct}%">${BIT}</b></div>
       </div>
       <header class="step-head anim-in">
-        <span class="kicker">Paso ${String(st.paso + 1).padStart(2, '0')} de ${String(total).padStart(2, '0')}</span>
+        <span class="kicker">Etapa ${LET[st.paso]} · ${st.paso + 1} de ${total}</span>
         <h2>${esc(paso.titulo)}</h2>
         ${paso.ayuda ? `<p class="help">${esc(paso.ayuda)}</p>` : ''}
         <span class="count" id="count" aria-live="polite"></span>
@@ -1037,10 +1061,41 @@ function stepView(dir) {
   </div>`;
 }
 
+let shaftPx = 0, drillTimer = 0;
+function drillTo(frac) {
+  const total = GRUPOS[st.grupo].pasos.length;
+  const prog = Math.min(1, (st.paso + frac) / total);
+  const wrap = document.getElementById('strata-wrap'), shaft = document.getElementById('shaft');
+  if (wrap && shaft) {
+    const lis = wrap.querySelectorAll('.strata li'), li = lis[st.paso];
+    if (li) { shaftPx = Math.round(li.offsetTop + Math.max(0.12, frac) * li.offsetHeight); shaft.style.height = shaftPx + 'px'; }
+  }
+  const bar = document.querySelector('.mbar i'), mk = document.querySelector('.mbar b');
+  if (bar) bar.style.width = (prog * 100) + '%';
+  if (mk) mk.style.left = (prog * 100) + '%';
+  animateDepth(Math.round(prog * TOTAL_DEPTH));
+}
+function drillPulse() {
+  const rail = document.querySelector('.rail'), mtop = document.querySelector('.mtop');
+  if (!rail || reduceMotion()) return;
+  rail.classList.add('drilling'); if (mtop) mtop.classList.add('drilling'); clearTimeout(drillTimer);
+  drillTimer = setTimeout(() => { rail.classList.remove('drilling'); if (mtop) mtop.classList.remove('drilling'); }, 1100);
+  const wrap = document.getElementById('strata-wrap'); if (!wrap) return;
+  for (let i = 0; i < 9; i++) {
+    const c = document.createElement('span'); c.className = 'cut';
+    const ang = Math.PI * (0.15 + Math.random() * 0.7) * (i % 2 ? 1 : -1);
+    c.style.left = '22px'; c.style.top = (shaftPx + 6) + 'px';
+    c.style.setProperty('--dx', (Math.sin(ang) * (14 + Math.random() * 22)).toFixed(1) + 'px');
+    c.style.setProperty('--dy', (-Math.abs(Math.cos(ang)) * (10 + Math.random() * 18)).toFixed(1) + 'px');
+    wrap.appendChild(c); setTimeout(() => c.remove(), 850);
+  }
+}
 function updateCount() {
   const el = $('#count'); if (!el || !st.grupo) return;
   const items = GRUPOS[st.grupo].pasos[st.paso].items.filter(i => i.t !== 'h');
   const n = items.filter(answered).length;
+  const part = items.reduce((acc, it) => acc + (it.t === 'matrix' ? it.rows.filter((_, ri) => rowDone(it, ri)).length / it.rows.length : (answered(it) ? 1 : 0)), 0);
+  drillTo(items.length ? part / items.length : 0);
   el.innerHTML = n === items.length ? `${ICON.check}<b>${n}</b> de ${items.length} respondidas` : `<b>${n}</b> de ${items.length} respondidas`;
   el.classList.toggle('full', n === items.length);
 }
@@ -1078,7 +1133,8 @@ function readInput(el) {
     if (rowEl) { const d = rowDone(it, row); rowEl.classList.toggle('row-done', d); if (d) rowEl.classList.remove('missing'); }
   }
   const justDone = refreshCard(it);
-  if (k !== 'text' && k !== 'otra') buzz(justDone ? [10, 30, 14] : 6);
+  if (k !== 'text' && k !== 'otra') { buzz(justDone ? [10, 30, 14] : 6); drillPulse(); }
+  else if (justDone) drillPulse();
   saveDraft(); flashSaved();
   if ((k === 'single' && el.value !== '__otra') || k === 'quiz' || k === 'scale') autoAdvance(el.closest('.q'));
 }
@@ -1135,6 +1191,8 @@ function goTo(p, dir) {
   saveDraft(); renderResponder(dir); scrollToView();
 }
 function bindStep() {
+  const shaft = document.getElementById('shaft');
+  if (shaft) { shaft.style.transition = 'none'; shaft.style.height = shaftPx + 'px'; void shaft.offsetHeight; shaft.style.transition = ''; }
   const form = $('#stepform');
   form.addEventListener('submit', e => e.preventDefault());
   form.addEventListener('change', e => readInput(e.target));

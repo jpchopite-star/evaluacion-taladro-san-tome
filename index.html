@@ -202,8 +202,12 @@ body.compact main .wrap { padding-top: 24px; }
 .depth .dl { font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--band-ink-2); font-weight: 600; }
 .depth .dv { font-family: var(--font-mono); font-size: 26px; font-weight: 600; color: var(--amber); font-variant-numeric: tabular-nums; }
 .depth .dt { font-size: 12px; color: var(--band-ink-2); font-family: var(--font-mono); }
-.drill-top { display: flex; justify-content: center; margin-bottom: -8px; position: relative; z-index: 2; }
-.drill-top svg { width: 96px; height: auto; color: var(--ink-2); overflow: visible; }
+.drill-top { display: flex; justify-content: flex-start; margin-bottom: -18px; position: relative; z-index: 2; }
+/* The derrick's centre (x=60 of 120 → 48px at 96px wide) sits exactly over the shaft (1px border + 23px + 2px = 26px). */
+.drill-top svg { width: 96px; height: auto; margin-left: -22px; color: var(--ink-2); overflow: visible; }
+.drill-top .mpipe { stroke: var(--amber); stroke-width: 5; stroke-dasharray: 8.75 3.75; }
+.rail.drilling .drill-top .mpipe { animation: spin-mini .35s linear infinite; }
+@keyframes spin-mini { to { stroke-dashoffset: -12.5; } }
 .drill-top .beacon { fill: var(--amber); animation: blink 1.8s ease-in-out infinite; }
 .strata-wrap { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
 .strata { list-style: none; margin: 0; padding: 0; display: grid; }
@@ -870,7 +874,7 @@ const ICON = {
 };
 const TOTAL_DEPTH = 3000;
 const LET = 'ABCDEFGHIJKLMNOP';
-const RIG_MINI = '<svg viewBox="0 0 120 70"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M44 66 L57 10 M76 66 L63 10"/><path d="M47 52 H73 M51 34 H69 M54 20 H66"/><path d="M44 66 L69 34 M76 66 L51 34 M47 52 L66 20 M73 52 L54 20" opacity=".45"/><rect x="54" y="5" width="12" height="5" rx="1.5"/><path d="M30 66 H90" stroke-width="3"/></g><circle cx="60" cy="2" r="2.2" class="beacon"/></svg>';
+const RIG_MINI = '<svg viewBox="0 0 120 70"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M44 66 L57 10 M76 66 L63 10"/><path d="M47 52 H73 M51 34 H69 M54 20 H66"/><path d="M44 66 L69 34 M76 66 L51 34 M47 52 L66 20 M73 52 L54 20" opacity=".45"/><rect x="54" y="5" width="12" height="5" rx="1.5"/><path d="M30 66 H90" stroke-width="3"/></g><line x1="60" y1="10" x2="60" y2="74" class="mpipe"/><circle cx="60" cy="2" r="2.2" class="beacon"/></svg>';
 const BIT = '<svg viewBox="0 0 18 16"><path d="M2 1 H16 L13 9 L9 15 L5 9 Z"/><path d="M9 1 V15" fill="none"/></svg>';
 const nfm = new Intl.NumberFormat('es-VE');
 const reduceMotion = () => { try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { return false; } };

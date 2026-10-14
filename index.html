@@ -1,0 +1,1252 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Evaluación Taladro San Tomé</title>
+<meta name="description" content="Cuestionario de evaluación de la visita guiada al Taladro Escuela San Tomé.">
+<meta property="og:title" content="Evaluación · Taladro Escuela San Tomé">
+<meta property="og:description" content="Cuestionario para participantes de la visita guiada (Maestría y Pregrado, UCV).">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one column (max 980px) — header band with a drilling-rig hazard stripe, two tabs: Responder (step-by-step form) and Resultados (insumo / producto / resultado + detail). */
+:root {
+  --bg: #f1f3f5;
+  --surface: #fcfcfb;
+  --surface-2: #e8ecf0;
+  --ink: #121a24;
+  --ink-2: #4b5563;
+  --muted: #7c8591;
+  --line: #dde2e7;
+  --accent: #1d5486;
+  --accent-ink: #ffffff;
+  --accent-soft: #dce8f4;
+  --amber: #e0a100;
+  --series-hoy: #2a78d6;
+  --series-antes: #8a8f96;
+  --good: #0c7d0c;
+  --critical: #c23434;
+  --band: #121a24;
+  --band-ink: #f3f5f7;
+  --band-ink-2: #aeb7c2;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+  --font-body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1217; --surface: #161b22; --surface-2: #1f262f; --ink: #eef1f4; --ink-2: #b6bfc9; --muted: #8a939e;
+    --line: #2a323c; --accent: #6aa6dd; --accent-ink: #0e1217; --accent-soft: #1c2c3d; --amber: #e8ad1c;
+    --series-hoy: #3987e5; --series-antes: #8a8f96; --good: #2fb52f; --critical: #e66767;
+    --band: #070a0d; --band-ink: #eef1f4; --band-ink-2: #8a939e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1217; --surface: #161b22; --surface-2: #1f262f; --ink: #eef1f4; --ink-2: #b6bfc9; --muted: #8a939e;
+  --line: #2a323c; --accent: #6aa6dd; --accent-ink: #0e1217; --accent-soft: #1c2c3d; --amber: #e8ad1c;
+  --series-hoy: #3987e5; --series-antes: #8a8f96; --good: #2fb52f; --critical: #e66767;
+  --band: #070a0d; --band-ink: #eef1f4; --band-ink-2: #8a939e; color-scheme: dark;
+}
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+* { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 980px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: 0.01em; text-wrap: balance; margin: 0; line-height: 1.1; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Header band */
+.band { background: var(--band); color: var(--band-ink); }
+.band .wrap { padding-block: 28px 0; }
+.eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--band-ink-2); font-weight: 600; }
+.band h1 { font-size: clamp(34px, 6vw, 52px); text-transform: uppercase; margin-top: 6px; }
+.band p { margin: 6px 0 0; color: var(--band-ink-2); max-width: 60ch; }
+.stripe { height: 8px; margin-top: 22px; background: repeating-linear-gradient(135deg, var(--amber) 0 12px, var(--band) 12px 24px); }
+.tabs { display: flex; gap: 4px; margin-top: 20px; }
+.tab { appearance: none; border: 0; background: transparent; color: var(--band-ink-2); padding: 10px 16px 12px; font-family: var(--font-display); font-size: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; border-radius: 8px 8px 0 0; }
+.tab[aria-selected="true"] { background: var(--bg); color: var(--ink); }
+.tab:hover:not([aria-selected="true"]) { color: var(--band-ink); }
+
+main .wrap { padding-block: 28px 64px; }
+.notice { border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius); padding: 14px 16px; color: var(--ink-2); margin-bottom: 20px; display: flex; gap: 10px; align-items: flex-start; }
+.notice strong { color: var(--ink); }
+.notice.warn { border-color: color-mix(in srgb, var(--amber) 60%, var(--line)); }
+.notice.err { border-color: color-mix(in srgb, var(--critical) 60%, var(--line)); }
+.notice .ico { flex: none; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 13px; background: var(--surface-2); color: var(--ink); }
+
+.btn { appearance: none; border: 1px solid var(--line); background: var(--surface); padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; border-color: transparent; color: var(--ink-2); padding-inline: 8px; }
+.btn.ghost:hover { color: var(--ink); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn.danger { color: var(--critical); }
+.btn.sm { padding: 6px 12px; font-size: 14px; }
+
+/* Group chooser */
+.choose h2 { font-size: 30px; text-transform: uppercase; }
+.choose > p { color: var(--ink-2); margin: 6px 0 20px; max-width: 62ch; }
+.groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.group-card { text-align: left; appearance: none; border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius); padding: 20px; cursor: pointer; display: grid; gap: 6px; }
+.group-card:hover { border-color: var(--accent); }
+.group-card .k { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 600; }
+.group-card .n { font-family: var(--font-display); font-size: 26px; font-weight: 700; line-height: 1.1; }
+.group-card .d { color: var(--ink-2); font-size: 15px; }
+.group-card .go { margin-top: 8px; color: var(--accent); font-weight: 600; }
+.draft { margin-top: 16px; }
+
+/* Wizard */
+.wiz-head { display: grid; gap: 10px; margin-bottom: 20px; }
+.wiz-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline; color: var(--ink-2); font-size: 14px; }
+.chip { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); font-size: 13px; font-weight: 600; }
+.progress { height: 6px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+.progress > i { display: block; height: 100%; background: var(--accent); transition: width .25s ease; }
+.wiz-head h2 { font-size: clamp(28px, 4.5vw, 36px); text-transform: uppercase; }
+.wiz-head .help { color: var(--ink-2); margin: 0; max-width: 66ch; }
+.steps-dots { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.qlist { display: grid; gap: 14px; }
+.q { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; min-width: 0; }
+.q.missing { border-color: var(--critical); }
+.q .qt { font-weight: 600; margin: 0 0 4px; }
+.q .qh { color: var(--muted); font-size: 14px; margin: 0 0 10px; }
+.q .req { color: var(--critical); margin-left: 2px; }
+.q .miss { color: var(--critical); font-size: 14px; margin-top: 8px; display: none; }
+.q.missing .miss { display: block; }
+.subhead { padding-top: 10px; }
+.subhead h3 { font-size: 22px; text-transform: uppercase; color: var(--accent); }
+.subhead p { margin: 2px 0 0; color: var(--ink-2); font-size: 15px; }
+
+.opts { display: grid; gap: 6px; margin-top: 8px; }
+.opt { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border-radius: 8px; border: 1px solid transparent; cursor: pointer; }
+.opt:hover { background: var(--surface-2); }
+.opt input { margin-top: 4px; accent-color: var(--accent); flex: none; }
+.opt:has(input:checked) { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 35%, transparent); }
+.otra { margin-left: 34px; margin-top: 2px; }
+input[type="text"], input[type="email"], input[type="password"], textarea { width: 100%; border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 10px 12px; }
+textarea { min-height: 84px; resize: vertical; }
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
+
+/* Segmented 1–5 / 0–10 */
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.seg label { position: relative; }
+.seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.seg span { display: grid; place-items: center; min-width: 38px; height: 38px; padding: 0 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); font-weight: 600; font-variant-numeric: tabular-nums; cursor: pointer; }
+.seg label:hover span { border-color: var(--muted); }
+.seg input:checked + span { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.scale-labels { display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; margin-top: 6px; max-width: 520px; }
+
+.matrix { display: grid; gap: 2px; margin-top: 8px; }
+.mrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.mrow:first-child { border-top: 0; }
+.mrow.missing .mlabel { color: var(--critical); }
+.mscales { display: grid; gap: 6px; justify-items: end; }
+.masp { display: flex; gap: 8px; align-items: center; }
+.masp .al { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; min-width: 64px; text-align: right; }
+.mrow .seg span { min-width: 34px; height: 34px; }
+.scale-key { color: var(--muted); font-size: 13px; margin: 0 0 4px; }
+@media (max-width: 720px) {
+  .mrow { grid-template-columns: 1fr; }
+  .mscales { justify-items: start; }
+  .masp { flex-wrap: wrap; }
+  .masp .al { text-align: left; min-width: 0; width: 100%; }
+}
+
+.wiz-nav { position: sticky; bottom: 0; margin-top: 20px; padding-block: 12px calc(12px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(to top, var(--bg) 70%, transparent); display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+.wiz-nav .err-msg { color: var(--critical); font-size: 14px; }
+
+.done { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: grid; gap: 10px; justify-items: start; }
+.done h2 { font-size: 34px; text-transform: uppercase; }
+.done p { margin: 0; color: var(--ink-2); max-width: 60ch; }
+.done .score { font-family: var(--font-display); font-size: 44px; font-weight: 700; line-height: 1; color: var(--accent); }
+
+/* Results */
+.res-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: end; margin-bottom: 18px; }
+.res-head h2 { font-size: 32px; text-transform: uppercase; }
+.res-head p { margin: 2px 0 0; color: var(--ink-2); }
+.toggle { display: inline-flex; background: var(--surface-2); border-radius: 10px; padding: 3px; gap: 2px; }
+.toggle button { appearance: none; border: 0; background: transparent; padding: 7px 14px; border-radius: 8px; font-weight: 600; cursor: pointer; color: var(--ink-2); }
+.toggle button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.res-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
+.kpi .l { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+.kpi .v { font-family: var(--font-display); font-size: 36px; font-weight: 700; line-height: 1.1; margin-top: 4px; }
+.kpi .s { color: var(--ink-2); font-size: 14px; }
+.kpi .v .u { font-size: 18px; color: var(--ink-2); font-weight: 600; }
+.up { color: var(--good); }
+
+.ipr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 18px; overflow: hidden; }
+.ipr > div { padding: 16px 18px; border-left: 1px solid var(--line); min-width: 0; }
+.ipr > div:first-child { border-left: 0; }
+.ipr h3 { font-size: 22px; text-transform: uppercase; display: flex; align-items: baseline; gap: 8px; }
+.ipr h3 small { font-family: var(--font-body); font-size: 12px; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+.ipr .lead { color: var(--ink-2); font-size: 14px; margin: 2px 0 10px; }
+.ipr dl { margin: 0; display: grid; gap: 8px; }
+.ipr dl > div { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 8px; }
+.ipr dt { color: var(--ink-2); font-size: 14px; }
+.ipr dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 760px) { .ipr { grid-template-columns: 1fr; } .ipr > div { border-left: 0; border-top: 1px solid var(--line); } .ipr > div:first-child { border-top: 0; } }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin-bottom: 18px; min-width: 0; }
+.panel h3 { font-size: 22px; text-transform: uppercase; }
+.panel .sub { color: var(--ink-2); font-size: 14px; margin: 2px 0 14px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.grid2 > .panel { margin-bottom: 0; }
+.grid2 + .panel, .grid2 + .grid2 { margin-top: 18px; }
+@media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--ink-2); margin-bottom: 8px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+
+/* Dumbbell */
+.db-row { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 3.5rem; gap: 12px; align-items: center; padding: 5px 0; }
+.db-row .lab { font-size: 14px; color: var(--ink-2); line-height: 1.3; }
+.db-track { position: relative; height: 22px; }
+.db-track .gl { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--line); }
+.db-track .bar { position: absolute; top: 50%; height: 2px; transform: translateY(-50%); background: color-mix(in srgb, var(--series-hoy) 45%, var(--series-antes)); }
+.db-track .dot { position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 2px var(--surface); }
+.db-row .delta { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.db-axis { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 3.5rem; gap: 12px; }
+.db-axis .ticks { position: relative; height: 18px; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.db-axis .ticks span { position: absolute; transform: translateX(-50%); }
+.db-axis .dh { font-size: 12px; color: var(--muted); text-align: right; }
+@media (max-width: 640px) {
+  .db-row, .db-axis { grid-template-columns: minmax(0, 1fr) 3rem; }
+  .db-row .lab { grid-column: 1 / -1; }
+  .db-axis > :first-child { display: none; }
+}
+
+/* Horizontal bars */
+.hb { display: grid; gap: 8px; }
+.hb-row { display: grid; grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) 3.5rem; gap: 10px; align-items: center; }
+.hb-row .lab { font-size: 14px; color: var(--ink-2); line-height: 1.3; }
+.hb-row .trk { height: 14px; background: var(--surface-2); border-radius: 4px; position: relative; overflow: hidden; }
+.hb-row .fill { position: absolute; inset: 0 auto 0 0; background: var(--series-hoy); border-radius: 0 4px 4px 0; }
+.hb-row .val { font-size: 14px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) { .hb-row { grid-template-columns: minmax(0, 1fr) 3rem; } .hb-row .lab { grid-column: 1 / -1; } }
+
+.tscroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; white-space: nowrap; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.heat { text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; border: 2px solid var(--surface); border-radius: 6px; }
+
+.answers { display: grid; gap: 10px; }
+.answers blockquote { margin: 0; padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--bg); border-radius: 0 8px 8px 0; }
+.answers cite { display: block; font-style: normal; color: var(--muted); font-size: 13px; margin-top: 4px; }
+.qtabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.qtabs button { appearance: none; border: 1px solid var(--line); background: transparent; border-radius: 999px; padding: 4px 12px; font-size: 14px; cursor: pointer; color: var(--ink-2); }
+.qtabs button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); border-color: transparent; font-weight: 600; }
+
+.empty { text-align: center; padding: 48px 20px; background: var(--surface); border: 1px dashed var(--line); border-radius: var(--radius); color: var(--ink-2); }
+.empty h3 { font-size: 26px; text-transform: uppercase; color: var(--ink); margin-bottom: 6px; }
+
+.tip { position: fixed; z-index: 50; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 13px; padding: 6px 10px; border-radius: 6px; max-width: 260px; line-height: 1.35; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+.login { max-width: 440px; margin: 0 auto; }
+.login form { display: grid; gap: 10px; }
+.login label { font-weight: 600; font-size: 14px; }
+.login .err-msg { color: var(--critical); font-size: 14px; margin: 0; min-height: 1.2em; }
+.updated { color: var(--muted); }
+.foot { color: var(--muted); font-size: 13px; margin-top: 28px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="wrap">
+    <div class="eyebrow">Ministerio de Hidrocarburos · Universidad Central de Venezuela</div>
+    <h1>Taladro Escuela San Tomé</h1>
+    <p>Evaluación de la visita guiada: cuestionario para participantes y panel de resultados.</p>
+    <nav class="tabs" role="tablist" aria-label="Secciones">
+      <button class="tab" role="tab" id="tab-responder" aria-controls="view-responder" aria-selected="true">Responder</button>
+      <button class="tab" role="tab" id="tab-resultados" aria-controls="view-resultados" aria-selected="false">Resultados</button>
+    </nav>
+  </div>
+  <div class="stripe" aria-hidden="true"></div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div id="status"></div>
+    <section id="view-responder" role="tabpanel" aria-labelledby="tab-responder"></section>
+    <section id="view-resultados" role="tabpanel" aria-labelledby="tab-resultados" hidden></section>
+    <p class="foot">Las respuestas son anónimas: cada participante se identifica solo con un código (iniciales + últimos 3 dígitos de su cédula).</p>
+  </div>
+</main>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+(() => {
+'use strict';
+
+/* ================================================================== */
+/* CONFIGURACIÓN: datos del proyecto de Supabase                       */
+/* La clave "anon" es pública por diseño; los permisos de la tabla     */
+/* solo le permiten INSERTAR respuestas, nunca leerlas.                */
+/* ================================================================== */
+const SUPABASE_URL = 'https://lhyxrzrdchquaafogksb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoeXhyenJkY2hxdWFhZm9na3NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5ODQ0OTYsImV4cCI6MjEwNzU2MDQ5Nn0.gw8LRQmQhjNYTNb7V3tUloPSbwd7HOt0yD0rgJJBonA';
+
+/* ------------------------------------------------------------------ */
+/* Question bank                                                       */
+/* ------------------------------------------------------------------ */
+const PARADAS = [
+  'Historia de los primeros pozos',
+  'Centro virtual y asistentes por área',
+  'Partes del taladro y equipo thumper',
+  'Equipos y laboratorio de cementación',
+  'Aulas de formación y certificación',
+  'Recorrido por el taladro completo',
+  'Aula avanzada y simulador'
+];
+const PARADAS_N = PARADAS.map((p, i) => `${i + 1}. ${p}`);
+
+const S  = (id, q, op, x = {}) => ({ id, t: 'single', q, op, req: true, ...x });
+const Q  = (id, p, q, op, ok) => ({ id, t: 'quiz', p, q, op, ok, req: true });
+const P  = (id, q, x = {}) => ({ id, t: 'para', q, ...x });
+const TX = (id, q, x = {}) => ({ id, t: 'text', q, ...x });
+const M  = (id, q, rows, asp, x = {}) => ({ id, t: 'matrix', q, rows, asp, req: true, ...x });
+const MU = (id, q, op, x = {}) => ({ id, t: 'multi', q, op, ...x });
+const SC = (id, q, min, max, lmin, lmax) => ({ id, t: 'scale', q, min, max, lmin, lmax, req: true });
+const H  = (q, help) => ({ t: 'h', q, help });
+
+const qZumaque = id => Q(id, 1, '¿Qué pozo se reconoce como el primer pozo de producción comercial a gran escala en Venezuela?',
+  ['Eureka, en el Táchira', 'Zumaque I, en Mene Grande (Zulia), 1914', 'Barroso II, en Cabimas', 'Un pozo del Taladro Escuela San Tomé'], 1);
+const qThumper = id => Q(id, 3, 'El equipo exploratorio thumper se usa para:',
+  ['Perforar pozos poco profundos', 'Generar ondas en el suelo cuyo rebote, captado por micrófonos o geófonos, permite inferir la composición del subsuelo', 'Compactar el terreno antes de instalar el taladro', 'Medir la presión dentro del pozo'], 1);
+const qBop = id => Q(id, 3, 'La función principal del conjunto de válvulas preventoras de reventones (BOP) es:',
+  ['Regular la velocidad de la mecha', 'Sellar el pozo ante un influjo descontrolado de fluidos', 'Mezclar el lodo de perforación', 'Medir la producción diaria'], 1);
+const qCementar = id => Q(id, 4, 'El objetivo principal de cementar un pozo es:',
+  ['Lubricar la mecha', 'Fijar el revestidor y aislar las distintas zonas del subsuelo', 'Transportar los recortes a superficie', 'Acelerar la perforación'], 1);
+const qTraza = id => Q(id, 4, 'Guardar las muestras y registros de las pruebas de cemento sirve principalmente para:',
+  ['Vender el cemento sobrante', 'Tener trazabilidad y respaldo técnico ante fallas, reclamos o auditorías', 'Decorar el laboratorio', 'Evitar hacer pruebas en el futuro'], 1);
+const qLodo = id => Q(id, 6, 'Las funciones principales del lodo de perforación son:',
+  ['Controlar la presión del pozo, enfriar la mecha y llevar los recortes a superficie', 'Solo dar color al pozo para identificarlo', 'Sustituir al cemento', 'Generar electricidad para el taladro'], 0);
+const qSim = id => Q(id, 7, 'El principal valor del simulador de perforación es:',
+  ['Practicar escenarios críticos, como una arremetida, sin riesgo real ni costo de un taladro en operación', 'Sustituir de forma permanente al taladro físico', 'Producir datos de producción reales', 'Entretener a los visitantes'], 0);
+
+const E_EXPECT = ['Nada', 'Poco', 'Parcialmente', 'En gran medida', 'Totalmente'];
+const F22 = ['Menos de 25 %', '25–50 %', '51–75 %', 'Más de 75 %'];
+
+function stepsExperiencia(adapt, ref, e4, e5) {
+  return {
+    titulo: 'Valoración de la experiencia', ayuda: 'Califique de 1 (muy deficiente) a 5 (excelente).',
+    items: [
+      M('E1', 'E1. Califique cada aspecto de la visita', ['Organización y logística del viaje', 'Dominio del tema por parte de los guías', adapt, 'Tiempo dedicado a cada parada', 'Oportunidad de hacer preguntas', 'Medidas de seguridad durante el recorrido', 'Calidad de los recursos tecnológicos (asistentes virtuales, simulador, aulas)'], ['Calificación']),
+      S('E2', `E2. ¿En qué medida la visita cumplió la expectativa que marcó en ${ref}?`, E_EXPECT),
+      S('E3', 'E3. ¿Cuál fue la parada más valiosa para usted?', PARADAS_N),
+      S('E4', `E4. ${e4}`, PARADAS_N),
+      SC('E5', `E5. ${e5}`, 0, 10, 'Nada probable', 'Muy probable')
+    ]
+  };
+}
+function stepComentarios(g2, g3) {
+  return {
+    titulo: 'Comentarios finales', ayuda: 'Sus comentarios nos ayudan a mejorar las próximas visitas.',
+    items: [
+      P('G1', 'G1. ¿Qué fue lo más importante que aprendió en la visita?'),
+      P('G2', `G2. ${g2}`),
+      P('G3', `G3. ${g3}`),
+      S('G4', 'G4. ¿Acepta que lo contactemos en 3 a 6 meses para un breve cuestionario de seguimiento?', ['Sí', 'No']),
+      TX('G5', 'Correo para el seguimiento (opcional)', { kind: 'email' })
+    ]
+  };
+}
+const AYUDA_F = 'Insumo: su punto de partida. Producto: lo que obtuvo de inmediato. Resultado: lo que cambiará en su carrera y en el sector.';
+
+const GRUPOS = {
+  maestria: {
+    corto: 'Maestría',
+    nombre: 'Maestría en Economía y Administración de Hidrocarburos',
+    desc: 'Profesionales de ingeniería, derecho, economía y administración. Mide comprensión del negocio de la perforación y aplicación profesional.',
+    seg: { id: 'A2', label: 'Formación de base' },
+    pasos: [
+      { titulo: 'Perfil del participante', ayuda: 'Datos básicos para analizar los resultados por perfil. No pedimos su nombre.',
+        items: [
+          TX('A1', 'A1. Código personal', { req: true, help: 'Iniciales + últimos 3 dígitos de su cédula. Ejemplo: JD123' }),
+          S('A2', 'A2. Formación de pregrado', ['Ingeniería', 'Derecho', 'Economía', 'Administración / Contaduría'], { otra: true }),
+          TX('A2b', 'A2b. Si es ingeniero, indique su especialidad'),
+          S('A3', 'A3. Años de experiencia laboral', ['0–2', '3–5', '6–10', 'Más de 10']),
+          S('A4', 'A4. Sector en el que trabaja actualmente', ['Hidrocarburos (operadora)', 'Empresa de servicios petroleros', 'Sector público / regulador', 'Banca, finanzas o consultoría', 'Legal', 'Académico'], { otra: true }),
+          S('A5', 'A5. Antes de esta visita, ¿había estado en un taladro de perforación (real o escuela)?', ['Nunca', 'Una vez', 'Varias veces', 'Trabajo o trabajé en uno']),
+          S('A6', 'A6. ¿En qué etapa de la maestría se encuentra?', ['Primer año', 'Segundo año', 'Trabajo de grado']),
+          S('A7', 'A7. ¿Cuál era su principal expectativa antes de la visita?', ['Entender la operación técnica de un taladro', 'Entender costos y modelo de negocio de la perforación', 'Conocer la oferta de formación y certificación del Taladro Escuela', 'Hacer contactos profesionales'], { otra: true })
+        ] },
+      { titulo: 'Antes y después', ayuda: 'Para cada tema, califique cómo estaba ANTES de la visita y cómo está HOY. 1 = no sabía nada del tema; 5 = podría explicarlo con seguridad a un colega.',
+        items: [ M('B', 'Su nivel en cada tema', [
+          'B1. Historia de los primeros pozos petroleros de Venezuela',
+          'B2. Uso de asistentes virtuales e inteligencia artificial en la industria',
+          'B3. Componentes principales de un taladro (mechas, válvulas, preventores)',
+          'B4. Exploración sísmica y cómo se ubica el petróleo bajo tierra',
+          'B5. Cementación de pozos y control de calidad del cemento',
+          'B6. Sistema de lodo y control de presión del pozo',
+          'B7. Roles y posiciones del personal en el piso del taladro',
+          'B8. Uso de simuladores para entrenar y reducir riesgos',
+          'B9. Estructura de costos de un pozo (tarifa diaria, tiempo no productivo)',
+          'B10. Cadena de valor de la perforación (operadora, contratista, empresas de servicio)',
+          'B11. Modelo de negocio de un centro de formación y certificación',
+          'B12. Relación entre capacitación, productividad y seguridad operacional',
+          'B13. Capacidad para conversar con ingenieros sobre la operación',
+          'B14. Confianza para evaluar o asesorar decisiones de inversión en perforación',
+          'B15. Interés en especializarse o trabajar en exploración y producción'
+        ], ['Antes', 'Hoy']) ] },
+      { titulo: 'Calificación de las paradas', ayuda: 'Califique cada parada de 1 (muy bajo) a 5 (muy alto) en tres aspectos.',
+        items: [ M('C0', 'Cada parada de la visita', PARADAS_N, ['Claridad', 'Utilidad', 'Negocio'], { help: 'Claridad de la explicación · Utilidad para mi perfil profesional · Me ayudó a entender el negocio' }) ] },
+      { titulo: 'Comprensión · paradas 1 a 3', ayuda: 'Responda sin consultar fuentes. Nos interesa lo que usted recuerda.',
+        items: [
+          H('Parada 1 · Historia de los primeros pozos'),
+          { ...qZumaque('C1_1'), q: 'C1.1 ' + qZumaque('x').q },
+          Q('C1_2', 1, 'C1.2 ¿Por qué el pozo Eureka de la Compañía Petrolia del Táchira se considera un antecedente no comercial?', ['Nunca produjo petróleo', 'Su producción fue pequeña y abastecía solo un mercado local', 'Solo producía gas natural', 'Fue un pozo de agua mal clasificado'], 1),
+          P('C1_3', 'C1.3 En una frase, ¿qué relación encuentra entre la historia presentada y la reinauguración del Taladro Escuela San Tomé?'),
+          H('Parada 2 · Centro virtual'),
+          P('C2_1', 'C2.1 Mencione dos áreas cuyos asistentes virtuales recuerda (por ejemplo: ingeniería de pozos).'),
+          Q('C2_2', 2, 'C2.2 Para una empresa, ¿cuál es el principal beneficio de contar con asistentes virtuales especializados por área?', ['Reemplazar por completo al personal técnico', 'Dar acceso inmediato a conocimiento estandarizado y acelerar la formación', 'Eliminar la necesidad de certificaciones', 'Reducir el consumo de energía del taladro'], 1),
+          H('Parada 3 · Partes del taladro y equipo thumper'),
+          { ...qThumper('C3_1'), q: 'C3.1 ' + qThumper('x').q },
+          Q('C3_2', 3, 'C3.2 Desde el punto de vista económico, la exploración sísmica es importante porque:', ['Reduce el riesgo de invertir en pozos secos', 'Sustituye la perforación', 'Es obligatoria solo por razones ambientales', 'Aumenta el precio del crudo'], 0),
+          { ...qBop('C3_3'), q: 'C3.3 ' + qBop('x').q }
+        ] },
+      { titulo: 'Comprensión · paradas 4 a 7', ayuda: 'Responda sin consultar fuentes. Nos interesa lo que usted recuerda.',
+        items: [
+          H('Parada 4 · Cementación y laboratorio'),
+          { ...qCementar('C4_1'), q: 'C4.1 ' + qCementar('x').q },
+          Q('C4_2', 4, 'C4.2 ¿Por qué el cemento se diseña y prueba en laboratorio para cada pozo específico?', ['Por razones estéticas', 'Porque la presión y la temperatura de cada pozo cambian el fraguado y la resistencia del cemento', 'Porque cada pozo usa un color de cemento distinto', 'Para cumplir solo un requisito administrativo'], 1),
+          { ...qTraza('C4_3'), q: 'C4.3 ' + qTraza('x').q },
+          H('Parada 5 · Aulas de formación'),
+          Q('C5_1', 5, 'C5.1 Según lo presentado, además de formar profesionales, el Taladro Escuela genera valor para el sector mediante:', ['La certificación de profesionales y el acceso de universidades públicas y privadas', 'La venta de crudo producido en sus pozos', 'El alquiler del taladro a operadoras para producción', 'Ninguna de las anteriores'], 0),
+          P('C5_2', 'C5.2 ¿Qué tipo de profesional de su entorno se beneficiaría más de estas aulas y por qué?'),
+          H('Parada 6 · Taladro completo'),
+          { ...qLodo('C6_1'), q: 'C6.1 ' + qLodo('x').q },
+          Q('C6_2', 6, 'C6.2 Una ventaja operativa del top drive frente al sistema rotatorio convencional es:', ['Hace girar la sarta desde arriba y agiliza las conexiones, lo que ahorra tiempo de taladro', 'Elimina la necesidad de lodo', 'Permite perforar sin personal en el piso', 'Reduce el diámetro del hoyo'], 0),
+          Q('C6_3', 6, 'C6.3 Si una mala coordinación entre las posiciones del piso del taladro detiene la operación, el principal efecto económico es:', ['Ninguno, porque el taladro cobra por metro perforado siempre', 'Aumento del tiempo no productivo y, por tanto, del costo del pozo', 'Reducción del precio del crudo', 'Aumento automático de la producción'], 1),
+          H('Parada 7 · Aula avanzada y simulador'),
+          { ...qSim('C7_1'), q: 'C7.1 ' + qSim('x').q },
+          P('C7_2', 'C7.2 Después de ver el simulador, ¿cómo cree que la formación en simulación afecta el costo y el riesgo de un proyecto de perforación?')
+        ] },
+      { titulo: 'Modelo de negocio y aplicación', ayuda: '1 = totalmente en desacuerdo; 5 = totalmente de acuerdo.',
+        items: [
+          M('D1', 'D1. Indique su grado de acuerdo', [
+            'D1.1 Ahora entiendo mejor cómo se genera valor en la fase de perforación.',
+            'D1.2 Puedo identificar los principales impulsores de costo de un pozo.',
+            'D1.3 Entiendo la relación entre operadora, contratista de perforación y empresas de servicio.',
+            'D1.4 Entiendo cómo el Taladro Escuela puede sostenerse (certificaciones, convenios con universidades y empresas).',
+            'D1.5 Puedo relacionar lo visto con mi formación de base.',
+            'D1.6 Lo aprendido me será útil en mi trabajo actual.',
+            'D1.7 Lo aprendido me ayudará en mi trabajo de grado de la maestría.',
+            'D1.8 La visita mejoró mis perspectivas profesionales en el sector hidrocarburos.',
+            'D1.9 La visita cambió positivamente mi percepción de la capacidad del país para formar talento petrolero.'
+          ], ['Acuerdo']),
+          MU('D2', 'D2. ¿En qué áreas aplicaría primero lo aprendido? (puede marcar varias)', ['Evaluación económica de proyectos de perforación', 'Contratos, regulación y marco legal', 'Finanzas y presupuesto de operaciones', 'Gestión de talento, formación y certificación', 'Políticas públicas del sector', 'Gestión de riesgos y seguridad operacional'], { otra: true }),
+          P('D3', 'D3. Describa una decisión o tarea concreta de su trabajo en la que usaría lo aprendido en la visita.'),
+          H('D4 · Según su formación de base', 'Responda solo la pregunta que corresponde a su formación.'),
+          P('D4_der', 'Derecho: ¿Qué aspecto contractual, laboral o regulatorio identificó en la operación de un taladro?'),
+          P('D4_eco', 'Economía: ¿Qué variable de la operación incluiría en un modelo de evaluación económica de un pozo?'),
+          P('D4_adm', 'Administración: ¿Qué proceso de gestión (compras, personal, logística) le pareció más crítico?'),
+          P('D4_ing', 'Ingeniería: ¿Qué decisión técnica vista en la visita tiene mayor impacto en el costo del pozo?')
+        ] },
+      stepsExperiencia('Adaptación de las explicaciones a un público no solo técnico', 'A7', '¿Cuál fue la parada menos útil para su perfil?', 'Del 0 al 10, ¿qué tan probable es que recomiende esta visita a un colega o a otra cohorte de la maestría?'),
+      { titulo: 'Insumo, producto y resultado', ayuda: AYUDA_F,
+        items: [
+          H('Insumo'),
+          S('F1_1', 'F1.1 Antes de la visita, ¿cuántas horas de formación sobre perforación había recibido en la maestría?', ['0', '1–10', '11–30', 'Más de 30']),
+          SC('F1_2', 'F1.2 Antes de la visita, ¿cómo calificaría su conocimiento general sobre un taladro de perforación?', 1, 10, 'Nulo', 'Experto'),
+          MU('F1_3', 'F1.3 ¿Qué recursos de la visita contribuyeron más a su aprendizaje? (marque hasta tres)', ['Explicaciones de los guías', 'Asistentes virtuales', 'Equipos físicos exhibidos', 'Laboratorio de cementación', 'Simulador de perforación', 'Intercambio con compañeros de otras profesiones', 'Intervenciones de los organizadores'], { lim: 3, req: true }),
+          H('Producto'),
+          SC('F2_1', 'F2.1 Hoy, ¿cómo calificaría su conocimiento general sobre un taladro de perforación?', 1, 10, 'Nulo', 'Experto'),
+          S('F2_2', 'F2.2 ¿Qué porcentaje del contenido presentado siente que comprendió?', F22),
+          S('F2_3', 'F2.3 ¿Cuántos conceptos nuevos podría explicar hoy a un colega?', ['0', '1–2', '3–5', 'Más de 5']),
+          S('F2_4', 'F2.4 ¿Estableció nuevos contactos profesionales durante la visita?', ['Ninguno', '1–2', '3 o más']),
+          H('Resultado'),
+          M('F3_1', 'F3.1 ¿Qué tan probable es que haga lo siguiente en los próximos 6 meses? (1 = nada probable; 5 = muy probable)', [
+            'Aplicar lo aprendido en una tarea o decisión de su trabajo',
+            'Compartir lo aprendido con su equipo u organización',
+            'Elegir un tema de trabajo de grado vinculado a perforación o formación de talento',
+            'Inscribirse, o recomendar a su organización, un curso o certificación en el Taladro Escuela',
+            'Proponer un convenio entre su organización y el Taladro Escuela',
+            'Buscar un cargo o ascenso en el área de exploración y producción'
+          ], ['Probabilidad']),
+          P('F3_2', 'F3.2 ¿Cómo cree que formar profesionales en el Taladro Escuela puede impactar al sector y al país (empleo, producción, seguridad, retención de talento)?')
+        ] },
+      stepComentarios('¿Qué tema le hubiera gustado ver con más profundidad (por ejemplo, costos, contratos, financiamiento)?', '¿Qué cambiaría para mejorar la próxima visita de la maestría?')
+    ]
+  },
+
+  pregrado: {
+    corto: 'Pregrado',
+    nombre: 'Pregrado · Escuela de Ingeniería de Petróleo',
+    desc: 'Estudiantes de inicio, mitad y final de carrera. Mide conocimiento técnico del taladro y aporte al avance académico.',
+    seg: { id: 'A3', label: 'Etapa de la carrera' },
+    pasos: [
+      { titulo: 'Perfil del estudiante', ayuda: 'Datos básicos para analizar los resultados por etapa de la carrera. No pedimos su nombre.',
+        items: [
+          TX('A1', 'A1. Código personal', { req: true, help: 'Iniciales + últimos 3 dígitos de su cédula. Ejemplo: MP456' }),
+          TX('A2', 'A2. Semestre que cursa actualmente', { req: true }),
+          S('A3', 'A3. Etapa de la carrera', ['Inicial (semestres 1 a 4)', 'Media (semestres 5 a 7)', 'Final (semestre 8 en adelante, pasantía o tesis)']),
+          S('A4', 'A4. ¿Cuántas materias relacionadas con perforación ha aprobado?', ['Ninguna', '1', '2', '3 o más']),
+          S('A5', 'A5. Antes de esta visita, ¿había estado en un taladro de perforación (real o escuela)?', ['Nunca', 'Una vez', 'Varias veces']),
+          S('A6', 'A6. ¿Ha realizado o está realizando pasantías en el sector hidrocarburos?', ['No', 'Sí, en curso', 'Sí, ya las terminé']),
+          S('A7', 'A7. ¿Tiene definido su tema de tesis o trabajo especial de grado?', ['No', 'Tengo una idea', 'Sí, ya está definido']),
+          S('A8', 'A8. ¿Qué área le interesa más para su futuro profesional?', ['Perforación', 'Yacimientos', 'Producción', 'Cementación y completación', 'Gestión y economía de hidrocarburos', 'Aún no lo sé']),
+          S('A9', 'A9. ¿Cuál era su principal expectativa antes de la visita?', ['Ver en la práctica lo que estudio en clase', 'Conocer los equipos de un taladro real', 'Probar el simulador y las herramientas tecnológicas', 'Conocer opciones de certificación, pasantía o empleo'], { otra: true })
+        ] },
+      { titulo: 'Antes y después', ayuda: 'Para cada tema, califique cómo estaba ANTES de la visita y cómo está HOY. 1 = no sabía nada del tema; 5 = podría explicarlo con seguridad a un compañero.',
+        items: [ M('B', 'Su nivel en cada tema', [
+          'B1. Historia de los primeros pozos petroleros de Venezuela',
+          'B2. Uso de asistentes virtuales e inteligencia artificial en la industria',
+          'B3. Tipos de mechas de perforación y su aplicación',
+          'B4. Válvulas del taladro y sistema de prevención de reventones',
+          'B5. Exploración sísmica (equipo thumper y geófonos)',
+          'B6. Diseño y pruebas de laboratorio del cemento',
+          'B7. Operación de los equipos de cementación',
+          'B8. Sistema de circulación y tratamiento del lodo',
+          'B9. Sistemas de izaje y rotación (malacate, top drive)',
+          'B10. Posiciones y funciones del personal en el piso del taladro',
+          'B11. Control de pozos: detección y respuesta a una arremetida',
+          'B12. Uso de simuladores de perforación',
+          'B13. Relación entre lo que veo en clase y la operación real',
+          'B14. Confianza para hacer pasantías o trabajar en un taladro',
+          'B15. Claridad sobre el área en la que quiero especializarme'
+        ], ['Antes', 'Hoy']) ] },
+      { titulo: 'Calificación de las paradas', ayuda: 'Califique cada parada de 1 (muy bajo) a 5 (muy alto) en tres aspectos.',
+        items: [ M('C0', 'Cada parada de la visita', PARADAS_N, ['Claridad', 'Materias', 'Futuro'], { help: 'Claridad de la explicación · Relación con mis materias · Utilidad para mi futuro profesional' }) ] },
+      { titulo: 'Comprensión · paradas 1 a 3', ayuda: 'Responda sin consultar apuntes. Nos interesa lo que usted recuerda.',
+        items: [
+          H('Parada 1 · Historia de los primeros pozos'),
+          { ...qZumaque('C1_1'), q: 'C1.1 ' + qZumaque('x').q },
+          Q('C1_2', 1, 'C1.2 ¿Qué empresa perforó el pozo Eureka en la hacienda La Alquitrana (Táchira)?', ['Caribbean Petroleum Company', 'Compañía Nacional Minera Petrolia del Táchira', 'Creole Petroleum Corporation', 'Shell de Venezuela'], 1),
+          Q('C1_3', 1, 'C1.3 El reventón del pozo Barroso II en Cabimas (1922) es importante porque:', ['Fue el primer pozo perforado con top drive', 'Mostró al mundo el potencial petrolero de la cuenca del Lago de Maracaibo', 'Cerró la producción petrolera en el Zulia', 'Fue el primer pozo cementado en Venezuela'], 1),
+          H('Parada 2 · Centro virtual'),
+          P('C2_1', 'C2.1 Mencione dos áreas cuyos asistentes virtuales recuerda (por ejemplo: ingeniería de pozos).'),
+          Q('C2_2', 2, 'C2.2 ¿Qué pregunta dirigiría al asistente virtual de cementación?', ['¿Qué tasa de penetración tiene la mecha?', '¿Qué diseño de lechada y tiempo de espesamiento necesita este pozo?', '¿Cuál es la nómina del personal del taladro?', '¿Cuál es el precio del barril hoy?'], 1),
+          H('Parada 3 · Partes del taladro y equipo thumper'),
+          { ...qThumper('C3_1'), q: 'C3.1 ' + qThumper('x').q },
+          Q('C3_2', 3, 'C3.2 Una mecha PDC se caracteriza por:', ['Tres conos giratorios con dientes de acero', 'Cortadores fijos de diamante policristalino que cizallan la roca', 'No necesitar circulación de lodo', 'Usarse solo para tomar núcleos'], 1),
+          { ...qBop('C3_3'), q: 'C3.3 ' + qBop('x').q },
+          Q('C3_4', 3, 'C3.4 El múltiple de estrangulación (choke manifold) se usa para:', ['Controlar la contrapresión mientras se circula un influjo fuera del pozo', 'Mezclar cemento', 'Hacer girar la sarta', 'Almacenar tubería'], 0)
+        ] },
+      { titulo: 'Comprensión · paradas 4 a 7', ayuda: 'Responda sin consultar apuntes. Nos interesa lo que usted recuerda.',
+        items: [
+          H('Parada 4 · Cementación y laboratorio'),
+          { ...qCementar('C4_1'), q: 'C4.1 ' + qCementar('x').q },
+          Q('C4_2', 4, 'C4.2 ¿Qué prueba de laboratorio mide cuánto tiempo la lechada sigue siendo bombeable bajo la presión y temperatura del pozo?', ['Tiempo de espesamiento (consistómetro)', 'Resistencia a la compresión', 'Densidad', 'Agua libre'], 0),
+          Q('C4_3', 4, 'C4.3 ¿Qué clase de cemento API es de uso más común en pozos petroleros?', ['Clase A', 'Clase C', 'Clase G', 'Cemento de construcción sin clasificar'], 2),
+          { ...qTraza('C4_4'), q: 'C4.4 ' + qTraza('x').q },
+          H('Parada 5 · Aulas de formación'),
+          Q('C5_1', 5, 'C5.1 Según lo presentado, el Taladro Escuela está dirigido a:', ['Solo trabajadores de una empresa privada', 'La certificación de profesionales y el uso por parte de universidades públicas y privadas', 'Solo visitantes turísticos', 'Solo personal militar'], 1),
+          P('C5_2', 'C5.2 ¿Qué curso o certificación le gustaría tomar en estas aulas y en qué momento de su carrera?'),
+          H('Parada 6 · Taladro completo'),
+          { ...qLodo('C6_1'), q: 'C6.1 ' + qLodo('x').q },
+          Q('C6_2', 6, 'C6.2 Si la presión hidrostática del lodo es menor que la presión de la formación, el riesgo inmediato es:', ['Pérdida de circulación', 'Una arremetida (entrada de fluidos de la formación al pozo)', 'Desgaste de la mecha', 'Atascamiento por el top drive'], 1),
+          Q('C6_3', 6, 'C6.3 La función de las zarandas (shale shakers) es:', ['Separar los recortes del lodo que regresa del pozo', 'Hacer girar la mecha', 'Mezclar el cemento', 'Elevar la tubería'], 0),
+          Q('C6_4', 6, 'C6.4 Una ventaja del top drive frente al sistema de mesa rotaria y kelly es:', ['Hace girar la sarta desde arriba y agiliza las conexiones', 'Elimina la necesidad de lodo', 'Permite perforar sin personal en el piso', 'Reduce el diámetro del hoyo'], 0),
+          Q('C6_5', 6, 'C6.5 ¿Qué posición opera el malacate y controla los parámetros de perforación desde la consola?', ['Encuellador', 'Cuñero', 'Perforador', 'Supervisor de la operadora'], 2),
+          H('Parada 7 · Aula avanzada y simulador'),
+          { ...qSim('C7_1'), q: 'C7.1 ' + qSim('x').q },
+          Q('C7_2', 7, 'C7.2 Si en el simulador aumenta de forma inesperada el volumen de los tanques de lodo, la respuesta correcta es:', ['Aumentar la velocidad de perforación', 'Detener la perforación, verificar flujo y cerrar el pozo con el BOP', 'Ignorarlo hasta el cambio de turno', 'Reducir la densidad del lodo'], 1),
+          P('C7_3', 'C7.3 ¿Qué maniobra o situación le gustaría practicar en el simulador?')
+        ] },
+      { titulo: 'Avance académico y carrera', ayuda: '1 = totalmente en desacuerdo; 5 = totalmente de acuerdo.',
+        items: [
+          M('D1', 'D1. Indique su grado de acuerdo', [
+            'D1.1 La visita me ayudó a entender mejor materias que ya cursé.',
+            'D1.2 La visita me preparó para materias que aún me faltan.',
+            'D1.3 Ahora veo con más claridad la aplicación práctica de mi carrera.',
+            'D1.4 La visita aumentó mi motivación para culminar la carrera.',
+            'D1.5 La visita me ayudó a definir o ajustar mi tema de tesis o pasantía.',
+            'D1.6 Me siento mejor preparado para una pasantía o primer empleo en campo.',
+            'D1.7 Ahora tengo más claro en qué área quiero especializarme.',
+            'D1.8 Las visitas al Taladro Escuela deberían formar parte del plan de estudios.'
+          ], ['Acuerdo']),
+          P('D2', 'D2. ¿Con qué materias de su carrera relaciona lo visto en la visita?'),
+          H('D3 · Según su etapa de la carrera', 'Responda solo la pregunta que corresponde a su etapa (pregunta A3).'),
+          S('D3_ini', 'Etapa inicial: ¿La visita confirmó su elección de carrera?', ['Sí', 'No', 'Tengo dudas'], { req: false }),
+          P('D3_ini_pq', 'Etapa inicial: ¿Por qué?'),
+          P('D3_med', 'Etapa media: ¿Qué materia próxima espera entender mejor gracias a la visita?'),
+          P('D3_fin', 'Etapa final: ¿Cómo usará lo visto en su tesis, pasantía o búsqueda de empleo?'),
+          MU('D4', 'D4. ¿Para qué le interesaría volver al Taladro Escuela? (puede marcar varias)', ['Prácticas en el simulador', 'Curso o certificación', 'Desarrollar mi tesis o trabajo especial de grado', 'Realizar pasantías', 'Clases prácticas de alguna materia', 'No me interesa volver'])
+        ] },
+      stepsExperiencia('Adaptación de las explicaciones a mi nivel de la carrera', 'A9', '¿Cuál fue la parada más difícil de entender?', 'Del 0 al 10, ¿qué tan probable es que recomiende esta visita a un compañero de la Escuela de Petróleo?'),
+      { titulo: 'Insumo, producto y resultado', ayuda: AYUDA_F,
+        items: [
+          H('Insumo'),
+          S('F1_1', 'F1.1 Antes de la visita, ¿cuántas horas de práctica en campo o en simulador había tenido en la carrera?', ['0', '1–10', '11–30', 'Más de 30']),
+          SC('F1_2', 'F1.2 Antes de la visita, ¿cómo calificaría su conocimiento general sobre un taladro de perforación?', 1, 10, 'Nulo', 'Experto'),
+          MU('F1_3', 'F1.3 ¿Qué recursos de la visita contribuyeron más a su aprendizaje? (marque hasta tres)', ['Explicaciones de los guías', 'Asistentes virtuales', 'Equipos físicos exhibidos', 'Laboratorio de cementación', 'Recorrido por el taladro completo', 'Simulador de perforación', 'Intervenciones de los organizadores'], { lim: 3, req: true }),
+          H('Producto'),
+          SC('F2_1', 'F2.1 Hoy, ¿cómo calificaría su conocimiento general sobre un taladro de perforación?', 1, 10, 'Nulo', 'Experto'),
+          S('F2_2', 'F2.2 ¿Qué porcentaje del contenido presentado siente que comprendió?', F22),
+          S('F2_3', 'F2.3 ¿Cuántos equipos o componentes del taladro podría identificar hoy por su nombre?', ['0–2', '3–5', '6–10', 'Más de 10']),
+          S('F2_4', 'F2.4 ¿Obtuvo contactos o información sobre pasantías, cursos o empleo?', ['No', 'Sí, información', 'Sí, contactos directos']),
+          H('Resultado'),
+          M('F3_1', 'F3.1 ¿Qué tan probable es que haga lo siguiente en los próximos 6 meses? (1 = nada probable; 5 = muy probable)', [
+            'Usar lo aprendido en una materia, proyecto o examen',
+            'Compartir lo aprendido con compañeros o en un centro de estudiantes',
+            'Elegir un tema de tesis vinculado a lo visto en el taladro',
+            'Inscribirse en un curso o certificación del Taladro Escuela',
+            'Solicitar una pasantía en el Taladro Escuela o en una empresa del sector',
+            'Elegir una especialización en perforación o un área afín'
+          ], ['Probabilidad']),
+          P('F3_2', 'F3.2 ¿Cómo cree que formar ingenieros en el Taladro Escuela puede impactar al sector y al país (empleo, producción, seguridad, retención de talento)?')
+        ] },
+      stepComentarios('¿Qué equipo o proceso le hubiera gustado ver con más detalle?', '¿Qué cambiaría para mejorar la próxima visita de la Escuela de Petróleo?')
+    ]
+  }
+};
+
+const allItems = g => GRUPOS[g].pasos.flatMap(p => p.items).filter(i => i.t !== 'h');
+const itemById = (g, id) => allItems(g).find(i => i.id === id);
+const quizItems = g => allItems(g).filter(i => i.t === 'quiz');
+
+/* ------------------------------------------------------------------ */
+/* Utilities                                                           */
+/* ------------------------------------------------------------------ */
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const nf1 = new Intl.NumberFormat('es-VE', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const nf0 = new Intl.NumberFormat('es-VE', { maximumFractionDigits: 0 });
+const f1 = v => (v == null || Number.isNaN(v)) ? '—' : nf1.format(v);
+const pct = v => (v == null || Number.isNaN(v)) ? '—' : nf0.format(v * 100) + ' %';
+const mean = a => { const b = a.filter(x => typeof x === 'number' && !Number.isNaN(x)); return b.length ? b.reduce((s, x) => s + x, 0) / b.length : null; };
+const sgn = v => v == null ? '—' : (v > 0 ? '+' : '') + nf1.format(v);
+const domId = s => String(s).replace(/[^a-zA-Z0-9_-]/g, '_');
+const fecha = iso => { try { return new Date(iso).toLocaleString('es-VE', { dateStyle: 'medium', timeStyle: 'short' }); } catch { return iso || ''; } };
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+  del(k) { try { localStorage.removeItem(k); } catch {} }
+};
+const DRAFT_KEY = 'taladro-borrador-v1';
+const SESSION_KEY = 'taladro-sesion-v1';
+
+/* ------------------------------------------------------------------ */
+/* Supabase (REST, sin librerías)                                      */
+/* ------------------------------------------------------------------ */
+const configured = !!(SUPABASE_URL && SUPABASE_ANON_KEY);
+const API = SUPABASE_URL.replace(/\/+$/, '');
+let session = store.get(SESSION_KEY);
+function setSession(s) { session = s; if (s) store.set(SESSION_KEY, s); else store.del(SESSION_KEY); }
+function headers(token, extra = {}) { return { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + (token || SUPABASE_ANON_KEY), 'Content-Type': 'application/json', ...extra }; }
+async function apiError(res) { let m = res.status + ''; try { const j = await res.json(); m = j.msg || j.message || j.error_description || j.error || m; } catch {} const e = new Error(m); e.status = res.status; return e; }
+async function login(email, password) {
+  const res = await fetch(`${API}/auth/v1/token?grant_type=password`, { method: 'POST', headers: headers(), body: JSON.stringify({ email, password }) });
+  if (!res.ok) throw await apiError(res);
+  const j = await res.json();
+  setSession({ access_token: j.access_token, refresh_token: j.refresh_token, expires_at: Date.now() + (j.expires_in || 3600) * 1000, email: j.user && j.user.email });
+}
+async function refresh() {
+  if (!session || !session.refresh_token) throw new Error('sin sesión');
+  const res = await fetch(`${API}/auth/v1/token?grant_type=refresh_token`, { method: 'POST', headers: headers(), body: JSON.stringify({ refresh_token: session.refresh_token }) });
+  if (!res.ok) { setSession(null); throw await apiError(res); }
+  const j = await res.json();
+  setSession({ access_token: j.access_token, refresh_token: j.refresh_token, expires_at: Date.now() + (j.expires_in || 3600) * 1000, email: j.user && j.user.email });
+}
+async function authed(path, opts = {}) {
+  if (!session) throw new Error('sin sesión');
+  if (Date.now() > session.expires_at - 60000) await refresh();
+  let res = await fetch(API + path, { ...opts, headers: headers(session.access_token, opts.headers) });
+  if (res.status === 401) { await refresh(); res = await fetch(API + path, { ...opts, headers: headers(session.access_token, opts.headers) }); }
+  if (!res.ok) throw await apiError(res);
+  return res;
+}
+async function logout() {
+  try { if (session) await fetch(`${API}/auth/v1/logout`, { method: 'POST', headers: headers(session.access_token) }); } catch {}
+  setSession(null); all = []; resultsLoaded = false; resultsError = null;
+}
+
+/* ------------------------------------------------------------------ */
+/* State                                                               */
+/* ------------------------------------------------------------------ */
+let loading = false;
+let updatedAt = null;
+let all = [];
+let resultsLoaded = false;
+let resultsError = null;
+
+const st = { grupo: null, paso: 0, r: {}, done: null, sending: false, error: '' };
+const draft = store.get(DRAFT_KEY);
+let resGrupo = 'maestria';
+let openQ = 'G1';
+
+/* ------------------------------------------------------------------ */
+/* Tabs                                                                */
+/* ------------------------------------------------------------------ */
+function showTab(name) {
+  const isRes = name === 'resultados';
+  $('#tab-responder').setAttribute('aria-selected', String(!isRes));
+  $('#tab-resultados').setAttribute('aria-selected', String(isRes));
+  $('#view-responder').hidden = isRes;
+  $('#view-resultados').hidden = !isRes;
+  if (isRes) { subscribeResults(); renderResultados(); }
+}
+$('#tab-responder').addEventListener('click', () => showTab('responder'));
+$('#tab-resultados').addEventListener('click', () => showTab('resultados'));
+
+/* ------------------------------------------------------------------ */
+/* Status banner                                                       */
+/* ------------------------------------------------------------------ */
+function renderStatus() {
+  const el = $('#status');
+  el.innerHTML = configured ? '' : `<div class="notice warn"><span class="ico">!</span><div><strong>La página aún no está conectada a la base de datos.</strong> Puede recorrer el cuestionario, pero el envío no quedará registrado.</div></div>`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Responder                                                           */
+/* ------------------------------------------------------------------ */
+function saveDraft() {
+  if (st.grupo && !st.done) store.set(DRAFT_KEY, { grupo: st.grupo, paso: st.paso, r: st.r, t: Date.now() });
+}
+
+function renderResponder() {
+  const v = $('#view-responder');
+  if (st.done) { v.innerHTML = doneView(); bindDone(); return; }
+  if (!st.grupo) { v.innerHTML = chooserView(); bindChooser(); return; }
+  v.innerHTML = stepView();
+  bindStep();
+}
+
+function chooserView() {
+  const d = store.get(DRAFT_KEY);
+  const draftHtml = d && d.grupo && GRUPOS[d.grupo] ? `
+    <div class="notice draft"><span class="ico">i</span><div>Hay un cuestionario sin terminar de <strong>${esc(GRUPOS[d.grupo].corto)}</strong> (paso ${d.paso + 1} de ${GRUPOS[d.grupo].pasos.length}).
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><button class="btn sm primary" id="draft-go">Continuar</button><button class="btn sm" id="draft-drop">Descartar y empezar de nuevo</button></div></div></div>` : '';
+  return `<div class="choose">
+    <h2>¿A qué grupo pertenece?</h2>
+    <p>Elija su programa para abrir el cuestionario que le corresponde. Toma entre 20 y 30 minutos y puede volver atrás en cualquier momento.</p>
+    <div class="groups">
+      ${Object.entries(GRUPOS).map(([k, g]) => `
+        <button class="group-card" data-g="${k}">
+          <span class="k">${k === 'maestria' ? 'Primer viaje' : 'Segundo viaje'}</span>
+          <span class="n">${esc(g.nombre)}</span>
+          <span class="d">${esc(g.desc)}</span>
+          <span class="go">Comenzar · ${g.pasos.length} pasos →</span>
+        </button>`).join('')}
+    </div>
+    ${draftHtml}
+  </div>`;
+}
+function bindChooser() {
+  document.querySelectorAll('.group-card').forEach(b => b.addEventListener('click', () => {
+    store.del(DRAFT_KEY);
+    Object.assign(st, { grupo: b.dataset.g, paso: 0, r: {}, error: '' });
+    saveDraft(); renderResponder(); window.scrollTo({ top: 0 });
+  }));
+  const go = $('#draft-go'), drop = $('#draft-drop');
+  if (go) go.addEventListener('click', () => {
+    const d = store.get(DRAFT_KEY);
+    Object.assign(st, { grupo: d.grupo, paso: Math.min(d.paso || 0, GRUPOS[d.grupo].pasos.length - 1), r: d.r || {}, error: '' });
+    renderResponder();
+  });
+  if (drop) drop.addEventListener('click', () => { store.del(DRAFT_KEY); renderResponder(); });
+}
+
+function itemHtml(it) {
+  if (it.t === 'h') return `<div class="subhead"><h3>${esc(it.q)}</h3>${it.help ? `<p>${esc(it.help)}</p>` : ''}</div>`;
+  const id = domId(it.id);
+  const v = st.r[it.id];
+  const reqMark = it.req ? '<span class="req" aria-hidden="true">*</span>' : '';
+  let body = '';
+  if (it.t === 'text') {
+    body = `<input type="${it.kind === 'email' ? 'email' : 'text'}" id="q_${id}" data-q="${it.id}" data-k="text" value="${esc(v || '')}" autocomplete="off">`;
+  } else if (it.t === 'para') {
+    body = `<textarea id="q_${id}" data-q="${it.id}" data-k="text">${esc(v || '')}</textarea>`;
+  } else if (it.t === 'single' || it.t === 'quiz') {
+    const opts = it.op.map((o, i) => {
+      const val = it.t === 'quiz' ? i : o;
+      const checked = it.t === 'quiz' ? v === i : v === o;
+      return `<label class="opt"><input type="radio" name="q_${id}" id="q_${id}_${i}" data-q="${it.id}" data-k="${it.t}" value="${esc(val)}" ${checked ? 'checked' : ''}><span>${esc(o)}</span></label>`;
+    });
+    if (it.otra) {
+      opts.push(`<label class="opt"><input type="radio" name="q_${id}" id="q_${id}_otra" data-q="${it.id}" data-k="single" value="__otra" ${v === '__otra' ? 'checked' : ''}><span>Otra</span></label>
+        <div class="otra"><input type="text" id="q_${id}_otxt" data-q="${it.id}" data-k="otra" placeholder="Especifique" value="${esc(st.r[it.id + '_otra'] || '')}"></div>`);
+    }
+    body = `<div class="opts" role="radiogroup">${opts.join('')}</div>`;
+  } else if (it.t === 'multi') {
+    const arr = Array.isArray(v) ? v : [];
+    const full = it.lim && arr.length >= it.lim;
+    const opts = it.op.map((o, i) => `<label class="opt"><input type="checkbox" name="q_${id}" id="q_${id}_${i}" data-q="${it.id}" data-k="multi" value="${esc(o)}" ${arr.includes(o) ? 'checked' : (full ? 'disabled' : '')}><span>${esc(o)}</span></label>`);
+    if (it.otra) opts.push(`<label class="opt"><input type="checkbox" name="q_${id}" id="q_${id}_otra" data-q="${it.id}" data-k="multi" value="__otra" ${arr.includes('__otra') ? 'checked' : ''}><span>Otra</span></label>
+      <div class="otra"><input type="text" id="q_${id}_otxt" data-q="${it.id}" data-k="otra" placeholder="Especifique" value="${esc(st.r[it.id + '_otra'] || '')}"></div>`);
+    body = `<div class="opts">${opts.join('')}</div>`;
+  } else if (it.t === 'scale') {
+    const btns = [];
+    for (let n = it.min; n <= it.max; n++) btns.push(`<label><input type="radio" name="q_${id}" id="q_${id}_${n}" data-q="${it.id}" data-k="scale" value="${n}" ${v === n ? 'checked' : ''}><span>${n}</span></label>`);
+    body = `<div class="seg" role="radiogroup" aria-label="${esc(it.q)}">${btns.join('')}</div><div class="scale-labels"><span>${it.min} · ${esc(it.lmin)}</span><span>${it.max} · ${esc(it.lmax)}</span></div>`;
+  } else if (it.t === 'matrix') {
+    const rows = it.rows.map((row, ri) => {
+      const scales = it.asp.map((a, ai) => {
+        const cur = v && v[ai] ? v[ai][ri] : null;
+        const btns = [1, 2, 3, 4, 5].map(n => `<label><input type="radio" name="m_${id}_${ai}_${ri}" id="m_${id}_${ai}_${ri}_${n}" data-q="${it.id}" data-k="matrix" data-a="${ai}" data-row="${ri}" value="${n}" ${cur === n ? 'checked' : ''}><span>${n}</span></label>`).join('');
+        return `<div class="masp">${it.asp.length > 1 ? `<span class="al">${esc(a)}</span>` : ''}<div class="seg" role="radiogroup" aria-label="${esc(row)} · ${esc(a)}">${btns}</div></div>`;
+      }).join('');
+      return `<div class="mrow" id="mr_${id}_${ri}"><div class="mlabel">${esc(row)}</div><div class="mscales">${scales}</div></div>`;
+    }).join('');
+    body = `<div class="matrix">${rows}</div>`;
+  }
+  const help = it.help ? `<p class="qh">${esc(it.help)}</p>` : (it.t === 'matrix' ? '<p class="qh">1 = muy bajo · 5 = muy alto</p>' : '');
+  const lim = it.lim ? `<p class="qh">Máximo ${it.lim} opciones.</p>` : '';
+  return `<div class="q" id="w_${id}"><p class="qt">${esc(it.q)}${reqMark}</p>${help}${lim}${body}<div class="miss">Falta responder esta pregunta.</div></div>`;
+}
+
+function stepView() {
+  const g = GRUPOS[st.grupo];
+  const paso = g.pasos[st.paso];
+  const total = g.pasos.length;
+  const last = st.paso === total - 1;
+  return `
+    <div class="wiz-head">
+      <div class="wiz-meta">
+        <span><span class="chip">${esc(g.corto)}</span> &nbsp;Paso ${st.paso + 1} de ${total}</span>
+        <button class="btn ghost sm" id="cambiar">Cambiar de grupo</button>
+      </div>
+      <div class="progress" aria-hidden="true"><i style="width:${((st.paso) / total) * 100}%"></i></div>
+      <h2>${esc(paso.titulo)}</h2>
+      ${paso.ayuda ? `<p class="help">${esc(paso.ayuda)}</p>` : ''}
+    </div>
+    <form id="stepform" class="qlist" novalidate>
+      ${paso.items.map(itemHtml).join('')}
+    </form>
+    <div class="wiz-nav">
+      <button class="btn" id="atras" ${st.paso === 0 ? 'disabled' : ''}>← Atrás</button>
+      <span class="err-msg" id="errmsg" role="alert">${esc(st.error)}</span>
+      <button class="btn primary" id="siguiente" ${st.sending ? 'disabled' : ''}>${last ? (st.sending ? 'Enviando…' : 'Enviar respuestas') : 'Siguiente →'}</button>
+    </div>`;
+}
+
+function readInput(el) {
+  const q = el.dataset.q, k = el.dataset.k;
+  if (!q) return;
+  const it = itemById(st.grupo, q);
+  if (k === 'text') st.r[q] = el.value;
+  else if (k === 'otra') {
+    st.r[q + '_otra'] = el.value;
+    if (it.t === 'single' && el.value.trim()) { st.r[q] = '__otra'; const rb = document.getElementById(`q_${domId(q)}_otra`); if (rb) rb.checked = true; }
+    if (it.t === 'multi' && el.value.trim()) { const cb = document.getElementById(`q_${domId(q)}_otra`); if (cb && !cb.checked) { cb.checked = true; readInput(cb); return; } }
+  }
+  else if (k === 'single') st.r[q] = el.value;
+  else if (k === 'quiz' || k === 'scale') st.r[q] = Number(el.value);
+  else if (k === 'multi') {
+    const boxes = [...document.querySelectorAll(`input[name="q_${domId(q)}"]`)];
+    st.r[q] = boxes.filter(b => b.checked).map(b => b.value);
+    if (it.lim) { const full = st.r[q].length >= it.lim; boxes.forEach(b => { if (!b.checked) b.disabled = full; }); }
+  } else if (k === 'matrix') {
+    const a = Number(el.dataset.a), row = Number(el.dataset.row);
+    if (!Array.isArray(st.r[q])) st.r[q] = it.asp.map(() => it.rows.map(() => null));
+    st.r[q][a][row] = Number(el.value);
+    const rowEl = document.getElementById(`mr_${domId(q)}_${row}`);
+    if (rowEl && it.asp.every((_, ai) => st.r[q][ai][row] != null)) rowEl.classList.remove('missing');
+  }
+  const w = document.getElementById('w_' + domId(q));
+  if (w && answered(it)) w.classList.remove('missing');
+  saveDraft();
+}
+
+function answered(it) {
+  const v = st.r[it.id];
+  switch (it.t) {
+    case 'text': case 'para': return !!(v && String(v).trim());
+    case 'single': return !!v && (v !== '__otra' || !!(st.r[it.id + '_otra'] || '').trim());
+    case 'quiz': case 'scale': return typeof v === 'number';
+    case 'multi': return Array.isArray(v) && v.length > 0;
+    case 'matrix': return Array.isArray(v) && v.every(a => Array.isArray(a) && a.length === it.rows.length && a.every(x => x != null));
+  }
+  return true;
+}
+
+function validateStep() {
+  const paso = GRUPOS[st.grupo].pasos[st.paso];
+  let first = null;
+  paso.items.forEach(it => {
+    if (it.t === 'h' || !it.req) return;
+    const w = document.getElementById('w_' + domId(it.id));
+    const ok = answered(it);
+    if (w) w.classList.toggle('missing', !ok);
+    if (it.t === 'matrix') {
+      it.rows.forEach((_, ri) => {
+        const done = Array.isArray(st.r[it.id]) && it.asp.every((_, ai) => st.r[it.id][ai] && st.r[it.id][ai][ri] != null);
+        const rowEl = document.getElementById(`mr_${domId(it.id)}_${ri}`);
+        if (rowEl) rowEl.classList.toggle('missing', !done);
+        if (!done && !first) first = rowEl;
+      });
+    }
+    if (!ok && !first) first = w;
+  });
+  if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  return !first;
+}
+
+function bindStep() {
+  const form = $('#stepform');
+  form.addEventListener('submit', e => e.preventDefault());
+  form.addEventListener('change', e => readInput(e.target));
+  form.addEventListener('input', e => { if (e.target.dataset.k === 'text' || e.target.dataset.k === 'otra') readInput(e.target); });
+  $('#atras').addEventListener('click', () => { st.paso = Math.max(0, st.paso - 1); st.error = ''; saveDraft(); renderResponder(); window.scrollTo({ top: 0 }); });
+  $('#cambiar').addEventListener('click', () => { st.grupo = null; st.paso = 0; st.error = ''; renderResponder(); });
+  $('#siguiente').addEventListener('click', async () => {
+    if (!validateStep()) { st.error = 'Responda las preguntas marcadas para continuar.'; $('#errmsg').textContent = st.error; return; }
+    st.error = ''; $('#errmsg').textContent = '';
+    const total = GRUPOS[st.grupo].pasos.length;
+    if (st.paso < total - 1) { st.paso++; saveDraft(); renderResponder(); window.scrollTo({ top: 0 }); return; }
+    await enviar();
+  });
+}
+
+function puntaje(g, r) {
+  const qs = quizItems(g);
+  const aciertos = qs.filter(q => r[q.id] === q.ok).length;
+  return { aciertos, total: qs.length };
+}
+
+function limpiar(r) {
+  const out = {};
+  for (const [k, v] of Object.entries(r)) {
+    if (v == null) continue;
+    if (typeof v === 'string' && !v.trim()) continue;
+    out[k] = typeof v === 'string' ? v.trim().slice(0, 4000) : v;
+  }
+  return out;
+}
+
+async function enviar() {
+  const { aciertos, total } = puntaje(st.grupo, st.r);
+  if (!configured) {
+    st.error = 'La página aún no está conectada a la base de datos. Avise al organizador.';
+    $('#errmsg').textContent = st.error; return;
+  }
+  st.sending = true; renderResponder();
+  const doc = { grupo: st.grupo, codigo: String(st.r.A1 || '').trim().toUpperCase().slice(0, 40), aciertos, total_quiz: total, r: limpiar(st.r) };
+  try {
+    const res = await fetch(`${API}/rest/v1/respuestas`, { method: 'POST', headers: headers(null, { Prefer: 'return=minimal' }), body: JSON.stringify(doc) });
+    if (!res.ok) throw await apiError(res);
+    store.del(DRAFT_KEY);
+    st.done = { aciertos, total, grupo: st.grupo };
+    st.sending = false; st.error = '';
+    renderResponder(); window.scrollTo({ top: 0 });
+  } catch (e) {
+    st.sending = false;
+    st.error = 'No se pudo enviar. Revise su conexión y pulse Enviar de nuevo; sus respuestas siguen aquí.';
+    renderResponder();
+  }
+}
+
+function doneView() {
+  const d = st.done;
+  return `<div class="done">
+    <span class="chip">${esc(GRUPOS[d.grupo].corto)}</span>
+    <h2>Respuestas enviadas</h2>
+    <p>Gracias por participar. Su cuestionario quedó registrado para el análisis de la visita.</p>
+    <div><div class="score">${d.aciertos} de ${d.total}</div><p>preguntas de comprensión respondidas correctamente</p></div>
+    <button class="btn primary" id="otra">Registrar otra respuesta</button>
+  </div>`;
+}
+function bindDone() {
+  $('#otra').addEventListener('click', () => { Object.assign(st, { grupo: null, paso: 0, r: {}, done: null, error: '' }); renderResponder(); window.scrollTo({ top: 0 }); });
+}
+
+/* ------------------------------------------------------------------ */
+/* Results                                                             */
+/* ------------------------------------------------------------------ */
+async function loadResults() {
+  if (!configured || !session || loading) return;
+  loading = true;
+  try {
+    const res = await authed('/rest/v1/respuestas?select=*&order=enviado.desc&limit=5000');
+    const data = await res.json();
+    all = data.map(x => ({ id: x.id, grupo: x.grupo, enviado: x.enviado, codigo: x.codigo, aciertos: x.aciertos, totalQuiz: x.total_quiz, r: x.r || {} }));
+    resultsLoaded = true; resultsError = null; updatedAt = new Date();
+  } catch (e) {
+    if (!session) resultsError = null; else resultsError = e.message || 'error';
+  }
+  loading = false;
+  if (!$('#view-resultados').hidden) renderResultados();
+}
+function subscribeResults() { if (session && !resultsLoaded && !resultsError) loadResults(); }
+setInterval(() => { if (session && resultsLoaded && !$('#view-resultados').hidden && document.visibilityState === 'visible') loadResults(); }, 60000);
+
+function loginView() {
+  return `<div class="panel login"><h3>Acceso del organizador</h3><p class="sub">Los resultados solo los ve quien administra la evaluación. Para responder el cuestionario, use la pestaña Responder.</p>
+    <form id="loginform" novalidate>
+      <label for="lg_email">Correo</label><input type="email" id="lg_email" autocomplete="username" required>
+      <label for="lg_pass">Contraseña</label><input type="password" id="lg_pass" autocomplete="current-password" required>
+      <p class="err-msg" id="lg_err" role="alert"></p>
+      <button class="btn primary" id="lg_btn">Entrar</button>
+    </form></div>`;
+}
+function bindLogin() {
+  $('#loginform').addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = $('#lg_email').value.trim(), pass = $('#lg_pass').value;
+    if (!email || !pass) { $('#lg_err').textContent = 'Escriba su correo y su contraseña.'; return; }
+    $('#lg_btn').disabled = true; $('#lg_btn').textContent = 'Entrando…'; $('#lg_err').textContent = '';
+    try { await login(email, pass); renderResultados(); loadResults(); }
+    catch (err) { $('#lg_btn').disabled = false; $('#lg_btn').textContent = 'Entrar'; $('#lg_err').textContent = err.status === 400 ? 'Correo o contraseña incorrectos.' : 'No se pudo entrar. Revise su conexión e intente de nuevo.'; }
+  });
+}
+
+function textOf(it, v, r) {
+  if (v == null) return '';
+  if (v === '__otra') return 'Otra: ' + (r[it.id + '_otra'] || '');
+  if (Array.isArray(v) && it.t === 'multi') return v.map(x => x === '__otra' ? 'Otra: ' + (r[it.id + '_otra'] || '') : x).join('; ');
+  if (it.t === 'quiz') return it.op[v] ?? '';
+  return String(v);
+}
+
+function analyze(g, rows) {
+  const n = rows.length;
+  const items = Object.fromEntries(allItems(g).map(i => [i.id, i]));
+  const R = rows.map(x => x.r || {});
+  const B = items.B;
+  const bAntes = B.rows.map((_, i) => mean(R.map(r => r.B?.[0]?.[i])));
+  const bHoy = B.rows.map((_, i) => mean(R.map(r => r.B?.[1]?.[i])));
+  const perPerson = R.map(r => mean(B.rows.map((_, i) => (r.B?.[1]?.[i] ?? NaN) - (r.B?.[0]?.[i] ?? NaN))));
+  const ganancia = mean(perPerson);
+  const normGain = mean(R.flatMap(r => B.rows.map((_, i) => { const a = r.B?.[0]?.[i], h = r.B?.[1]?.[i]; if (a == null || h == null || a >= 5) return NaN; return (h - a) / (5 - a); })));
+  const mejora = n ? R.filter(r => mean(B.rows.map((_, i) => (r.B?.[1]?.[i] ?? NaN) - (r.B?.[0]?.[i] ?? NaN))) >= 1).length / n : null;
+  const qs = quizItems(g);
+  const comp = mean(rows.map(x => x.totalQuiz ? x.aciertos / x.totalQuiz : NaN));
+  const porParada = PARADAS.map((_, pi) => { const qq = qs.filter(q => q.p === pi + 1); if (!qq.length) return null; return mean(R.flatMap(r => qq.map(q => typeof r[q.id] === 'number' ? (r[q.id] === q.ok ? 1 : 0) : NaN))); });
+  const porPregunta = qs.map(q => ({ q, v: mean(R.map(r => typeof r[q.id] === 'number' ? (r[q.id] === q.ok ? 1 : 0) : NaN)) }));
+  const C0 = items.C0;
+  const c0 = C0.asp.map((_, ai) => PARADAS.map((_, pi) => mean(R.map(r => r.C0?.[ai]?.[pi]))));
+  const f12 = mean(R.map(r => r.F1_2)), f21 = mean(R.map(r => r.F2_1));
+  const e5 = R.map(r => r.E5).filter(x => typeof x === 'number');
+  const nps = e5.length ? (e5.filter(x => x >= 9).length - e5.filter(x => x <= 6).length) / e5.length * 100 : null;
+  const share = (id, pred) => { const vals = R.map(r => r[id]).filter(v => v != null); return vals.length ? vals.filter(pred).length / vals.length : null; };
+  const counts = (id) => { const it = items[id]; const m = new Map((it.op || []).map(o => [o, 0])); R.forEach(r => { const v = r[id]; const arr = Array.isArray(v) ? v : (v != null ? [v] : []); arr.forEach(x => { const key = x === '__otra' ? 'Otra' : (it.t === 'quiz' ? it.op[x] : x); m.set(key, (m.get(key) || 0) + 1); }); }); return [...m.entries()]; };
+  const matrixMeans = id => items[id].rows.map((_, i) => mean(R.map(r => r[id]?.[0]?.[i])));
+  const matrixTop2 = id => items[id].rows.map((_, i) => { const vals = R.map(r => r[id]?.[0]?.[i]).filter(x => typeof x === 'number'); return vals.length ? vals.filter(x => x >= 4).length / vals.length : null; });
+  const f31 = matrixTop2('F3_1');
+  const d1 = matrixMeans('D1');
+  const e1 = matrixMeans('E1');
+  const segItem = items[GRUPOS[g].seg.id];
+  const segVals = segItem.op ? [...segItem.op, ...(segItem.otra ? ['Otra'] : [])] : [...new Set(R.map(r => String(r[segItem.id] || '').trim()).filter(Boolean))].sort((a, b) => Number(a) - Number(b));
+  const segKey = r => { const v = r[segItem.id]; return v === '__otra' ? 'Otra' : String(v ?? '').trim(); };
+  const segs = segVals.map(s => { const sub = rows.filter(x => segKey(x.r || {}) === s); if (!sub.length) return null; const RR = sub.map(x => x.r || {});
+    return { s, n: sub.length, comp: mean(sub.map(x => x.totalQuiz ? x.aciertos / x.totalQuiz : NaN)), gan: mean(RR.map(r => mean(B.rows.map((_, i) => (r.B?.[1]?.[i] ?? NaN) - (r.B?.[0]?.[i] ?? NaN))))), f21: mean(RR.map(r => r.F2_1)), res: mean(RR.map(r => mean((r.F3_1?.[0] || []).map(x => x >= 4 ? 1 : 0)))) }; }).filter(Boolean);
+  return { n, bAntes, bHoy, ganancia, normGain, mejora, comp, porParada, porPregunta, c0, f12, f21, nps, e5n: e5.length, f31, d1, e1,
+    nunca: share('A5', v => v === 'Nunca'), sinHoras: share('F1_1', v => v === '0'), compMas50: share('F2_2', v => v === '51–75 %' || v === 'Más de 75 %'),
+    seguimiento: share('G4', v => v === 'Sí'), recursos: counts('F1_3').sort((a, b) => b[1] - a[1]), e3: counts('E3'), e2: counts('E2'), f22: counts('F2_2'), segs,
+    bAntesM: mean(bAntes), bHoyM: mean(bHoy), f31M: mean(f31), d1M: mean(d1), items };
+}
+
+const RAMP = ['#cde2fb', '#9ec5f4', '#6da7ec', '#3987e5', '#256abf', '#184f95'];
+function heat(v) { if (v == null) return { bg: 'transparent', fg: 'var(--muted)' }; const t = Math.max(0, Math.min(1, (v - 1) / 4)); const i = Math.round(t * (RAMP.length - 1)); return { bg: RAMP[i], fg: i >= 3 ? '#ffffff' : '#0b1b2e' }; }
+
+function hbars(rows, max, fmt) {
+  return `<div class="hb">${rows.map(([lab, v, tip]) => `<div class="hb-row"><div class="lab">${esc(lab)}</div><div class="trk" data-tip="${esc(tip || (lab + ': ' + fmt(v)))}" tabindex="0"><div class="fill" style="width:${v == null ? 0 : Math.max(0, Math.min(100, v / max * 100))}%"></div></div><div class="val">${fmt(v)}</div></div>`).join('')}</div>`;
+}
+
+function dumbbell(labels, antes, hoy) {
+  const x = v => ((v - 1) / 4) * 100;
+  const ticks = [1, 2, 3, 4, 5];
+  const grid = ticks.map(t => `<span class="gl" style="left:${x(t)}%"></span>`).join('');
+  const rows = labels.map((lab, i) => {
+    const a = antes[i], h = hoy[i];
+    if (a == null || h == null) return '';
+    const lo = Math.min(a, h), hi = Math.max(a, h), d = h - a;
+    return `<div class="db-row"><div class="lab">${esc(lab)}</div>
+      <div class="db-track" tabindex="0" data-tip="${esc(lab)} — Antes ${f1(a)} · Hoy ${f1(h)} (${sgn(d)})">${grid}
+        <span class="bar" style="left:${x(lo)}%;width:${x(hi) - x(lo)}%"></span>
+        <span class="dot" style="left:${x(a)}%;background:var(--series-antes)"></span>
+        <span class="dot" style="left:${x(h)}%;background:var(--series-hoy)"></span>
+      </div><div class="delta ${d > 0 ? 'up' : ''}">${sgn(d)}</div></div>`;
+  }).join('');
+  return `<div class="legend"><span><i style="background:var(--series-antes)"></i>Antes de la visita</span><span><i style="background:var(--series-hoy)"></i>Hoy</span></div>
+    ${rows}
+    <div class="db-axis"><span></span><div class="ticks">${ticks.map(t => `<span style="left:${x(t)}%">${t}</span>`).join('')}</div><span class="dh">Cambio</span></div>`;
+}
+
+function renderResultados() {
+  const v = $('#view-resultados');
+  if (!configured) { v.innerHTML = `<div class="empty"><h3>Base de datos no configurada</h3><p>Falta conectar la página con Supabase.</p></div>`; return; }
+  if (!session) { v.innerHTML = loginView(); bindLogin(); return; }
+  if (resultsError) { v.innerHTML = `<div class="empty"><h3>No se pudieron cargar las respuestas</h3><p>${esc(resultsError)}</p><p><button class="btn" id="retry">Reintentar</button> <button class="btn ghost" id="salir">Salir</button></p></div>`; $('#retry').addEventListener('click', () => { resultsError = null; renderResultados(); loadResults(); }); $('#salir').addEventListener('click', async () => { await logout(); renderResultados(); }); return; }
+  if (!resultsLoaded) { v.innerHTML = `<div class="empty"><h3>Cargando respuestas…</h3></div>`; return; }
+
+  const g = resGrupo;
+  const G = GRUPOS[g];
+  const rows = all.filter(x => x.grupo === g).sort((a, b) => String(b.enviado).localeCompare(String(a.enviado)));
+  const nM = all.filter(x => x.grupo === 'maestria').length, nP = all.filter(x => x.grupo === 'pregrado').length;
+
+  const head = `<div class="res-head">
+    <div><h2>Resultados</h2><p>${all.length} respuesta${all.length === 1 ? '' : 's'} registrada${all.length === 1 ? '' : 's'} <span class="updated">· actualizado ${updatedAt ? updatedAt.toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' }) : ''}</span></p></div>
+    <div class="res-actions">
+      <div class="toggle" role="group" aria-label="Grupo">
+        <button data-rg="maestria" aria-pressed="${g === 'maestria'}">Maestría (${nM})</button>
+        <button data-rg="pregrado" aria-pressed="${g === 'pregrado'}">Pregrado (${nP})</button>
+      </div>
+      <button class="btn sm" id="refresh">Actualizar</button>
+      <button class="btn sm" id="csv" ${all.length ? '' : 'disabled'}>Exportar CSV</button>
+      <button class="btn ghost sm" id="logout">Salir</button>
+    </div>
+  </div>`;
+
+  if (!rows.length) {
+    v.innerHTML = head + `<div class="empty"><h3>Aún no hay respuestas de ${esc(G.corto)}</h3><p>Cuando un participante envíe el cuestionario desde la pestaña Responder, sus datos aparecerán aquí (pulse Actualizar o espere un minuto).</p></div>`;
+    bindResultados(); return;
+  }
+
+  const a = analyze(g, rows);
+  const items = a.items;
+
+  const kpis = `<div class="kpis">
+    <div class="kpi"><div class="l">Respuestas</div><div class="v">${a.n}</div><div class="s">${esc(G.corto)}</div></div>
+    <div class="kpi"><div class="l">Ganancia autopercibida</div><div class="v ${a.ganancia > 0 ? 'up' : ''}">${sgn(a.ganancia)} <span class="u">pts</span></div><div class="s">Media Hoy − Antes, escala 1–5</div></div>
+    <div class="kpi"><div class="l">Comprensión</div><div class="v">${pct(a.comp)}</div><div class="s">Aciertos en ${quizItems(g).length} preguntas</div></div>
+    <div class="kpi"><div class="l">Conocimiento general</div><div class="v">${f1(a.f12)} → ${f1(a.f21)}</div><div class="s">Antes → hoy, escala 1–10</div></div>
+    <div class="kpi"><div class="l">Recomendación (NPS)</div><div class="v">${a.nps == null ? '—' : nf0.format(a.nps)}</div><div class="s">De −100 a +100 · ${a.e5n} respuestas</div></div>
+  </div>`;
+
+  const topRes = items.F3_1.rows.map((r, i) => [r, a.f31[i]]).sort((x, y) => (y[1] ?? -1) - (x[1] ?? -1))[0];
+  const ipr = `<div class="ipr">
+    <div><h3>Insumo <small>Punto de partida</small></h3><p class="lead">Con qué llegaron los participantes.</p><dl>
+      <div><dt>Conocimiento previo (1–10)</dt><dd>${f1(a.f12)}</dd></div>
+      <div><dt>Nivel medio en los temas, antes (1–5)</dt><dd>${f1(a.bAntesM)}</dd></div>
+      <div><dt>Nunca había visitado un taladro</dt><dd>${pct(a.nunca)}</dd></div>
+      <div><dt>Sin horas previas de ${g === 'maestria' ? 'formación en perforación' : 'práctica en campo'}</dt><dd>${pct(a.sinHoras)}</dd></div>
+      <div><dt>Recurso más valorado</dt><dd>${esc(a.recursos[0] && a.recursos[0][1] ? a.recursos[0][0] : '—')}</dd></div>
+    </dl></div>
+    <div><h3>Producto <small>Al salir</small></h3><p class="lead">Lo que obtuvieron de inmediato.</p><dl>
+      <div><dt>Conocimiento hoy (1–10)</dt><dd>${f1(a.f21)}</dd></div>
+      <div><dt>Nivel medio en los temas, hoy (1–5)</dt><dd>${f1(a.bHoyM)}</dd></div>
+      <div><dt>Mejoraron al menos 1 punto</dt><dd>${pct(a.mejora)}</dd></div>
+      <div><dt>Ganancia normalizada</dt><dd>${pct(a.normGain)}</dd></div>
+      <div><dt>Aciertos de comprensión</dt><dd>${pct(a.comp)}</dd></div>
+      <div><dt>Dicen comprender más del 50 %</dt><dd>${pct(a.compMas50)}</dd></div>
+    </dl></div>
+    <div><h3>Resultado <small>Intención a 6 meses</small></h3><p class="lead">Lo que planean hacer con lo aprendido.</p><dl>
+      <div><dt>Acciones con probabilidad 4 o 5</dt><dd>${pct(a.f31M)}</dd></div>
+      <div><dt>Acción más probable</dt><dd style="white-space:normal;text-align:right">${esc(topRes ? topRes[0] : '—')}</dd></div>
+      <div><dt>Acuerdo medio con el aporte (D1, 1–5)</dt><dd>${f1(a.d1M)}</dd></div>
+      <div><dt>Aceptan seguimiento</dt><dd>${pct(a.seguimiento)}</dd></div>
+    </dl></div>
+  </div>`;
+
+  const bPanel = `<div class="panel"><h3>Antes y después por tema</h3><p class="sub">Nivel medio autopercibido, escala 1–5. Ordenado como en el cuestionario.</p>${dumbbell(items.B.rows, a.bAntes, a.bHoy)}</div>`;
+
+  const compPanel = `<div class="panel"><h3>Comprensión por parada</h3><p class="sub">Porcentaje de respuestas correctas en las preguntas de cada parada.</p>
+    ${hbars(PARADAS.map((p, i) => [`${i + 1}. ${p}`, a.porParada[i], a.porParada[i] == null ? `Parada ${i + 1}: sin preguntas cerradas` : null]), 1, v2 => v2 == null ? '—' : pct(v2))}</div>`;
+
+  const c0Panel = `<div class="panel"><h3>Calificación de las paradas</h3><p class="sub">Media de 1 a 5. Más oscuro = mejor calificado.</p>
+    <div class="tscroll"><table><thead><tr><th>Parada</th>${items.C0.asp.map(x => `<th class="num">${esc(x)}</th>`).join('')}</tr></thead><tbody>
+    ${PARADAS.map((p, pi) => `<tr><td>${pi + 1}. ${esc(p)}</td>${items.C0.asp.map((_, ai) => { const val = a.c0[ai][pi]; const h = heat(val); return `<td class="heat" style="background:${h.bg};color:${h.fg}">${f1(val)}</td>`; }).join('')}</tr>`).join('')}
+    </tbody></table></div></div>`;
+
+  const qPanel = `<div class="panel"><h3>Aciertos por pregunta</h3><p class="sub">Identifica los conceptos que hay que reforzar en la próxima visita.</p>
+    ${hbars(a.porPregunta.map(({ q, v: val }) => [q.q.split(' ')[0] + ' ' + q.q.split(' ').slice(1).join(' ').slice(0, 70) + (q.q.length > 75 ? '…' : ''), val, q.q + ' — correcta: ' + q.op[q.ok] + ' — ' + pct(val)]), 1, pct)}</div>`;
+
+  const f31Panel = `<div class="panel"><h3>Resultado esperado</h3><p class="sub">Porcentaje que califica cada acción con 4 o 5 (probable en los próximos 6 meses).</p>
+    ${hbars(items.F3_1.rows.map((r, i) => [r, a.f31[i]]), 1, pct)}</div>`;
+  const d1Panel = `<div class="panel"><h3>${g === 'maestria' ? 'Negocio y aplicación' : 'Avance académico'}</h3><p class="sub">Grado de acuerdo medio, escala 1–5.</p>
+    ${hbars(items.D1.rows.map((r, i) => [r.replace(/^D1\.\d+\s*/, ''), a.d1[i]]), 5, f1)}</div>`;
+  const e1Panel = `<div class="panel"><h3>Experiencia</h3><p class="sub">Calificación media de 1 a 5.</p>
+    ${hbars(items.E1.rows.map((r, i) => [r, a.e1[i]]), 5, f1)}</div>`;
+  const e3max = Math.max(1, ...a.e3.map(x => x[1]));
+  const e3Panel = `<div class="panel"><h3>Parada más valiosa</h3><p class="sub">Número de participantes que la eligieron.</p>
+    ${hbars(a.e3.map(([k, c]) => [k, c]), e3max, x => x == null ? '—' : String(x))}</div>`;
+
+  const segPanel = `<div class="panel"><h3>Por ${esc(G.seg.label.toLowerCase())}</h3><p class="sub">Compara si la visita funcionó igual para cada perfil.</p>
+    <div class="tscroll"><table><thead><tr><th>${esc(G.seg.label)}</th><th class="num">n</th><th class="num">Comprensión</th><th class="num">Ganancia (1–5)</th><th class="num">Conocimiento hoy</th><th class="num">Acciones 4–5</th></tr></thead><tbody>
+    ${a.segs.map(s => `<tr><td>${esc(s.s)}</td><td class="num">${s.n}</td><td class="num">${pct(s.comp)}</td><td class="num">${sgn(s.gan)}</td><td class="num">${f1(s.f21)}</td><td class="num">${pct(s.res)}</td></tr>`).join('')}
+    </tbody></table></div></div>`;
+
+  const OPEN = [['G1', 'Lo más importante'], ['G2', 'Ver con más profundidad'], ['G3', 'Qué mejorar'], ['F3_2', 'Impacto en el sector']];
+  if (!OPEN.some(o => o[0] === openQ)) openQ = 'G1';
+  const openList = rows.filter(x => x.r && x.r[openQ]).map(x => `<blockquote>${esc(x.r[openQ])}<cite>${esc(x.codigo || 'Sin código')} · ${esc(fecha(x.enviado))}</cite></blockquote>`);
+  const openPanel = `<div class="panel"><h3>Respuestas abiertas</h3><p class="sub">${esc(items[openQ].q)}</p>
+    <div class="qtabs" role="group" aria-label="Pregunta abierta">${OPEN.map(([k, l]) => `<button data-oq="${k}" aria-pressed="${k === openQ}">${esc(l)}</button>`).join('')}</div>
+    <div class="answers">${openList.length ? openList.join('') : '<p class="sub">Nadie ha respondido esta pregunta todavía.</p>'}</div></div>`;
+
+  const listPanel = `<div class="panel"><h3>Registro de respuestas</h3><p class="sub">Cada fila es un cuestionario enviado.</p>
+    <div class="tscroll"><table><thead><tr><th>Código</th><th>Enviado</th><th>${esc(G.seg.label)}</th><th class="num">Aciertos</th><th class="num">Ganancia</th><th></th></tr></thead><tbody>
+    ${rows.map(x => { const r = x.r || {}; const gan = mean(items.B.rows.map((_, i) => (r.B?.[1]?.[i] ?? NaN) - (r.B?.[0]?.[i] ?? NaN)));
+      return `<tr><td>${esc(x.codigo || '—')}</td><td>${esc(fecha(x.enviado))}</td><td>${esc(textOf(items[G.seg.id], r[G.seg.id], r))}</td><td class="num">${x.aciertos ?? '—'} / ${x.totalQuiz ?? '—'}</td><td class="num">${sgn(gan)}</td><td class="num"><button class="btn ghost sm danger" data-del="${esc(x.id)}">Eliminar</button></td></tr>`; }).join('')}
+    </tbody></table></div></div>`;
+
+  v.innerHTML = head + kpis + ipr + bPanel + `<div class="grid2">${compPanel}${c0Panel}</div>` + qPanel + `<div class="grid2">${f31Panel}${d1Panel}</div><div class="grid2">${e1Panel}${e3Panel}</div>` + segPanel + openPanel + listPanel;
+  bindResultados();
+}
+
+let pendingDel = null, pendingTimer = null;
+function bindResultados() {
+  const v = $('#view-resultados');
+  v.querySelectorAll('[data-rg]').forEach(b => b.addEventListener('click', () => { resGrupo = b.dataset.rg; store.set('taladro-res-grupo', resGrupo); renderResultados(); }));
+  v.querySelectorAll('[data-oq]').forEach(b => b.addEventListener('click', () => { openQ = b.dataset.oq; renderResultados(); }));
+  v.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', async () => {
+    const id = b.dataset.del;
+    if (pendingDel !== id) {
+      pendingDel = id; b.textContent = 'Confirmar eliminación';
+      clearTimeout(pendingTimer); pendingTimer = setTimeout(() => { pendingDel = null; if (b.isConnected) b.textContent = 'Eliminar'; }, 4000);
+      return;
+    }
+    pendingDel = null; b.disabled = true; b.textContent = 'Eliminando…';
+    try { await authed('/rest/v1/respuestas?id=eq.' + encodeURIComponent(id), { method: 'DELETE', headers: { Prefer: 'return=minimal' } }); all = all.filter(x => String(x.id) !== String(id)); renderResultados(); }
+    catch (e) { b.disabled = false; b.textContent = 'No se pudo eliminar'; }
+  }));
+  const csv = $('#csv');
+  if (csv) csv.addEventListener('click', exportCsv);
+  const rf = $('#refresh'); if (rf) rf.addEventListener('click', () => { rf.disabled = true; rf.textContent = 'Actualizando…'; loadResults(); });
+  const lo = $('#logout'); if (lo) lo.addEventListener('click', async () => { await logout(); renderResultados(); });
+}
+
+function csvCell(s) { s = String(s ?? ''); return /[",\n;]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
+function exportCsv() {
+  const lines = [];
+  for (const g of Object.keys(GRUPOS)) {
+    const rows = all.filter(x => x.grupo === g);
+    if (!rows.length) continue;
+    const its = allItems(g);
+    const cols = ['id', 'grupo', 'enviado', 'codigo', 'aciertos', 'total_preguntas'];
+    const getters = [x => x.id, x => GRUPOS[g].corto, x => x.enviado, x => x.codigo, x => x.aciertos, x => x.totalQuiz];
+    its.forEach(it => {
+      if (it.t === 'matrix') it.rows.forEach((row, ri) => it.asp.forEach((asp, ai) => { cols.push(`${it.id}_${ri + 1}${it.asp.length > 1 ? '_' + asp : ''}`); getters.push(x => x.r?.[it.id]?.[ai]?.[ri] ?? ''); }));
+      else if (it.t === 'quiz') { cols.push(it.id); getters.push(x => textOf(it, x.r?.[it.id], x.r || {})); cols.push(it.id + '_correcta'); getters.push(x => typeof x.r?.[it.id] === 'number' ? (x.r[it.id] === it.ok ? 1 : 0) : ''); }
+      else { cols.push(it.id); getters.push(x => textOf(it, x.r?.[it.id], x.r || {})); }
+    });
+    if (lines.length) lines.push('');
+    lines.push(cols.map(csvCell).join(','));
+    rows.forEach(x => lines.push(getters.map(fn => csvCell(fn(x))).join(',')));
+  }
+  const data = '﻿' + lines.join('\r\n');
+  const blob = new Blob([data], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `respuestas-taladro-san-tome-${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+
+/* ------------------------------------------------------------------ */
+/* Tooltip                                                             */
+/* ------------------------------------------------------------------ */
+const tip = $('#tip');
+function showTip(el, x, y) { tip.textContent = el.dataset.tip; tip.hidden = false; const w = tip.offsetWidth, h = tip.offsetHeight; tip.style.left = Math.min(window.innerWidth - w - 8, Math.max(8, x - w / 2)) + 'px'; tip.style.top = Math.max(8, y - h - 12) + 'px'; }
+document.addEventListener('mousemove', e => { const el = e.target.closest && e.target.closest('[data-tip]'); if (el) showTip(el, e.clientX, e.clientY); else tip.hidden = true; });
+document.addEventListener('focusin', e => { const el = e.target.closest && e.target.closest('[data-tip]'); if (el) { const r = el.getBoundingClientRect(); showTip(el, r.left + r.width / 2, r.top); } });
+document.addEventListener('focusout', () => { tip.hidden = true; });
+document.addEventListener('scroll', () => { tip.hidden = true; }, { passive: true });
+
+/* ------------------------------------------------------------------ */
+/* Boot                                                                */
+/* ------------------------------------------------------------------ */
+const savedRes = store.get('taladro-res-grupo');
+if (savedRes && GRUPOS[savedRes]) resGrupo = savedRes;
+renderResponder();
+if (location.hash === '#resultados') showTab('resultados');
+
+renderStatus();
+})();
+</script>
+</body>
+</html>

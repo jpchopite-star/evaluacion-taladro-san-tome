@@ -845,7 +845,7 @@ const ICON = {
   save: svgI('<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>'),
   target: svgI('<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8"/>'),
   chart: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22"/><path d="M8 23v-6M13 23V11M18 23v-9M23 23V6"/><path d="M7 13l6-5 5 3 6-6"/></svg>',
-  helmet: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 21a11 11 0 0 1 22 0"/><path d="M3 21h26v3H3z"/><path d="M13 10.5V7h6v3.5"/><path d="M16 7v7"/></svg>'
+  pumpjack: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M2 28h28"/><path d="M11 28l4.5-14.5L20 28"/><path d="M13 22h5"/><path d="M6 11.2L26 15.6"/><path d="M6 11.2c-2.6.4-3.4 3.6-2.6 6.4"/><path d="M3.6 17.8V26"/><path d="M2 26h3.2"/><path d="M25 15.4l1 5"/><circle cx="26" cy="22" r="2.6"/><path d="M22.5 28v-3.4h7v3.4"/><circle cx="15.5" cy="13.5" r=".9"/></svg>'
 };
 const TOTAL_DEPTH = 3000;
 const nfm = new Intl.NumberFormat('es-VE');
@@ -905,7 +905,7 @@ function chooserView() {
     </div>` : '';
   const cards = Object.entries(GRUPOS).map(([k, g], i) => `
     <button class="group-card" data-g="${k}" data-tone="${k}" style="--i:${i}">
-      <span class="gc-top"><span class="gc-icon">${k === 'maestria' ? ICON.chart : ICON.helmet}</span><span class="gc-tag">${i === 0 ? 'Primer viaje' : 'Segundo viaje'}</span></span>
+      <span class="gc-top"><span class="gc-icon">${k === 'maestria' ? ICON.chart : ICON.pumpjack}</span><span class="gc-tag">${i === 0 ? 'Primer viaje' : 'Segundo viaje'}</span></span>
       <span class="n">${esc(g.nombre)}</span>
       <span class="d">${esc(g.desc)}</span>
       <span class="gc-meta"><span>${g.pasos.length} pasos</span><span>≈ 15 min</span><span>${allItems(k).length} preguntas</span></span>

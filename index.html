@@ -282,7 +282,7 @@ td.heat { text-align: center; font-weight: 700; font-variant-numeric: tabular-nu
     <div id="status"></div>
     <section id="view-responder" role="tabpanel" aria-labelledby="tab-responder"></section>
     <section id="view-resultados" role="tabpanel" aria-labelledby="tab-resultados" hidden></section>
-    <p class="foot">Las respuestas son anónimas: cada participante se identifica solo con un código (iniciales + últimos 3 dígitos de su cédula).</p>
+    <p class="foot">Sus respuestas se usan únicamente para evaluar la visita y mejorar las próximas.</p>
   </div>
 </main>
 <div class="tip" id="tip" hidden></div>
@@ -373,9 +373,9 @@ const GRUPOS = {
     desc: 'Profesionales de ingeniería, derecho, economía y administración. Mide comprensión del negocio de la perforación y aplicación profesional.',
     seg: { id: 'A2', label: 'Formación de base' },
     pasos: [
-      { titulo: 'Perfil del participante', ayuda: 'Datos básicos para analizar los resultados por perfil. No pedimos su nombre.',
+      { titulo: 'Perfil del participante', ayuda: 'Datos básicos para analizar los resultados por perfil.',
         items: [
-          TX('A1', 'A1. Código personal', { req: true, help: 'Iniciales + últimos 3 dígitos de su cédula. Ejemplo: JD123' }),
+          TX('A1', 'A1. Nombre y apellido', { req: true, auto: 'name' }),
           S('A2', 'A2. Formación de pregrado', ['Ingeniería', 'Derecho', 'Economía', 'Administración / Contaduría'], { otra: true }),
           TX('A2b', 'A2b. Si es ingeniero, indique su especialidad'),
           S('A3', 'A3. Años de experiencia laboral', ['0–2', '3–5', '6–10', 'Más de 10']),
@@ -489,9 +489,9 @@ const GRUPOS = {
     desc: 'Estudiantes de inicio, mitad y final de carrera. Mide conocimiento técnico del taladro y aporte al avance académico.',
     seg: { id: 'A3', label: 'Etapa de la carrera' },
     pasos: [
-      { titulo: 'Perfil del estudiante', ayuda: 'Datos básicos para analizar los resultados por etapa de la carrera. No pedimos su nombre.',
+      { titulo: 'Perfil del estudiante', ayuda: 'Datos básicos para analizar los resultados por etapa de la carrera.',
         items: [
-          TX('A1', 'A1. Código personal', { req: true, help: 'Iniciales + últimos 3 dígitos de su cédula. Ejemplo: MP456' }),
+          TX('A1', 'A1. Nombre y apellido', { req: true, auto: 'name' }),
           TX('A2', 'A2. Semestre que cursa actualmente', { req: true }),
           S('A3', 'A3. Etapa de la carrera', ['Inicial (semestres 1 a 4)', 'Media (semestres 5 a 7)', 'Final (semestre 8 en adelante, pasantía o tesis)']),
           S('A4', 'A4. ¿Cuántas materias relacionadas con perforación ha aprobado?', ['Ninguna', '1', '2', '3 o más']),
@@ -758,7 +758,7 @@ function itemHtml(it) {
   const reqMark = it.req ? '<span class="req" aria-hidden="true">*</span>' : '';
   let body = '';
   if (it.t === 'text') {
-    body = `<input type="${it.kind === 'email' ? 'email' : 'text'}" id="q_${id}" data-q="${it.id}" data-k="text" value="${esc(v || '')}" autocomplete="off">`;
+    body = `<input type="${it.kind === 'email' ? 'email' : 'text'}" id="q_${id}" data-q="${it.id}" data-k="text" value="${esc(v || '')}" autocomplete="${it.auto || 'off'}" maxlength="${it.auto === 'name' ? 80 : 500}">`;
   } else if (it.t === 'para') {
     body = `<textarea id="q_${id}" data-q="${it.id}" data-k="text">${esc(v || '')}</textarea>`;
   } else if (it.t === 'single' || it.t === 'quiz') {
@@ -925,7 +925,7 @@ async function enviar() {
     $('#errmsg').textContent = st.error; return;
   }
   st.sending = true; renderResponder();
-  const doc = { grupo: st.grupo, codigo: String(st.r.A1 || '').trim().toUpperCase().slice(0, 40), aciertos, total_quiz: total, r: limpiar(st.r) };
+  const doc = { grupo: st.grupo, codigo: String(st.r.A1 || '').trim().replace(/\s+/g, ' ').slice(0, 80), aciertos, total_quiz: total, r: limpiar(st.r) };
   try {
     const res = await fetch(`${API}/rest/v1/respuestas`, { method: 'POST', headers: headers(null, { Prefer: 'return=minimal' }), body: JSON.stringify(doc) });
     if (!res.ok) throw await apiError(res);
@@ -1163,13 +1163,13 @@ function renderResultados() {
 
   const OPEN = [['G1', 'Lo más importante'], ['G2', 'Ver con más profundidad'], ['G3', 'Qué mejorar'], ['F3_2', 'Impacto en el sector']];
   if (!OPEN.some(o => o[0] === openQ)) openQ = 'G1';
-  const openList = rows.filter(x => x.r && x.r[openQ]).map(x => `<blockquote>${esc(x.r[openQ])}<cite>${esc(x.codigo || 'Sin código')} · ${esc(fecha(x.enviado))}</cite></blockquote>`);
+  const openList = rows.filter(x => x.r && x.r[openQ]).map(x => `<blockquote>${esc(x.r[openQ])}<cite>${esc(x.codigo || 'Sin nombre')} · ${esc(fecha(x.enviado))}</cite></blockquote>`);
   const openPanel = `<div class="panel"><h3>Respuestas abiertas</h3><p class="sub">${esc(items[openQ].q)}</p>
     <div class="qtabs" role="group" aria-label="Pregunta abierta">${OPEN.map(([k, l]) => `<button data-oq="${k}" aria-pressed="${k === openQ}">${esc(l)}</button>`).join('')}</div>
     <div class="answers">${openList.length ? openList.join('') : '<p class="sub">Nadie ha respondido esta pregunta todavía.</p>'}</div></div>`;
 
   const listPanel = `<div class="panel"><h3>Registro de respuestas</h3><p class="sub">Cada fila es un cuestionario enviado.</p>
-    <div class="tscroll"><table><thead><tr><th>Código</th><th>Enviado</th><th>${esc(G.seg.label)}</th><th class="num">Aciertos</th><th class="num">Ganancia</th><th></th></tr></thead><tbody>
+    <div class="tscroll"><table><thead><tr><th>Participante</th><th>Enviado</th><th>${esc(G.seg.label)}</th><th class="num">Aciertos</th><th class="num">Ganancia</th><th></th></tr></thead><tbody>
     ${rows.map(x => { const r = x.r || {}; const gan = mean(items.B.rows.map((_, i) => (r.B?.[1]?.[i] ?? NaN) - (r.B?.[0]?.[i] ?? NaN)));
       return `<tr><td>${esc(x.codigo || '—')}</td><td>${esc(fecha(x.enviado))}</td><td>${esc(textOf(items[G.seg.id], r[G.seg.id], r))}</td><td class="num">${x.aciertos ?? '—'} / ${x.totalQuiz ?? '—'}</td><td class="num">${sgn(gan)}</td><td class="num"><button class="btn ghost sm danger" data-del="${esc(x.id)}">Eliminar</button></td></tr>`; }).join('')}
     </tbody></table></div></div>`;
@@ -1207,7 +1207,7 @@ function exportCsv() {
     const rows = all.filter(x => x.grupo === g);
     if (!rows.length) continue;
     const its = allItems(g);
-    const cols = ['id', 'grupo', 'enviado', 'codigo', 'aciertos', 'total_preguntas'];
+    const cols = ['id', 'grupo', 'enviado', 'nombre', 'aciertos', 'total_preguntas'];
     const getters = [x => x.id, x => GRUPOS[g].corto, x => x.enviado, x => x.codigo, x => x.aciertos, x => x.totalQuiz];
     its.forEach(it => {
       if (it.t === 'matrix') it.rows.forEach((row, ri) => it.asp.forEach((asp, ai) => { cols.push(`${it.id}_${ri + 1}${it.asp.length > 1 ? '_' + asp : ''}`); getters.push(x => x.r?.[it.id]?.[ai]?.[ri] ?? ''); }));

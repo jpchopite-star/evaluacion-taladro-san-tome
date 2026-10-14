@@ -358,9 +358,7 @@ function stepComentarios(g2, g3) {
     items: [
       P('G1', 'G1. ¿Qué fue lo más importante que aprendió en la visita?'),
       P('G2', `G2. ${g2}`),
-      P('G3', `G3. ${g3}`),
-      S('G4', 'G4. ¿Acepta que lo contactemos en 3 a 6 meses para un breve cuestionario de seguimiento?', ['Sí', 'No']),
-      TX('G5', 'Correo para el seguimiento (opcional)', { kind: 'email' })
+      P('G3', `G3. ${g3}`)
     ]
   };
 }
@@ -1036,7 +1034,7 @@ function analyze(g, rows) {
     return { s, n: sub.length, comp: mean(sub.map(x => x.totalQuiz ? x.aciertos / x.totalQuiz : NaN)), gan: mean(RR.map(r => mean(B.rows.map((_, i) => (r.B?.[1]?.[i] ?? NaN) - (r.B?.[0]?.[i] ?? NaN))))), f21: mean(RR.map(r => r.F2_1)), res: mean(RR.map(r => mean((r.F3_1?.[0] || []).map(x => x >= 4 ? 1 : 0)))) }; }).filter(Boolean);
   return { n, bAntes, bHoy, ganancia, normGain, mejora, comp, porParada, porPregunta, c0, f12, f21, nps, e5n: e5.length, f31, d1, e1,
     nunca: share('A5', v => v === 'Nunca'), sinHoras: share('F1_1', v => v === '0'), compMas50: share('F2_2', v => v === '51–75 %' || v === 'Más de 75 %'),
-    seguimiento: share('G4', v => v === 'Sí'), recursos: counts('F1_3').sort((a, b) => b[1] - a[1]), e3: counts('E3'), e2: counts('E2'), f22: counts('F2_2'), segs,
+    recursos: counts('F1_3').sort((a, b) => b[1] - a[1]), e3: counts('E3'), e2: counts('E2'), f22: counts('F2_2'), segs,
     bAntesM: mean(bAntes), bHoyM: mean(bHoy), f31M: mean(f31), d1M: mean(d1), items };
 }
 
@@ -1129,7 +1127,6 @@ function renderResultados() {
       <div><dt>Acciones con probabilidad 4 o 5</dt><dd>${pct(a.f31M)}</dd></div>
       <div><dt>Acción más probable</dt><dd style="white-space:normal;text-align:right">${esc(topRes ? topRes[0] : '—')}</dd></div>
       <div><dt>Acuerdo medio con el aporte (D1, 1–5)</dt><dd>${f1(a.d1M)}</dd></div>
-      <div><dt>Aceptan seguimiento</dt><dd>${pct(a.seguimiento)}</dd></div>
     </dl></div>
   </div>`;
 

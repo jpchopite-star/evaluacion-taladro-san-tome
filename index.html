@@ -226,12 +226,12 @@ body.compact main .wrap { padding-top: 24px; }
 .strata li.st-todo .sl { color: var(--muted); }
 .shaft { position: absolute; left: 23px; top: 0; width: 4px; height: 0; z-index: 1; transition: height .8s var(--ease); pointer-events: none; }
 .shaft .pipe { position: absolute; inset: 0; border-radius: 2px; background: repeating-linear-gradient(180deg, var(--amber) 0 7px, color-mix(in srgb, var(--amber) 45%, var(--band)) 7px 10px); }
-.shaft .bit { position: absolute; left: 50%; bottom: -13px; width: 18px; height: 16px; margin-left: -9px; z-index: 3; }
-.shaft .bit svg { width: 100%; height: 100%; display: block; fill: var(--amber); stroke: var(--amber-ink); stroke-width: 1; transform-origin: 50% 30%; }
+.bit { position: absolute; left: 14px; top: 0; width: 22px; height: 24px; z-index: 4; pointer-events: none; transition: top .8s var(--ease); filter: drop-shadow(0 2px 2px rgba(0,0,0,.28)); }
+.bit svg { width: 100%; height: 100%; display: block; transform-origin: 50% 10%; }
 .rail.drilling .shaft .pipe { animation: drillspin .35s linear infinite; }
-.rail.drilling .shaft .bit svg { animation: bitwob .12s linear infinite alternate; }
+.rail.drilling .bit svg { animation: bitwob .12s linear infinite alternate; }
 @keyframes drillspin { from { background-position: 0 0; } to { background-position: 0 10px; } }
-@keyframes bitwob { from { transform: rotate(-10deg); } to { transform: rotate(10deg); } }
+@keyframes bitwob { 0% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(1px) rotate(0); } 100% { transform: translateY(0) rotate(4deg); } }
 .cut { position: absolute; z-index: 3; width: 5px; height: 5px; border-radius: 1px; background: var(--amber); pointer-events: none; animation: cut .8s var(--ease) forwards; }
 .cut:nth-child(3n) { background: color-mix(in srgb, var(--amber) 50%, var(--band)); }
 @keyframes cut { from { transform: translate(0, 0) rotate(0); opacity: 1; } to { transform: translate(var(--dx), var(--dy)) rotate(160deg); opacity: 0; } }
@@ -241,10 +241,10 @@ body.compact main .wrap { padding-top: 24px; }
 .mtop-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .mtop .mono { font-size: 14px; color: var(--ink-2); }
 .mtop .mono b { color: var(--ink); }
-.mbar { position: relative; height: 8px; margin-top: 10px; border-radius: 999px; background: var(--surface-2); }
+.mbar { position: relative; height: 8px; margin-top: 16px; border-radius: 999px; background: var(--surface-2); }
 .mbar i { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: linear-gradient(90deg, var(--amber), color-mix(in srgb, var(--amber) 70%, var(--accent-2))); transition: width .6s var(--ease); }
-.mbar b { position: absolute; top: 50%; width: 20px; height: 18px; transform: translate(-30%, -50%) rotate(-90deg); transition: left .8s var(--ease); }
-.mbar b svg { width: 100%; height: 100%; display: block; fill: var(--amber); stroke: var(--amber-ink); stroke-width: 1; }
+.mbar b { position: absolute; top: 50%; width: 20px; height: 22px; margin-top: -11px; margin-left: -4px; transform: rotate(-90deg); transition: left .8s var(--ease); }
+.mbar b svg { width: 100%; height: 100%; display: block; }
 .mbar i { background-image: repeating-linear-gradient(90deg, var(--amber) 0 7px, color-mix(in srgb, var(--amber) 55%, var(--band)) 7px 10px); }
 .mtop.drilling .mbar i { animation: drillspin-x .35s linear infinite; }
 .mtop.drilling .mbar b svg { animation: bitwob .12s linear infinite alternate; }
@@ -875,7 +875,8 @@ const ICON = {
 const TOTAL_DEPTH = 3000;
 const LET = 'ABCDEFGHIJKLMNOP';
 const RIG_MINI = '<svg viewBox="0 0 120 70"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M44 66 L57 10 M76 66 L63 10"/><path d="M47 52 H73 M51 34 H69 M54 20 H66"/><path d="M44 66 L69 34 M76 66 L51 34 M47 52 L66 20 M73 52 L54 20" opacity=".45"/><rect x="54" y="5" width="12" height="5" rx="1.5"/><path d="M30 66 H90" stroke-width="3"/></g><line x1="60" y1="10" x2="60" y2="74" class="mpipe"/><circle cx="60" cy="2" r="2.2" class="beacon"/></svg>';
-const BIT = '<svg viewBox="0 0 18 16"><path d="M2 1 H16 L13 9 L9 15 L5 9 Z"/><path d="M9 1 V15" fill="none"/></svg>';
+/* Tricone drill bit: threaded pin, shank, and three toothed cones */
+const BIT = '<svg viewBox="0 0 24 26"><g stroke="#1f2a37" stroke-width="1" stroke-linejoin="round"><rect x="9" y="0.5" width="6" height="5" rx="0.8" fill="#9aa7b6"/><path d="M9 2.2h6M9 3.9h6" fill="none" opacity=".55"/><path d="M5 5.5h14l1.6 4H3.4z" fill="#c3ccd6"/><path d="M3.4 9.5h17.2l-2.2 5.6H5.6z" fill="#9aa7b6"/><circle cx="7.2" cy="17.4" r="4" fill="#5f6b7a"/><circle cx="16.8" cy="17.4" r="4" fill="#5f6b7a"/><circle cx="12" cy="20.6" r="4.4" fill="#748091"/></g><g fill="#f0a500"><circle cx="4.6" cy="18.6" r=".95"/><circle cx="7.4" cy="20.6" r=".95"/><circle cx="6.6" cy="15.6" r=".8"/><circle cx="19.4" cy="18.6" r=".95"/><circle cx="16.6" cy="20.6" r=".95"/><circle cx="17.4" cy="15.6" r=".8"/><circle cx="9.6" cy="23" r=".95"/><circle cx="12" cy="24.2" r=".95"/><circle cx="14.4" cy="23" r=".95"/><circle cx="12" cy="19.4" r=".85"/></g></svg>';
 const nfm = new Intl.NumberFormat('es-VE');
 const reduceMotion = () => { try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { return false; } };
 function buzz(p = 8) { try { if (navigator.vibrate) navigator.vibrate(p); } catch {} }
@@ -1042,7 +1043,7 @@ function stepView(dir) {
       <div class="rail-head"><span class="chip">${esc(g.corto)}</span><button type="button" class="btn ghost sm" id="cambiar">Cambiar grupo</button></div>
       <div class="depth"><span class="dl">Profundidad</span><span class="dv"><span id="depth">${nfm.format(shownDepth)}</span> m</span><span class="dt">de ${nfm.format(TOTAL_DEPTH)} m</span></div>
       <div class="drill-top" aria-hidden="true">${RIG_MINI}</div>
-      <div class="strata-wrap" id="strata-wrap"><ol class="strata">${rail}</ol><div class="shaft" id="shaft" aria-hidden="true"><i class="pipe"></i><span class="bit">${BIT}</span></div></div>
+      <div class="strata-wrap" id="strata-wrap"><ol class="strata">${rail}</ol><div class="shaft" id="shaft" aria-hidden="true"><i class="pipe"></i></div><span class="bit" id="bit" aria-hidden="true">${BIT}</span></div>
     </aside>
     <div class="wiz-main">
       <div class="mtop">
@@ -1072,7 +1073,7 @@ function drillTo(frac) {
   const wrap = document.getElementById('strata-wrap'), shaft = document.getElementById('shaft');
   if (wrap && shaft) {
     const lis = wrap.querySelectorAll('.strata li'), li = lis[st.paso];
-    if (li) { shaftPx = Math.round(li.offsetTop + Math.max(0.12, frac) * li.offsetHeight); shaft.style.height = shaftPx + 'px'; }
+    if (li) { shaftPx = Math.round(li.offsetTop + Math.max(0.12, frac) * li.offsetHeight); shaft.style.height = shaftPx + 'px'; const bit = document.getElementById('bit'); if (bit) bit.style.top = (shaftPx - 3) + 'px'; }
   }
   const bar = document.querySelector('.mbar i'), mk = document.querySelector('.mbar b');
   if (bar) bar.style.width = (prog * 100) + '%';
@@ -1196,7 +1197,8 @@ function goTo(p, dir) {
 }
 function bindStep() {
   const shaft = document.getElementById('shaft');
-  if (shaft) { shaft.style.transition = 'none'; shaft.style.height = shaftPx + 'px'; void shaft.offsetHeight; shaft.style.transition = ''; }
+  const bitEl = document.getElementById('bit');
+  if (shaft) { shaft.style.transition = 'none'; shaft.style.height = shaftPx + 'px'; if (bitEl) { bitEl.style.transition = 'none'; bitEl.style.top = (shaftPx - 3) + 'px'; } void shaft.offsetHeight; shaft.style.transition = ''; if (bitEl) bitEl.style.transition = ''; }
   const form = $('#stepform');
   form.addEventListener('submit', e => e.preventDefault());
   form.addEventListener('change', e => readInput(e.target));

@@ -448,7 +448,7 @@ td.heat { text-align: center; font-weight: 700; font-variant-numeric: tabular-nu
       <div class="eyebrow">Universidad Central de Venezuela</div>
       <h1>Taladro Escuela <span>San Tomé</span></h1>
       <p>Evaluación de la visita guiada. Cuéntenos qué aprendió en cada parada del recorrido.</p>
-      <ul class="hero-meta"><li><b>7</b> paradas</li><li><b>2</b> grupos</li><li><b>≈ 25</b> minutos</li></ul>
+      <ul class="hero-meta"><li><b>7</b> paradas</li><li><b>2</b> grupos</li><li><b>≈ 15</b> minutos</li></ul>
     </div>
     <svg class="rig" viewBox="0 0 220 250" aria-hidden="true">
       <rect x="0" y="182" width="220" height="20" class="s1"/>
@@ -602,37 +602,6 @@ const GRUPOS = {
         ], ['Antes', 'Hoy']) ] },
       { titulo: 'Calificación de las paradas', ayuda: 'Califique cada parada de 1 (muy bajo) a 5 (muy alto) en tres aspectos.',
         items: [ M('C0', 'Cada parada de la visita', PARADAS_N, ['Claridad', 'Utilidad', 'Negocio'], { help: 'Claridad de la explicación · Utilidad para mi perfil profesional · Me ayudó a entender el negocio' }) ] },
-      { titulo: 'Comprensión · paradas 1 a 3', ayuda: 'Responda sin consultar fuentes. Nos interesa lo que usted recuerda.',
-        items: [
-          H('Parada 1 · Historia de los primeros pozos'),
-          { ...qZumaque('C1_1'), q: 'C1.1 ' + qZumaque('x').q },
-          Q('C1_2', 1, 'C1.2 ¿Por qué el pozo Eureka de la Compañía Petrolia del Táchira se considera un antecedente no comercial?', ['Nunca produjo petróleo', 'Su producción fue pequeña y abastecía solo un mercado local', 'Solo producía gas natural', 'Fue un pozo de agua mal clasificado'], 1),
-          P('C1_3', 'C1.3 En una frase, ¿qué relación encuentra entre la historia presentada y la reinauguración del Taladro Escuela San Tomé?'),
-          H('Parada 2 · Centro virtual'),
-          P('C2_1', 'C2.1 Mencione dos áreas cuyos asistentes virtuales recuerda (por ejemplo: ingeniería de pozos).'),
-          Q('C2_2', 2, 'C2.2 Para una empresa, ¿cuál es el principal beneficio de contar con asistentes virtuales especializados por área?', ['Reemplazar por completo al personal técnico', 'Dar acceso inmediato a conocimiento estandarizado y acelerar la formación', 'Eliminar la necesidad de certificaciones', 'Reducir el consumo de energía del taladro'], 1),
-          H('Parada 3 · Partes del taladro y equipo thumper'),
-          { ...qThumper('C3_1'), q: 'C3.1 ' + qThumper('x').q },
-          Q('C3_2', 3, 'C3.2 Desde el punto de vista económico, la exploración sísmica es importante porque:', ['Reduce el riesgo de invertir en pozos secos', 'Sustituye la perforación', 'Es obligatoria solo por razones ambientales', 'Aumenta el precio del crudo'], 0),
-          { ...qBop('C3_3'), q: 'C3.3 ' + qBop('x').q }
-        ] },
-      { titulo: 'Comprensión · paradas 4 a 7', ayuda: 'Responda sin consultar fuentes. Nos interesa lo que usted recuerda.',
-        items: [
-          H('Parada 4 · Cementación y laboratorio'),
-          { ...qCementar('C4_1'), q: 'C4.1 ' + qCementar('x').q },
-          Q('C4_2', 4, 'C4.2 ¿Por qué el cemento se diseña y prueba en laboratorio para cada pozo específico?', ['Por razones estéticas', 'Porque la presión y la temperatura de cada pozo cambian el fraguado y la resistencia del cemento', 'Porque cada pozo usa un color de cemento distinto', 'Para cumplir solo un requisito administrativo'], 1),
-          { ...qTraza('C4_3'), q: 'C4.3 ' + qTraza('x').q },
-          H('Parada 5 · Aulas de formación'),
-          Q('C5_1', 5, 'C5.1 Según lo presentado, además de formar profesionales, el Taladro Escuela genera valor para el sector mediante:', ['La certificación de profesionales y el acceso de universidades públicas y privadas', 'La venta de crudo producido en sus pozos', 'El alquiler del taladro a operadoras para producción', 'Ninguna de las anteriores'], 0),
-          P('C5_2', 'C5.2 ¿Qué tipo de profesional de su entorno se beneficiaría más de estas aulas y por qué?'),
-          H('Parada 6 · Taladro completo'),
-          { ...qLodo('C6_1'), q: 'C6.1 ' + qLodo('x').q },
-          Q('C6_2', 6, 'C6.2 Una ventaja operativa del top drive frente al sistema rotatorio convencional es:', ['Hace girar la sarta desde arriba y agiliza las conexiones, lo que ahorra tiempo de taladro', 'Elimina la necesidad de lodo', 'Permite perforar sin personal en el piso', 'Reduce el diámetro del hoyo'], 0),
-          Q('C6_3', 6, 'C6.3 Si una mala coordinación entre las posiciones del piso del taladro detiene la operación, el principal efecto económico es:', ['Ninguno, porque el taladro cobra por metro perforado siempre', 'Aumento del tiempo no productivo y, por tanto, del costo del pozo', 'Reducción del precio del crudo', 'Aumento automático de la producción'], 1),
-          H('Parada 7 · Aula avanzada y simulador'),
-          { ...qSim('C7_1'), q: 'C7.1 ' + qSim('x').q },
-          P('C7_2', 'C7.2 Después de ver el simulador, ¿cómo cree que la formación en simulación afecta el costo y el riesgo de un proyecto de perforación?')
-        ] },
       { titulo: 'Modelo de negocio y aplicación', ayuda: '1 = totalmente en desacuerdo; 5 = totalmente de acuerdo.',
         items: [
           M('D1', 'D1. Indique su grado de acuerdo', [
@@ -719,42 +688,6 @@ const GRUPOS = {
         ], ['Antes', 'Hoy']) ] },
       { titulo: 'Calificación de las paradas', ayuda: 'Califique cada parada de 1 (muy bajo) a 5 (muy alto) en tres aspectos.',
         items: [ M('C0', 'Cada parada de la visita', PARADAS_N, ['Claridad', 'Materias', 'Futuro'], { help: 'Claridad de la explicación · Relación con mis materias · Utilidad para mi futuro profesional' }) ] },
-      { titulo: 'Comprensión · paradas 1 a 3', ayuda: 'Responda sin consultar apuntes. Nos interesa lo que usted recuerda.',
-        items: [
-          H('Parada 1 · Historia de los primeros pozos'),
-          { ...qZumaque('C1_1'), q: 'C1.1 ' + qZumaque('x').q },
-          Q('C1_2', 1, 'C1.2 ¿Qué empresa perforó el pozo Eureka en la hacienda La Alquitrana (Táchira)?', ['Caribbean Petroleum Company', 'Compañía Nacional Minera Petrolia del Táchira', 'Creole Petroleum Corporation', 'Shell de Venezuela'], 1),
-          Q('C1_3', 1, 'C1.3 El reventón del pozo Barroso II en Cabimas (1922) es importante porque:', ['Fue el primer pozo perforado con top drive', 'Mostró al mundo el potencial petrolero de la cuenca del Lago de Maracaibo', 'Cerró la producción petrolera en el Zulia', 'Fue el primer pozo cementado en Venezuela'], 1),
-          H('Parada 2 · Centro virtual'),
-          P('C2_1', 'C2.1 Mencione dos áreas cuyos asistentes virtuales recuerda (por ejemplo: ingeniería de pozos).'),
-          Q('C2_2', 2, 'C2.2 ¿Qué pregunta dirigiría al asistente virtual de cementación?', ['¿Qué tasa de penetración tiene la mecha?', '¿Qué diseño de lechada y tiempo de espesamiento necesita este pozo?', '¿Cuál es la nómina del personal del taladro?', '¿Cuál es el precio del barril hoy?'], 1),
-          H('Parada 3 · Partes del taladro y equipo thumper'),
-          { ...qThumper('C3_1'), q: 'C3.1 ' + qThumper('x').q },
-          Q('C3_2', 3, 'C3.2 Una mecha PDC se caracteriza por:', ['Tres conos giratorios con dientes de acero', 'Cortadores fijos de diamante policristalino que cizallan la roca', 'No necesitar circulación de lodo', 'Usarse solo para tomar núcleos'], 1),
-          { ...qBop('C3_3'), q: 'C3.3 ' + qBop('x').q },
-          Q('C3_4', 3, 'C3.4 El múltiple de estrangulación (choke manifold) se usa para:', ['Controlar la contrapresión mientras se circula un influjo fuera del pozo', 'Mezclar cemento', 'Hacer girar la sarta', 'Almacenar tubería'], 0)
-        ] },
-      { titulo: 'Comprensión · paradas 4 a 7', ayuda: 'Responda sin consultar apuntes. Nos interesa lo que usted recuerda.',
-        items: [
-          H('Parada 4 · Cementación y laboratorio'),
-          { ...qCementar('C4_1'), q: 'C4.1 ' + qCementar('x').q },
-          Q('C4_2', 4, 'C4.2 ¿Qué prueba de laboratorio mide cuánto tiempo la lechada sigue siendo bombeable bajo la presión y temperatura del pozo?', ['Tiempo de espesamiento (consistómetro)', 'Resistencia a la compresión', 'Densidad', 'Agua libre'], 0),
-          Q('C4_3', 4, 'C4.3 ¿Qué clase de cemento API es de uso más común en pozos petroleros?', ['Clase A', 'Clase C', 'Clase G', 'Cemento de construcción sin clasificar'], 2),
-          { ...qTraza('C4_4'), q: 'C4.4 ' + qTraza('x').q },
-          H('Parada 5 · Aulas de formación'),
-          Q('C5_1', 5, 'C5.1 Según lo presentado, el Taladro Escuela está dirigido a:', ['Solo trabajadores de una empresa privada', 'La certificación de profesionales y el uso por parte de universidades públicas y privadas', 'Solo visitantes turísticos', 'Solo personal militar'], 1),
-          P('C5_2', 'C5.2 ¿Qué curso o certificación le gustaría tomar en estas aulas y en qué momento de su carrera?'),
-          H('Parada 6 · Taladro completo'),
-          { ...qLodo('C6_1'), q: 'C6.1 ' + qLodo('x').q },
-          Q('C6_2', 6, 'C6.2 Si la presión hidrostática del lodo es menor que la presión de la formación, el riesgo inmediato es:', ['Pérdida de circulación', 'Una arremetida (entrada de fluidos de la formación al pozo)', 'Desgaste de la mecha', 'Atascamiento por el top drive'], 1),
-          Q('C6_3', 6, 'C6.3 La función de las zarandas (shale shakers) es:', ['Separar los recortes del lodo que regresa del pozo', 'Hacer girar la mecha', 'Mezclar el cemento', 'Elevar la tubería'], 0),
-          Q('C6_4', 6, 'C6.4 Una ventaja del top drive frente al sistema de mesa rotaria y kelly es:', ['Hace girar la sarta desde arriba y agiliza las conexiones', 'Elimina la necesidad de lodo', 'Permite perforar sin personal en el piso', 'Reduce el diámetro del hoyo'], 0),
-          Q('C6_5', 6, 'C6.5 ¿Qué posición opera el malacate y controla los parámetros de perforación desde la consola?', ['Encuellador', 'Cuñero', 'Perforador', 'Supervisor de la operadora'], 2),
-          H('Parada 7 · Aula avanzada y simulador'),
-          { ...qSim('C7_1'), q: 'C7.1 ' + qSim('x').q },
-          Q('C7_2', 7, 'C7.2 Si en el simulador aumenta de forma inesperada el volumen de los tanques de lodo, la respuesta correcta es:', ['Aumentar la velocidad de perforación', 'Detener la perforación, verificar flujo y cerrar el pozo con el BOP', 'Ignorarlo hasta el cambio de turno', 'Reducir la densidad del lodo'], 1),
-          P('C7_3', 'C7.3 ¿Qué maniobra o situación le gustaría practicar en el simulador?')
-        ] },
       { titulo: 'Avance académico y carrera', ayuda: '1 = totalmente en desacuerdo; 5 = totalmente de acuerdo.',
         items: [
           M('D1', 'D1. Indique su grado de acuerdo', [
@@ -975,7 +908,7 @@ function chooserView() {
       <span class="gc-top"><span class="gc-icon">${k === 'maestria' ? ICON.chart : ICON.helmet}</span><span class="gc-tag">${i === 0 ? 'Primer viaje' : 'Segundo viaje'}</span></span>
       <span class="n">${esc(g.nombre)}</span>
       <span class="d">${esc(g.desc)}</span>
-      <span class="gc-meta"><span>${g.pasos.length} pasos</span><span>≈ 25 min</span><span>${quizItems(k).length} preguntas de comprensión</span></span>
+      <span class="gc-meta"><span>${g.pasos.length} pasos</span><span>≈ 15 min</span><span>${allItems(k).length} preguntas</span></span>
       <span class="gc-cta">Comenzar ${ICON.arrow}</span>
     </button>`).join('');
   return `<div class="choose">
@@ -985,7 +918,7 @@ function chooserView() {
     <ul class="how anim-in" style="--i:4">
       <li><span class="how-ico">${ICON.steps}</span><div><strong>Por pasos</strong><span>Etapas cortas, una por cada sección de la visita.</span></div></li>
       <li><span class="how-ico">${ICON.save}</span><div><strong>Se guarda solo</strong><span>Si cierra la página, retoma donde lo dejó.</span></div></li>
-      <li><span class="how-ico">${ICON.target}</span><div><strong>Su resultado al final</strong><span>Vea cuántas preguntas de comprensión acertó.</span></div></li>
+      <li><span class="how-ico">${ICON.target}</span><div><strong>Sin respuestas incorrectas</strong><span>Solo queremos conocer su experiencia y opinión.</span></div></li>
     </ul>
   </div>`;
 }
@@ -1261,29 +1194,27 @@ async function enviar() {
 
 function doneView() {
   const d = st.done;
-  const k = d.total ? d.aciertos / d.total : 0;
-  const verdict = k >= 0.8 ? 'Excelente comprensión' : k >= 0.5 ? 'Buena comprensión' : 'Gracias por su tiempo';
+  const steps = GRUPOS[d.grupo].pasos.length;
   const C = 2 * Math.PI * 52;
-  const tiles = (d.paradas || []).map((p, i) => p.n ? `<li style="--k:${p.ok / p.n};--n:${i}" title="${esc(PARADAS[i])}"><span class="pt-n">P${i + 1}</span><span class="pt-v">${p.ok}/${p.n}</span><span class="pt-bar"><i></i></span><span class="sr">${esc(PARADAS[i])}</span></li>` : '').join('');
   return `<div class="done anim-in">
     <span class="badge-depth">${ICON.check}Pozo completado · ${nfm.format(TOTAL_DEPTH)} m</span>
     <h2>¡Gracias por participar!</h2>
     <p>Sus respuestas de <strong>${esc(GRUPOS[d.grupo].corto)}</strong> quedaron registradas para el análisis de la visita.</p>
-    <div class="score" role="img" aria-label="${d.aciertos} de ${d.total} respuestas correctas">
+    <div class="score" role="img" aria-label="${steps} de ${steps} etapas completadas">
       <svg viewBox="0 0 120 120" class="ring" aria-hidden="true"><circle cx="60" cy="60" r="52" class="ring-bg"/><circle cx="60" cy="60" r="52" class="ring-fg" id="ringfg" style="stroke-dasharray:${C};stroke-dashoffset:${C}"/></svg>
-      <div class="score-num"><b id="scnum">0</b><span>de ${d.total} correctas</span></div>
+      <div class="score-num"><b id="scnum">0</b><span>de ${steps} etapas</span></div>
     </div>
-    <p class="verdict">${verdict}</p>
-    ${tiles ? `<p class="sub">Aciertos por parada de la visita</p><ul class="ptiles">${tiles}</ul>` : ''}
+    <p class="verdict">Cuestionario completo</p>
+    <p class="sub">Su opinión nos ayuda a mejorar las próximas visitas al Taladro Escuela.</p>
     <button class="btn primary" id="otra">Registrar otra respuesta</button>
   </div>`;
 }
 function bindDone() {
   const d = st.done;
-  const C = 2 * Math.PI * 52, k = d.total ? d.aciertos / d.total : 0;
-  setTimeout(() => { const fg = $('#ringfg'); if (fg) fg.style.strokeDashoffset = String(C * (1 - k)); }, 80);
+  const steps = GRUPOS[d.grupo].pasos.length;
+  setTimeout(() => { const fg = $('#ringfg'); if (fg) fg.style.strokeDashoffset = '0'; }, 80);
   const el = $('#scnum'), t0 = performance.now(), dur = reduceMotion() ? 0 : 1200;
-  const tick = now => { const p = dur ? Math.min(1, (now - t0) / dur) : 1; if (el) el.textContent = Math.round(d.aciertos * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); };
+  const tick = now => { const p = dur ? Math.min(1, (now - t0) / dur) : 1; if (el) el.textContent = Math.round(steps * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); };
   requestAnimationFrame(tick);
   if (!d.celebrated) { d.celebrated = true; setTimeout(confetti, 250); buzz([20, 60, 20, 60, 40]); }
   $('#otra').addEventListener('click', () => { Object.assign(st, { grupo: null, paso: 0, maxPaso: 0, r: {}, done: null, error: '' }); shownDepth = 0; renderResponder(); scrollToView(); });
@@ -1466,7 +1397,7 @@ function renderResultados() {
   const kpis = `<div class="kpis">
     <div class="kpi"><div class="l">Respuestas</div><div class="v">${a.n}</div><div class="s">${esc(G.corto)}</div></div>
     <div class="kpi"><div class="l">Ganancia autopercibida</div><div class="v ${a.ganancia > 0 ? 'up' : ''}">${sgn(a.ganancia)} <span class="u">pts</span></div><div class="s">Media Hoy − Antes, escala 1–5</div></div>
-    <div class="kpi"><div class="l">Comprensión</div><div class="v">${pct(a.comp)}</div><div class="s">Aciertos en ${quizItems(g).length} preguntas</div></div>
+    <div class="kpi"><div class="l">Experiencia</div><div class="v">${f1(mean(a.e1))}</div><div class="s">Calificación media de la visita, 1–5</div></div>
     <div class="kpi"><div class="l">Conocimiento general</div><div class="v">${f1(a.f12)} → ${f1(a.f21)}</div><div class="s">Antes → hoy, escala 1–10</div></div>
     <div class="kpi"><div class="l">Recomendación (NPS)</div><div class="v">${a.nps == null ? '—' : nf0.format(a.nps)}</div><div class="s">De −100 a +100 · ${a.e5n} respuestas</div></div>
   </div>`;
@@ -1485,7 +1416,6 @@ function renderResultados() {
       <div><dt>Nivel medio en los temas, hoy (1–5)</dt><dd>${f1(a.bHoyM)}</dd></div>
       <div><dt>Mejoraron al menos 1 punto</dt><dd>${pct(a.mejora)}</dd></div>
       <div><dt>Ganancia normalizada</dt><dd>${pct(a.normGain)}</dd></div>
-      <div><dt>Aciertos de comprensión</dt><dd>${pct(a.comp)}</dd></div>
       <div><dt>Dicen comprender más del 50 %</dt><dd>${pct(a.compMas50)}</dd></div>
     </dl></div>
     <div><h3>Resultado <small>Intención a 6 meses</small></h3><p class="lead">Lo que planean hacer con lo aprendido.</p><dl>
@@ -1519,8 +1449,8 @@ function renderResultados() {
     ${hbars(a.e3.map(([k, c]) => [k, c]), e3max, x => x == null ? '—' : String(x))}</div>`;
 
   const segPanel = `<div class="panel"><h3>Por ${esc(G.seg.label.toLowerCase())}</h3><p class="sub">Compara si la visita funcionó igual para cada perfil.</p>
-    <div class="tscroll"><table><thead><tr><th>${esc(G.seg.label)}</th><th class="num">n</th><th class="num">Comprensión</th><th class="num">Ganancia (1–5)</th><th class="num">Conocimiento hoy</th><th class="num">Acciones 4–5</th></tr></thead><tbody>
-    ${a.segs.map(s => `<tr><td>${esc(s.s)}</td><td class="num">${s.n}</td><td class="num">${pct(s.comp)}</td><td class="num">${sgn(s.gan)}</td><td class="num">${f1(s.f21)}</td><td class="num">${pct(s.res)}</td></tr>`).join('')}
+    <div class="tscroll"><table><thead><tr><th>${esc(G.seg.label)}</th><th class="num">n</th><th class="num">Ganancia (1–5)</th><th class="num">Conocimiento hoy</th><th class="num">Acciones 4–5</th></tr></thead><tbody>
+    ${a.segs.map(s => `<tr><td>${esc(s.s)}</td><td class="num">${s.n}</td><td class="num">${sgn(s.gan)}</td><td class="num">${f1(s.f21)}</td><td class="num">${pct(s.res)}</td></tr>`).join('')}
     </tbody></table></div></div>`;
 
   const OPEN = [['G1', 'Lo más importante'], ['G2', 'Ver con más profundidad'], ['G3', 'Qué mejorar'], ['F3_2', 'Impacto en el sector']];
@@ -1531,12 +1461,12 @@ function renderResultados() {
     <div class="answers">${openList.length ? openList.join('') : '<p class="sub">Nadie ha respondido esta pregunta todavía.</p>'}</div></div>`;
 
   const listPanel = `<div class="panel"><h3>Registro de respuestas</h3><p class="sub">Cada fila es un cuestionario enviado.</p>
-    <div class="tscroll"><table><thead><tr><th>Participante</th><th>Enviado</th><th>${esc(G.seg.label)}</th><th class="num">Aciertos</th><th class="num">Ganancia</th><th></th></tr></thead><tbody>
+    <div class="tscroll"><table><thead><tr><th>Participante</th><th>Enviado</th><th>${esc(G.seg.label)}</th><th class="num">Ganancia</th><th></th></tr></thead><tbody>
     ${rows.map(x => { const r = x.r || {}; const gan = mean(items.B.rows.map((_, i) => (r.B?.[1]?.[i] ?? NaN) - (r.B?.[0]?.[i] ?? NaN)));
-      return `<tr><td>${esc(x.codigo || '—')}</td><td>${esc(fecha(x.enviado))}</td><td>${esc(textOf(items[G.seg.id], r[G.seg.id], r))}</td><td class="num">${x.aciertos ?? '—'} / ${x.totalQuiz ?? '—'}</td><td class="num">${sgn(gan)}</td><td class="num"><button class="btn ghost sm danger" data-del="${esc(x.id)}">Eliminar</button></td></tr>`; }).join('')}
+      return `<tr><td>${esc(x.codigo || '—')}</td><td>${esc(fecha(x.enviado))}</td><td>${esc(textOf(items[G.seg.id], r[G.seg.id], r))}</td><td class="num">${sgn(gan)}</td><td class="num"><button class="btn ghost sm danger" data-del="${esc(x.id)}">Eliminar</button></td></tr>`; }).join('')}
     </tbody></table></div></div>`;
 
-  v.innerHTML = head + kpis + ipr + bPanel + `<div class="grid2">${compPanel}${c0Panel}</div>` + qPanel + `<div class="grid2">${f31Panel}${d1Panel}</div><div class="grid2">${e1Panel}${e3Panel}</div>` + segPanel + openPanel + listPanel;
+  v.innerHTML = head + kpis + ipr + bPanel + `<div class="grid2">${c0Panel}${e3Panel}</div><div class="grid2">${f31Panel}${d1Panel}</div>` + e1Panel + segPanel + openPanel + listPanel;
   bindResultados();
 }
 
@@ -1569,8 +1499,8 @@ function exportCsv() {
     const rows = all.filter(x => x.grupo === g);
     if (!rows.length) continue;
     const its = allItems(g);
-    const cols = ['id', 'grupo', 'enviado', 'nombre', 'aciertos', 'total_preguntas'];
-    const getters = [x => x.id, x => GRUPOS[g].corto, x => x.enviado, x => x.codigo, x => x.aciertos, x => x.totalQuiz];
+    const cols = ['id', 'grupo', 'enviado', 'nombre'];
+    const getters = [x => x.id, x => GRUPOS[g].corto, x => x.enviado, x => x.codigo];
     its.forEach(it => {
       if (it.t === 'matrix') it.rows.forEach((row, ri) => it.asp.forEach((asp, ai) => { cols.push(`${it.id}_${ri + 1}${it.asp.length > 1 ? '_' + asp : ''}`); getters.push(x => x.r?.[it.id]?.[ai]?.[ri] ?? ''); }));
       else if (it.t === 'quiz') { cols.push(it.id); getters.push(x => textOf(it, x.r?.[it.id], x.r || {})); cols.push(it.id + '_correcta'); getters.push(x => typeof x.r?.[it.id] === 'number' ? (x.r[it.id] === it.ok ? 1 : 0) : ''); }

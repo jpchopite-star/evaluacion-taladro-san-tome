@@ -298,6 +298,9 @@ body.compact main .wrap { padding-top: 24px; }
 .opt:has(input:checked) { background: var(--accent-soft); border-color: var(--accent); }
 .opt:has(input:disabled) { opacity: .5; cursor: not-allowed; }
 .otra { margin-left: 36px; margin-top: 2px; }
+.consent { margin: 2px 0 12px; color: var(--ink-2); line-height: 1.6; max-width: 70ch; }
+.seg label.na span { min-width: 0; padding: 0 14px; font-family: var(--font-body); font-size: 13px; font-weight: 600; }
+.seg label.na input:checked + span { background: var(--muted); color: var(--surface); box-shadow: none; }
 .opts.chips { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
 .opts.chips .opt { position: relative; justify-content: center; padding: 12px 6px; font-family: var(--font-mono); font-weight: 600; }
 .opts.chips .opt input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; border: 0; }
@@ -555,6 +558,8 @@ const M  = (id, q, rows, asp, x = {}) => ({ id, t: 'matrix', q, rows, asp, req: 
 const MU = (id, q, op, x = {}) => ({ id, t: 'multi', q, op, ...x });
 const SC = (id, q, min, max, lmin, lmax) => ({ id, t: 'scale', q, min, max, lmin, lmax, req: true });
 const H  = (q, help) => ({ t: 'h', q, help });
+const CONSENT = 'Este cuestionario evalúa la visita guiada al Taladro Escuela San Tomé. Sus respuestas se usarán solo para mejorar las próximas visitas y para un informe con resultados agregados, en el que nadie será identificado. Solo el equipo organizador tiene acceso a las respuestas, que se guardan en un servidor seguro. Participar es voluntario.';
+const CS = id => ({ id, t: 'consent', q: 'Consentimiento informado', req: true });
 
 const qZumaque = id => Q(id, 1, '¿Qué pozo se reconoce como el primer pozo de producción comercial a gran escala en Venezuela?',
   ['Eureka, en el Táchira', 'Zumaque I, en Mene Grande (Zulia), 1914', 'Barroso II, en Cabimas', 'Un pozo del Taladro Escuela San Tomé'], 1);
@@ -574,14 +579,14 @@ const qSim = id => Q(id, 7, 'El principal valor del simulador de perforación es
 const E_EXPECT = ['Nada', 'Poco', 'Parcialmente', 'En gran medida', 'Totalmente'];
 const F22 = ['Menos de 25 %', '25–50 %', '51–75 %', 'Más de 75 %'];
 
-function stepsExperiencia(adapt, ref, e4, e5) {
+function stepsExperiencia(adapt, ref, e4, e5, e4none) {
   return {
     titulo: 'Valoración de la experiencia', ayuda: 'Califique de 1 (muy deficiente) a 5 (excelente).',
     items: [
       M('E1', 'E1. Califique cada aspecto de la visita', ['Organización y logística del viaje', 'Dominio del tema por parte de los guías', adapt, 'Tiempo dedicado a cada parada', 'Oportunidad de hacer preguntas', 'Medidas de seguridad durante el recorrido', 'Calidad de los recursos tecnológicos (asistentes virtuales, simulador, aulas)'], ['Calificación']),
       S('E2', 'E2. ¿En qué medida la visita cumplió sus expectativas?', E_EXPECT),
       S('E3', 'E3. ¿Cuál fue la parada más valiosa para usted?', PARADAS_N),
-      S('E4', `E4. ${e4}`, PARADAS_N),
+      S('E4', `E4. ${e4}`, [...PARADAS_N, e4none]),
       SC('E5', `E5. ${e5}`, 0, 10, 'Nada probable', 'Muy probable')
     ]
   };
@@ -607,12 +612,13 @@ const GRUPOS = {
     pasos: [
       { titulo: 'Perfil del participante', ayuda: 'Datos básicos para analizar los resultados por perfil.',
         items: [
+          CS('CONS'),
           TX('A1', 'A1. Nombre y apellido', { req: true, auto: 'name' }),
           TX('A1c', 'A1b. Número de cédula', { req: true, kind: 'cedula', help: 'Solo números, sin puntos. Ej.: 12345678' }),
           S('A2', 'A2. Formación de pregrado', ['Ingeniería', 'Derecho', 'Economía', 'Administración / Contaduría'], { otra: true }),
-          TX('A2b', 'A2b. Si es ingeniero, indique su especialidad'),
+          TX('A2b', 'A2b. ¿Cuál es su especialidad de ingeniería?', { showIf: { q: 'A2', vals: ['Ingeniería'] } }),
           S('A3', 'A3. Años de experiencia laboral', ['0–2', '3–5', '6–10', 'Más de 10']),
-          S('A4', 'A4. Sector en el que trabaja actualmente', ['Hidrocarburos (operadora)', 'Empresa de servicios petroleros', 'Sector público / regulador', 'Banca, finanzas o consultoría', 'Legal', 'Académico'], { otra: true }),
+          S('A4', 'A4. Sector en el que trabaja actualmente', ['Hidrocarburos (operadora)', 'Empresa de servicios petroleros', 'Sector público / regulador', 'Banca, finanzas o consultoría', 'Legal', 'Académico', 'No trabajo actualmente'], { otra: true }),
           S('A5', 'A5. Antes de esta visita, ¿había estado en un taladro de perforación (real o escuela)?', ['Nunca', 'Una vez', 'Varias veces', 'Trabajo o trabajé en uno']),
           S('A6', 'A6. ¿En qué etapa de la maestría se encuentra?', ['Aspirante', 'Primer año', 'Segundo año', 'Trabajo de grado', 'Egresado']),
           MU('A7', 'A7. ¿Cuáles eran sus expectativas antes de la visita? (puede marcar varias)', ['Entender la operación técnica de un taladro', 'Entender costos y modelo de negocio de la perforación', 'Conocer la oferta de formación y certificación del Taladro Escuela', 'Hacer contactos profesionales'], { otra: true, req: true })
@@ -648,18 +654,19 @@ const GRUPOS = {
             'D1.6 Lo aprendido me será útil en mi trabajo actual.',
             'D1.7 Lo aprendido me ayudará en mi trabajo de grado de la maestría.',
             'D1.8 La visita mejoró mis perspectivas profesionales en el sector hidrocarburos.',
-            'D1.9 La visita cambió positivamente mi percepción de la capacidad del país para formar talento petrolero.'
-          ], ['Acuerdo']),
+            'D1.9 La visita cambió positivamente mi percepción de la capacidad del país para formar talento petrolero.',
+            'D1.10 Lo visto en la visita tiene poca relación con mi trabajo o mis estudios.'
+          ], ['Acuerdo'], { na: true, rev: [9], rowIf: { 6: { q: 'A6', notIn: ['Aspirante', 'Egresado'] } }, help: '1 = totalmente en desacuerdo · 5 = totalmente de acuerdo · Marque «No aplica» si no corresponde a su caso.' }),
           MU('D2', 'D2. ¿En qué áreas aplicaría primero lo aprendido? (puede marcar varias)', ['Evaluación económica de proyectos de perforación', 'Contratos, regulación y marco legal', 'Finanzas y presupuesto de operaciones', 'Gestión de talento, formación y certificación', 'Políticas públicas del sector', 'Gestión de riesgos y seguridad operacional'], { otra: true }),
           P('D3', 'D3. Describa una decisión o tarea concreta de su trabajo en la que usaría lo aprendido en la visita.'),
-          H('D4 · Según su formación de base', 'Responda solo la pregunta que corresponde a su formación.'),
-          P('D4_der', 'Derecho: ¿Qué aspecto contractual, laboral o regulatorio identificó en la operación de un taladro?'),
-          P('D4_eco', 'Economía: ¿Qué variable de la operación incluiría en un modelo de evaluación económica de un pozo?'),
-          P('D4_adm', 'Administración: ¿Qué proceso de gestión (compras, personal, logística) le pareció más crítico?'),
-          P('D4_ing', 'Ingeniería: ¿Qué decisión técnica vista en la visita tiene mayor impacto en el costo del pozo?'),
-          P('D4_otra', 'Otra profesión: indique cuál es y qué aspecto de la visita se relaciona más con su trabajo.')
+          H('D4 · Según su formación de base', 'Esta pregunta cambia según la formación que indicó en A2.'),
+          P('D4_der', 'D4. ¿Qué aspecto contractual, laboral o regulatorio identificó en la operación de un taladro?', { showIf: { q: 'A2', vals: ['Derecho'] } }),
+          P('D4_eco', 'D4. ¿Qué variable de la operación incluiría en un modelo de evaluación económica de un pozo?', { showIf: { q: 'A2', vals: ['Economía'] } }),
+          P('D4_adm', 'D4. ¿Qué proceso de gestión (compras, personal, logística) le pareció más crítico?', { showIf: { q: 'A2', vals: ['Administración / Contaduría'] } }),
+          P('D4_ing', 'D4. ¿Qué decisión técnica vista en la visita tiene mayor impacto en el costo del pozo?', { showIf: { q: 'A2', vals: ['Ingeniería'] } }),
+          P('D4_otra', 'D4. ¿Qué aspecto de la visita se relaciona más con su profesión?', { showIf: { q: 'A2', vals: ['__otra'] } })
         ] },
-      stepsExperiencia('Adaptación de las explicaciones a un público no técnico operativo', 'A7', '¿Cuál fue la parada menos útil para su perfil?', 'Del 0 al 10, ¿qué tan probable es que recomiende esta visita a un colega o a otra cohorte de la maestría?'),
+      stepsExperiencia('Adaptación de las explicaciones a un público no técnico operativo', 'A7', '¿Cuál fue la parada menos útil para su perfil?', 'Del 0 al 10, ¿qué tan probable es que recomiende esta visita a un colega o a otra cohorte de la maestría?', 'Ninguna, todas me sirvieron'),
       { titulo: 'Insumo, producto y resultado', ayuda: AYUDA_F,
         items: [
           H('Insumo'),
@@ -675,7 +682,8 @@ const GRUPOS = {
             'Aplicar lo aprendido en una tarea o decisión de su trabajo',
             'Compartir lo aprendido con su equipo u organización',
             'Elegir un tema de trabajo de grado vinculado a perforación o formación de talento',
-            'Inscribirse, o recomendar a su organización, un curso o certificación en el Taladro Escuela',
+            'Inscribirse en un curso o certificación del Taladro Escuela',
+            'Recomendar a su organización un curso o certificación del Taladro Escuela',
             'Proponer un convenio entre su organización y el Taladro Escuela',
             'Buscar un cargo o ascenso en el área de exploración y producción'
           ], ['Probabilidad']),
@@ -693,6 +701,7 @@ const GRUPOS = {
     pasos: [
       { titulo: 'Perfil del estudiante', ayuda: 'Datos básicos para analizar los resultados por etapa de la carrera.',
         items: [
+          CS('CONS'),
           TX('A1', 'A1. Nombre y apellido', { req: true, auto: 'name' }),
           TX('A1c', 'A2. Número de cédula', { req: true, kind: 'cedula', help: 'Solo números, sin puntos. Ej.: 12345678' }),
           S('A2', 'A3. ¿Qué semestre cursa actualmente?', ['1.º', '2.º', '3.º', '4.º', '5.º', '6.º', '7.º', '8.º', '9.º', '10.º', 'Ya terminé las materias (tesis o pasantía)'], { chips: true, help: 'Si ya terminó todas las materias y está en tesis o pasantía, elija la última opción.' }),
@@ -731,20 +740,22 @@ const GRUPOS = {
             'D1.2 La visita me preparó para materias que aún me faltan.',
             'D1.3 Ahora veo con más claridad la aplicación práctica de mi carrera.',
             'D1.4 La visita aumentó mi motivación para culminar la carrera.',
-            'D1.5 La visita me ayudó a definir o ajustar mi tema de tesis o pasantía.',
-            'D1.6 Me siento mejor preparado para una pasantía o primer empleo en campo.',
-            'D1.7 Ahora tengo más claro en qué área quiero especializarme.',
-            'D1.8 Las visitas al Taladro Escuela deberían formar parte del plan de estudios.'
-          ], ['Acuerdo']),
+            'D1.5 La visita me ayudó a definir o ajustar mi tema de tesis.',
+            'D1.6 La visita me ayudó a orientar mi búsqueda de pasantías.',
+            'D1.7 Me siento mejor preparado para una pasantía o primer empleo en campo.',
+            'D1.8 Ahora tengo más claro en qué área quiero especializarme.',
+            'D1.9 La visita aportó poco a lo que ya sabía por mis clases.'
+          ], ['Acuerdo'], { na: true, rev: [8], help: '1 = totalmente en desacuerdo · 5 = totalmente de acuerdo · Marque «No aplica» si no corresponde a su caso.' }),
+          S('D1b', 'D1b. ¿Las visitas al Taladro Escuela deberían formar parte del plan de estudios?', ['Sí, como actividad obligatoria', 'Sí, como actividad opcional', 'No', 'No estoy seguro']),
           P('D2', 'D2. ¿Con qué materias de su carrera relaciona lo visto en la visita?'),
           H('D3 · Según su etapa de la carrera', 'Esta pregunta cambia según el semestre que indicó al inicio.'),
           S('D3_ini', 'D3. ¿La visita confirmó su elección de carrera?', ['Sí', 'No', 'Tengo dudas'], { showIf: { q: 'A3', vals: [ETAPAS[0]] } }),
           P('D3_ini_pq', 'D3b. ¿Por qué?', { showIf: { q: 'A3', vals: [ETAPAS[0]] } }),
           P('D3_med', 'D3. ¿Qué materia próxima espera entender mejor gracias a la visita?', { showIf: { q: 'A3', vals: [ETAPAS[1]] } }),
           P('D3_fin', 'D3. ¿Cómo usará lo visto en su tesis, pasantía o búsqueda de empleo?', { showIf: { q: 'A3', vals: [ETAPAS[2]] } }),
-          MU('D4', 'D4. ¿Para qué le interesaría volver al Taladro Escuela? (puede marcar varias)', ['Prácticas en el simulador', 'Curso o certificación', 'Desarrollar mi tesis o trabajo especial de grado', 'Realizar pasantías', 'Clases prácticas de alguna materia', 'No me interesa volver'])
+          MU('D4', 'D4. ¿Para qué le interesaría volver al Taladro Escuela? (puede marcar varias)', ['Prácticas en el simulador', 'Curso o certificación', 'Desarrollar mi tesis o trabajo especial de grado', 'Realizar pasantías', 'Clases prácticas de alguna materia', 'No me interesa volver'], { excl: 'No me interesa volver' })
         ] },
-      stepsExperiencia('Adaptación de las explicaciones a mi nivel de la carrera', 'A9', '¿Cuál fue la parada más difícil de entender?', 'Del 0 al 10, ¿qué tan probable es que recomiende esta visita a un compañero de la Escuela de Petróleo?'),
+      stepsExperiencia('Adaptación de las explicaciones a mi nivel de la carrera', 'A9', '¿Cuál fue la parada más difícil de entender?', 'Del 0 al 10, ¿qué tan probable es que recomiende esta visita a un compañero de la Escuela de Petróleo?', 'Ninguna me costó'),
       { titulo: 'Insumo, producto y resultado', ayuda: AYUDA_F,
         items: [
           H('Insumo'),
@@ -947,7 +958,7 @@ function chooserView() {
       <span class="gc-top"><span class="gc-icon">${k === 'maestria' ? ICON.chart : ICON.pumpjack}</span><span class="gc-tag">${i === 0 ? 'Primer viaje' : 'Segundo viaje'}</span></span>
       <span class="n">${esc(g.nombre)}</span>
       <span class="d">${esc(g.desc)}</span>
-      <span class="gc-meta"><span>${g.pasos.length} etapas (A–${LET[g.pasos.length - 1]})</span><span>≈ 15 min</span><span>${allItems(k).length} preguntas</span></span>
+      <span class="gc-meta"><span>${g.pasos.length} etapas (A–${LET[g.pasos.length - 1]})</span><span>≈ 15 min</span><span>${allItems(k).filter(i => i.t !== 'consent').length} preguntas</span></span>
       <span class="gc-cta">Comenzar ${ICON.arrow}</span>
     </button>`).join('');
   return `<div class="choose">
@@ -995,6 +1006,9 @@ function applyConds() {
     w.hidden = !vis;
   });
 }
+function rowVisible(it, ri) { const c = it.rowIf && it.rowIf[ri]; return !c || !c.notIn.includes(st.r[c.q]); }
+const visRows = it => it.rows.map((_, ri) => ri).filter(ri => rowVisible(it, ri));
+const rowsDoneCount = it => visRows(it).filter(ri => rowDone(it, ri)).length;
 function rowDone(it, ri) { const v = st.r[it.id]; return Array.isArray(v) && it.asp.every((_, ai) => v[ai] && v[ai][ri] != null); }
 
 function itemHtml(it, idx = 0) {
@@ -1016,6 +1030,8 @@ function itemHtml(it, idx = 0) {
     if (it.otra) opts.push(`<label class="opt"><input type="radio" name="q_${id}" id="q_${id}_otra" data-q="${it.id}" data-k="single" value="__otra" ${v === '__otra' ? 'checked' : ''}><span>Otra</span></label>
         <div class="otra"><input type="text" id="q_${id}_otxt" data-q="${it.id}" data-k="otra" placeholder="Especifique" value="${esc(st.r[it.id + '_otra'] || '')}"></div>`);
     body = `<div class="opts${it.chips ? ' chips' : ''}" role="radiogroup">${opts.join('')}</div>`;
+  } else if (it.t === 'consent') {
+    body = `<p class="consent">${esc(CONSENT)}</p><label class="opt"><input type="checkbox" name="q_${id}" id="q_${id}" data-q="${it.id}" data-k="consent" ${v === true ? 'checked' : ''}><span>Leí esta información y acepto participar.</span></label>`;
   } else if (it.t === 'multi') {
     const arr = Array.isArray(v) ? v : [];
     const full = it.lim && arr.length >= it.lim;
@@ -1031,13 +1047,14 @@ function itemHtml(it, idx = 0) {
     const rows = it.rows.map((row, ri) => {
       const scales = it.asp.map((a, ai) => {
         const cur = v && v[ai] ? v[ai][ri] : null;
-        const btns = [1, 2, 3, 4, 5].map(n => `<label style="${lvlStyle(n, 1, 5)}"><input type="radio" name="m_${id}_${ai}_${ri}" id="m_${id}_${ai}_${ri}_${n}" data-q="${it.id}" data-k="matrix" data-a="${ai}" data-row="${ri}" value="${n}" ${cur === n ? 'checked' : ''}><span>${n}</span></label>`).join('');
+        const btns = [1, 2, 3, 4, 5].map(n => `<label style="${lvlStyle(n, 1, 5)}"><input type="radio" name="m_${id}_${ai}_${ri}" id="m_${id}_${ai}_${ri}_${n}" data-q="${it.id}" data-k="matrix" data-a="${ai}" data-row="${ri}" value="${n}" ${cur === n ? 'checked' : ''}><span>${n}</span></label>`).join('')
+          + (it.na ? `<label class="na"><input type="radio" name="m_${id}_${ai}_${ri}" id="m_${id}_${ai}_${ri}_0" data-q="${it.id}" data-k="matrix" data-a="${ai}" data-row="${ri}" value="0" ${cur === 0 ? 'checked' : ''}><span>No aplica</span></label>` : '');
         return `<div class="masp">${it.asp.length > 1 ? `<span class="al">${esc(a)}</span>` : ''}<div class="seg" role="radiogroup" aria-label="${esc(row)} · ${esc(a)}">${btns}</div></div>`;
       }).join('');
-      return `<div class="mrow ${rowDone(it, ri) ? 'row-done' : ''}" id="mr_${id}_${ri}"><div class="mlabel">${esc(row)}</div><div class="mscales">${scales}</div></div>`;
+      return `<div class="mrow ${rowDone(it, ri) ? 'row-done' : ''}" id="mr_${id}_${ri}" ${rowVisible(it, ri) ? '' : 'hidden'}><div class="mlabel">${esc(row)}</div><div class="mscales">${scales}</div></div>`;
     }).join('');
     body = `<div class="matrix">${rows}</div>`;
-    extra = `<span class="mcount" id="mc_${id}">${it.rows.filter((_, ri) => rowDone(it, ri)).length}/${it.rows.length}</span>`;
+    extra = `<span class="mcount" id="mc_${id}">${rowsDoneCount(it)}/${visRows(it).length}</span>`;
   }
   const helpTxt = it.help ? esc(it.help) : (it.t === 'matrix' ? '1 = muy bajo · 5 = muy alto' : '');
   const lim = it.lim ? ` · Máximo ${it.lim} opciones` : '';
@@ -1121,7 +1138,7 @@ function updateCount() {
   const el = $('#count'); if (!el || !st.grupo) return;
   const items = GRUPOS[st.grupo].pasos[st.paso].items.filter(i => i.t !== 'h' && isVisible(i));
   const n = items.filter(answered).length;
-  const part = items.reduce((acc, it) => acc + (it.t === 'matrix' ? it.rows.filter((_, ri) => rowDone(it, ri)).length / it.rows.length : (answered(it) ? 1 : 0)), 0);
+  const part = items.reduce((acc, it) => acc + (it.t === 'matrix' ? rowsDoneCount(it) / Math.max(1, visRows(it).length) : (answered(it) ? 1 : 0)), 0);
   drillTo(items.length ? part / items.length : 0);
   el.innerHTML = n === items.length ? `${ICON.check}<b>${n}</b> de ${items.length} respondidas` : `<b>${n}</b> de ${items.length} respondidas`;
   el.classList.toggle('full', n === items.length);
@@ -1131,7 +1148,7 @@ function refreshCard(it) {
   const ok = answered(it), was = w.classList.contains('is-done');
   w.classList.toggle('is-done', ok);
   if (ok) w.classList.remove('missing');
-  if (it.t === 'matrix') { const mc = document.getElementById('mc_' + domId(it.id)); if (mc) mc.textContent = `${it.rows.filter((_, ri) => rowDone(it, ri)).length}/${it.rows.length}`; }
+  if (it.t === 'matrix') { const mc = document.getElementById('mc_' + domId(it.id)); if (mc) mc.textContent = `${rowsDoneCount(it)}/${visRows(it).length}`; }
   updateCount();
   return ok && !was;
 }
@@ -1146,10 +1163,12 @@ function readInput(el) {
     if (it.t === 'single' && el.value.trim()) { st.r[q] = '__otra'; const rb = document.getElementById(`q_${domId(q)}_otra`); if (rb) rb.checked = true; }
     if (it.t === 'multi' && el.value.trim()) { const cb = document.getElementById(`q_${domId(q)}_otra`); if (cb && !cb.checked) { cb.checked = true; readInput(cb); return; } }
   }
+  else if (k === 'consent') st.r[q] = el.checked;
   else if (k === 'single') st.r[q] = el.value;
   else if (k === 'quiz' || k === 'scale') st.r[q] = Number(el.value);
   else if (k === 'multi') {
     const boxes = [...document.querySelectorAll(`input[name="q_${domId(q)}"]`)];
+    if (it.excl && el.checked) boxes.forEach(b => { if (b !== el && (el.value === it.excl || b.value === it.excl)) b.checked = false; });
     st.r[q] = boxes.filter(b => b.checked).map(b => b.value);
     if (it.lim) { const full = st.r[q].length >= it.lim; boxes.forEach(b => { if (!b.checked) b.disabled = full; }); }
   } else if (k === 'matrix') {
@@ -1187,8 +1206,9 @@ function answered(it) {
     case 'text': case 'para': return it.kind === 'cedula' ? String(v || '').replace(/\D/g, '').length >= 5 : !!(v && String(v).trim());
     case 'single': return !!v && (v !== '__otra' || !!(st.r[it.id + '_otra'] || '').trim());
     case 'quiz': case 'scale': return typeof v === 'number';
+    case 'consent': return v === true;
     case 'multi': return Array.isArray(v) && v.length > 0;
-    case 'matrix': return Array.isArray(v) && v.every(a => Array.isArray(a) && a.length === it.rows.length && a.every(x => x != null));
+    case 'matrix': return Array.isArray(v) && it.rows.every((_, ri) => !rowVisible(it, ri) || rowDone(it, ri));
   }
   return true;
 }
@@ -1203,7 +1223,7 @@ function validateStep() {
     if (w) { w.classList.remove('missing'); if (!ok) { void w.offsetWidth; w.classList.add('missing'); } }
     if (it.t === 'matrix') {
       it.rows.forEach((_, ri) => {
-        const done = rowDone(it, ri);
+        const done = !rowVisible(it, ri) || rowDone(it, ri);
         const rowEl = document.getElementById(`mr_${domId(it.id)}_${ri}`);
         if (rowEl) rowEl.classList.toggle('missing', !done);
         if (!done && !first) first = rowEl;
@@ -1259,6 +1279,10 @@ function limpiar(r) {
 }
 
 async function enviar() {
+  allItems(st.grupo).forEach(it => {
+    if (it.showIf && !isVisible(it)) delete st.r[it.id];
+    if (it.t === 'matrix' && it.rowIf && Array.isArray(st.r[it.id])) it.rows.forEach((_, ri) => { if (!rowVisible(it, ri)) it.asp.forEach((_, ai) => { st.r[it.id][ai][ri] = null; }); });
+  });
   const { aciertos, total } = puntaje(st.grupo, st.r);
   if (!configured) {
     st.error = 'La página aún no está conectada a la base de datos. Avise al organizador.';
@@ -1406,8 +1430,8 @@ function analyze(g, rows) {
   const nps = e5.length ? (e5.filter(x => x >= 9).length - e5.filter(x => x <= 6).length) / e5.length * 100 : null;
   const share = (id, pred) => { const vals = R.map(r => r[id]).filter(v => v != null); return vals.length ? vals.filter(pred).length / vals.length : null; };
   const counts = (id) => { const it = items[id]; const m = new Map((it.op || []).map(o => [o, 0])); R.forEach(r => { const v = r[id]; const arr = Array.isArray(v) ? v : (v != null ? [v] : []); arr.forEach(x => { const key = x === '__otra' ? 'Otra' : (it.t === 'quiz' ? it.op[x] : x); m.set(key, (m.get(key) || 0) + 1); }); }); return [...m.entries()]; };
-  const matrixMeans = id => items[id].rows.map((_, i) => mean(R.map(r => r[id]?.[0]?.[i])));
-  const matrixTop2 = id => items[id].rows.map((_, i) => { const vals = R.map(r => r[id]?.[0]?.[i]).filter(x => typeof x === 'number'); return vals.length ? vals.filter(x => x >= 4).length / vals.length : null; });
+  const matrixMeans = id => items[id].rows.map((_, i) => mean(R.map(r => { const x = r[id]?.[0]?.[i]; return x >= 1 ? x : NaN; })));
+  const matrixTop2 = id => items[id].rows.map((_, i) => { const vals = R.map(r => r[id]?.[0]?.[i]).filter(x => typeof x === 'number' && x >= 1); return vals.length ? vals.filter(x => x >= 4).length / vals.length : null; });
   const f31 = matrixTop2('F3_1');
   const d1 = matrixMeans('D1');
   const e1 = matrixMeans('E1');
@@ -1419,7 +1443,7 @@ function analyze(g, rows) {
   return { n, bAntes, bHoy, ganancia, normGain, mejora, comp, porParada, porPregunta, c0, f12, f21, nps, e5n: e5.length, f31, d1, e1,
     nunca: share('A5', v => v === 'Nunca'), sinHoras: share('F1_1', v => v === '0'), compMas50: share('F2_2', v => v === '51–75 %' || v === 'Más de 75 %'),
     recursos: counts('F1_3').sort((a, b) => b[1] - a[1]), e3: counts('E3'), e2: counts('E2'), f22: counts('F2_2'), segs,
-    bAntesM: mean(bAntes), bHoyM: mean(bHoy), f31M: mean(f31), d1M: mean(d1), items };
+    bAntesM: mean(bAntes), bHoyM: mean(bHoy), f31M: mean(f31), d1M: mean(d1.map((m, i) => (items.D1.rev || []).includes(i) && m != null ? 6 - m : m)), items };
 }
 
 const RAMP = ['#cde2fb', '#9ec5f4', '#6da7ec', '#3987e5', '#256abf', '#184f95'];
@@ -1484,7 +1508,7 @@ function renderResultados() {
 
   const kpis = `<div class="kpis">
     <div class="kpi"><div class="l">Respuestas</div><div class="v">${a.n}</div><div class="s">${esc(G.corto)}</div></div>
-    <div class="kpi"><div class="l">Ganancia autopercibida</div><div class="v ${a.ganancia > 0 ? 'up' : ''}">${sgn(a.ganancia)} <span class="u">pts</span></div><div class="s">Media Hoy − Antes, escala 1–5</div></div>
+    <div class="kpi"><div class="l">Mejora percibida</div><div class="v ${a.ganancia > 0 ? 'up' : ''}">${sgn(a.ganancia)} <span class="u">pts</span></div><div class="s">Autoevaluación Hoy − Antes (1–5). No es una prueba de aprendizaje.</div></div>
     <div class="kpi"><div class="l">Experiencia</div><div class="v">${f1(mean(a.e1))}</div><div class="s">Calificación media de la visita, 1–5</div></div>
     <div class="kpi"><div class="l">Conocimiento general</div><div class="v">${f1(a.f12)} → ${f1(a.f21)}</div><div class="s">Antes → hoy, escala 1–10</div></div>
     <div class="kpi"><div class="l">Recomendación (NPS)</div><div class="v">${a.nps == null ? '—' : nf0.format(a.nps)}</div><div class="s">De −100 a +100 · ${a.e5n} respuestas</div></div>
@@ -1503,7 +1527,7 @@ function renderResultados() {
       <div><dt>Conocimiento hoy (1–10)</dt><dd>${f1(a.f21)}</dd></div>
       <div><dt>Nivel medio en los temas, hoy (1–5)</dt><dd>${f1(a.bHoyM)}</dd></div>
       <div><dt>Mejoraron al menos 1 punto</dt><dd>${pct(a.mejora)}</dd></div>
-      <div><dt>Ganancia normalizada</dt><dd>${pct(a.normGain)}</dd></div>
+      <div><dt>Mejora percibida normalizada</dt><dd>${pct(a.normGain)}</dd></div>
       <div><dt>Dicen comprender más del 50 %</dt><dd>${pct(a.compMas50)}</dd></div>
     </dl></div>
     <div><h3>Resultado <small>Intención a 6 meses</small></h3><p class="lead">Lo que planean hacer con lo aprendido.</p><dl>
@@ -1513,7 +1537,7 @@ function renderResultados() {
     </dl></div>
   </div>`;
 
-  const bPanel = `<div class="panel"><h3>Antes y después por tema</h3><p class="sub">Nivel medio autopercibido, escala 1–5. Ordenado como en el cuestionario.</p>${dumbbell(items.B.rows, a.bAntes, a.bHoy)}</div>`;
+  const bPanel = `<div class="panel"><h3>Antes y después por tema</h3><p class="sub">Autoevaluación de cada participante (1–5): mejora percibida, no aprendizaje medido. El «antes» se respondió después de la visita.</p>${dumbbell(items.B.rows, a.bAntes, a.bHoy)}</div>`;
 
   const compPanel = `<div class="panel"><h3>Comprensión por parada</h3><p class="sub">Porcentaje de respuestas correctas en las preguntas de cada parada.</p>
     ${hbars(PARADAS.map((p, i) => [`${i + 1}. ${p}`, a.porParada[i], a.porParada[i] == null ? `Parada ${i + 1}: sin preguntas cerradas` : null]), 1, v2 => v2 == null ? '—' : pct(v2))}</div>`;
@@ -1529,7 +1553,7 @@ function renderResultados() {
   const f31Panel = `<div class="panel"><h3>Resultado esperado</h3><p class="sub">Porcentaje que califica cada acción con 4 o 5 (probable en los próximos 6 meses).</p>
     ${hbars(items.F3_1.rows.map((r, i) => [r, a.f31[i]]), 1, pct)}</div>`;
   const d1Panel = `<div class="panel"><h3>${g === 'maestria' ? 'Negocio y aplicación' : 'Avance académico'}</h3><p class="sub">Grado de acuerdo medio, escala 1–5.</p>
-    ${hbars(items.D1.rows.map((r, i) => [r.replace(/^D1\.\d+\s*/, ''), a.d1[i]]), 5, f1)}</div>`;
+    ${hbars(items.D1.rows.map((r, i) => [r.replace(/^D1\.\d+\s*/, '') + ((items.D1.rev || []).includes(i) ? ' (en negativo: menos es mejor)' : ''), a.d1[i]]), 5, f1)}</div>`;
   const e1Panel = `<div class="panel"><h3>Experiencia</h3><p class="sub">Calificación media de 1 a 5.</p>
     ${hbars(items.E1.rows.map((r, i) => [r, a.e1[i]]), 5, f1)}</div>`;
   const e3max = Math.max(1, ...a.e3.map(x => x[1]));
@@ -1537,7 +1561,7 @@ function renderResultados() {
     ${hbars(a.e3.map(([k, c]) => [k, c]), e3max, x => x == null ? '—' : String(x))}</div>`;
 
   const segPanel = `<div class="panel"><h3>Por ${esc(G.seg.label.toLowerCase())}</h3><p class="sub">Compara si la visita funcionó igual para cada perfil.</p>
-    <div class="tscroll"><table><thead><tr><th>${esc(G.seg.label)}</th><th class="num">n</th><th class="num">Ganancia (1–5)</th><th class="num">Conocimiento hoy</th><th class="num">Acciones 4–5</th></tr></thead><tbody>
+    <div class="tscroll"><table><thead><tr><th>${esc(G.seg.label)}</th><th class="num">n</th><th class="num">Mejora percibida (1–5)</th><th class="num">Conocimiento hoy</th><th class="num">Acciones 4–5</th></tr></thead><tbody>
     ${a.segs.map(s => `<tr><td>${esc(s.s)}</td><td class="num">${s.n}</td><td class="num">${sgn(s.gan)}</td><td class="num">${f1(s.f21)}</td><td class="num">${pct(s.res)}</td></tr>`).join('')}
     </tbody></table></div></div>`;
 
@@ -1549,7 +1573,7 @@ function renderResultados() {
     <div class="answers">${openList.length ? openList.join('') : '<p class="sub">Nadie ha respondido esta pregunta todavía.</p>'}</div></div>`;
 
   const listPanel = `<div class="panel"><h3>Registro de respuestas</h3><p class="sub">Cada fila es un cuestionario enviado.</p>
-    <div class="tscroll"><table><thead><tr><th>Participante</th><th>Enviado</th><th>${esc(G.seg.label)}</th><th class="num">Ganancia</th><th></th></tr></thead><tbody>
+    <div class="tscroll"><table><thead><tr><th>Participante</th><th>Enviado</th><th>${esc(G.seg.label)}</th><th class="num">Mejora percibida</th><th></th></tr></thead><tbody>
     ${rows.map(x => { const r = x.r || {}; const gan = mean(items.B.rows.map((_, i) => (r.B?.[1]?.[i] ?? NaN) - (r.B?.[0]?.[i] ?? NaN)));
       return `<tr><td>${esc(x.codigo || '—')}${x.r && x.r.A1c ? `<br><small class="updated">C.I. ${esc(x.r.A1c)}</small>` : ''}</td><td>${esc(fecha(x.enviado))}</td><td>${esc(textOf(items[G.seg.id] || G.seg.item, r[G.seg.id], r))}</td><td class="num">${sgn(gan)}</td><td class="num"><button class="btn ghost sm danger" data-del="${esc(x.id)}">Eliminar</button></td></tr>`; }).join('')}
     </tbody></table></div></div>`;
@@ -1590,7 +1614,7 @@ function exportCsv() {
     const cols = ['id', 'grupo', 'enviado', 'nombre'];
     const getters = [x => x.id, x => GRUPOS[g].corto, x => x.enviado, x => x.codigo];
     its.forEach(it => {
-      if (it.t === 'matrix') it.rows.forEach((row, ri) => it.asp.forEach((asp, ai) => { cols.push(`${it.id}_${ri + 1}${it.asp.length > 1 ? '_' + asp : ''}`); getters.push(x => x.r?.[it.id]?.[ai]?.[ri] ?? ''); }));
+      if (it.t === 'matrix') it.rows.forEach((row, ri) => it.asp.forEach((asp, ai) => { cols.push(`${it.id}_${ri + 1}${it.asp.length > 1 ? '_' + asp : ''}`); getters.push(x => { const v = x.r?.[it.id]?.[ai]?.[ri]; return v === 0 ? 'No aplica' : (v ?? ''); }); }));
       else if (it.t === 'quiz') { cols.push(it.id); getters.push(x => textOf(it, x.r?.[it.id], x.r || {})); cols.push(it.id + '_correcta'); getters.push(x => typeof x.r?.[it.id] === 'number' ? (x.r[it.id] === it.ok ? 1 : 0) : ''); }
       else { cols.push(it.id); getters.push(x => textOf(it, x.r?.[it.id], x.r || {})); }
     });

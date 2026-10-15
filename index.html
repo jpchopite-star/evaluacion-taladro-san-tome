@@ -298,6 +298,12 @@ body.compact main .wrap { padding-top: 24px; }
 .opt:has(input:checked) { background: var(--accent-soft); border-color: var(--accent); }
 .opt:has(input:disabled) { opacity: .5; cursor: not-allowed; }
 .otra { margin-left: 36px; margin-top: 2px; }
+.opts.chips { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
+.opts.chips .opt { position: relative; justify-content: center; padding: 12px 6px; font-family: var(--font-mono); font-weight: 600; }
+.opts.chips .opt input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; border: 0; }
+.opts.chips .opt:last-child { grid-column: 1 / -1; font-family: var(--font-body); }
+.opts.chips .opt:has(input:checked) { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); animation: pop .35s var(--ease-back); }
+.opts.chips .opt:has(input:focus-visible) { outline: 2px solid var(--accent-2); outline-offset: 2px; }
 input[type="text"], input[type="email"], input[type="password"], textarea { width: 100%; border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 12px 14px; transition: border-color .2s, box-shadow .2s, background .2s; }
 textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus { outline: none; border-color: var(--accent-2); background: var(--surface); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-2) 18%, transparent); }
@@ -537,6 +543,9 @@ const PARADAS = [
   'Aula avanzada y simulador'
 ];
 const PARADAS_N = PARADAS.map((p, i) => `${i + 1}. ${p}`);
+const ETAPAS = ['Inicial (semestres 1 a 4)', 'Media (semestres 5 a 7)', 'Final (semestre 8 en adelante, pasantía o tesis)'];
+/* Pregrado: the career stage (A3) is derived from the semester (A2) instead of being asked twice. */
+function etapaDeSemestre(v) { if (!v) return undefined; const n = parseInt(v, 10); if (isNaN(n) || n >= 8) return ETAPAS[2]; return n >= 5 ? ETAPAS[1] : ETAPAS[0]; }
 
 const S  = (id, q, op, x = {}) => ({ id, t: 'single', q, op, req: true, ...x });
 const Q  = (id, p, q, op, ok) => ({ id, t: 'quiz', p, q, op, ok, req: true });
@@ -680,14 +689,13 @@ const GRUPOS = {
     corto: 'Pregrado',
     nombre: 'Pregrado · Escuela de Ingeniería de Petróleo',
     desc: 'Estudiantes de inicio, mitad y final de carrera. Mide conocimiento técnico del taladro y aporte al avance académico.',
-    seg: { id: 'A3', label: 'Etapa de la carrera' },
+    seg: { id: 'A3', label: 'Etapa de la carrera', item: { id: 'A3', t: 'single', op: ETAPAS } },
     pasos: [
       { titulo: 'Perfil del estudiante', ayuda: 'Datos básicos para analizar los resultados por etapa de la carrera.',
         items: [
           TX('A1', 'A1. Nombre y apellido', { req: true, auto: 'name' }),
-          TX('A1c', 'A1b. Número de cédula', { req: true, kind: 'cedula', help: 'Solo números, sin puntos. Ej.: 12345678' }),
-          TX('A2', 'A2. Semestre que cursa actualmente', { req: true }),
-          S('A3', 'A3. Etapa de la carrera', ['Inicial (semestres 1 a 4)', 'Media (semestres 5 a 7)', 'Final (semestre 8 en adelante, pasantía o tesis)']),
+          TX('A1c', 'A2. Número de cédula', { req: true, kind: 'cedula', help: 'Solo números, sin puntos. Ej.: 12345678' }),
+          S('A2', 'A3. ¿Qué semestre cursa actualmente?', ['1.º', '2.º', '3.º', '4.º', '5.º', '6.º', '7.º', '8.º', '9.º', '10.º', 'Ya terminé las materias (tesis o pasantía)'], { chips: true, help: 'Si ya terminó todas las materias y está en tesis o pasantía, elija la última opción.' }),
           S('A4', 'A4. ¿Cuántas materias relacionadas con perforación ha aprobado?', ['Ninguna', '1', '2', '3 o más']),
           S('A5', 'A5. Antes de esta visita, ¿había estado en un taladro de perforación (real o escuela)?', ['Nunca', 'Una vez', 'Varias veces']),
           S('A6', 'A6. ¿Ha realizado o está realizando pasantías en el sector hidrocarburos?', ['No', 'Estoy buscando', 'Sí, en curso', 'Sí, ya las terminé']),
@@ -729,11 +737,11 @@ const GRUPOS = {
             'D1.8 Las visitas al Taladro Escuela deberían formar parte del plan de estudios.'
           ], ['Acuerdo']),
           P('D2', 'D2. ¿Con qué materias de su carrera relaciona lo visto en la visita?'),
-          H('D3 · Según su etapa de la carrera', 'Responda solo la pregunta que corresponde a su etapa (pregunta A3).'),
-          S('D3_ini', 'Etapa inicial: ¿La visita confirmó su elección de carrera?', ['Sí', 'No', 'Tengo dudas'], { req: false }),
-          P('D3_ini_pq', 'Etapa inicial: ¿Por qué?'),
-          P('D3_med', 'Etapa media: ¿Qué materia próxima espera entender mejor gracias a la visita?'),
-          P('D3_fin', 'Etapa final: ¿Cómo usará lo visto en su tesis, pasantía o búsqueda de empleo?'),
+          H('D3 · Según su etapa de la carrera', 'Esta pregunta cambia según el semestre que indicó al inicio.'),
+          S('D3_ini', 'D3. ¿La visita confirmó su elección de carrera?', ['Sí', 'No', 'Tengo dudas'], { showIf: { q: 'A3', vals: [ETAPAS[0]] } }),
+          P('D3_ini_pq', 'D3b. ¿Por qué?', { showIf: { q: 'A3', vals: [ETAPAS[0]] } }),
+          P('D3_med', 'D3. ¿Qué materia próxima espera entender mejor gracias a la visita?', { showIf: { q: 'A3', vals: [ETAPAS[1]] } }),
+          P('D3_fin', 'D3. ¿Cómo usará lo visto en su tesis, pasantía o búsqueda de empleo?', { showIf: { q: 'A3', vals: [ETAPAS[2]] } }),
           MU('D4', 'D4. ¿Para qué le interesaría volver al Taladro Escuela? (puede marcar varias)', ['Prácticas en el simulador', 'Curso o certificación', 'Desarrollar mi tesis o trabajo especial de grado', 'Realizar pasantías', 'Clases prácticas de alguna materia', 'No me interesa volver'])
         ] },
       stepsExperiencia('Adaptación de las explicaciones a mi nivel de la carrera', 'A9', '¿Cuál fue la parada más difícil de entender?', 'Del 0 al 10, ¿qué tan probable es que recomiende esta visita a un compañero de la Escuela de Petróleo?'),
@@ -1007,7 +1015,7 @@ function itemHtml(it, idx = 0) {
     });
     if (it.otra) opts.push(`<label class="opt"><input type="radio" name="q_${id}" id="q_${id}_otra" data-q="${it.id}" data-k="single" value="__otra" ${v === '__otra' ? 'checked' : ''}><span>Otra</span></label>
         <div class="otra"><input type="text" id="q_${id}_otxt" data-q="${it.id}" data-k="otra" placeholder="Especifique" value="${esc(st.r[it.id + '_otra'] || '')}"></div>`);
-    body = `<div class="opts" role="radiogroup">${opts.join('')}</div>`;
+    body = `<div class="opts${it.chips ? ' chips' : ''}" role="radiogroup">${opts.join('')}</div>`;
   } else if (it.t === 'multi') {
     const arr = Array.isArray(v) ? v : [];
     const full = it.lim && arr.length >= it.lim;
@@ -1151,6 +1159,7 @@ function readInput(el) {
     const rowEl = document.getElementById(`mr_${domId(q)}_${row}`);
     if (rowEl) { const d = rowDone(it, row); rowEl.classList.toggle('row-done', d); if (d) rowEl.classList.remove('missing'); }
   }
+  if (st.grupo === 'pregrado' && q === 'A2') st.r.A3 = etapaDeSemestre(st.r.A2);
   applyConds();
   const justDone = refreshCard(it);
   if (k !== 'text' && k !== 'otra') { buzz(justDone ? [10, 30, 14] : 6); drillPulse(); }
@@ -1402,7 +1411,7 @@ function analyze(g, rows) {
   const f31 = matrixTop2('F3_1');
   const d1 = matrixMeans('D1');
   const e1 = matrixMeans('E1');
-  const segItem = items[GRUPOS[g].seg.id];
+  const segItem = items[GRUPOS[g].seg.id] || GRUPOS[g].seg.item;
   const segVals = segItem.op ? [...segItem.op, ...(segItem.otra ? ['Otra'] : [])] : [...new Set(R.map(r => String(r[segItem.id] || '').trim()).filter(Boolean))].sort((a, b) => Number(a) - Number(b));
   const segKey = r => { const v = r[segItem.id]; return v === '__otra' ? 'Otra' : String(v ?? '').trim(); };
   const segs = segVals.map(s => { const sub = rows.filter(x => segKey(x.r || {}) === s); if (!sub.length) return null; const RR = sub.map(x => x.r || {});
@@ -1542,7 +1551,7 @@ function renderResultados() {
   const listPanel = `<div class="panel"><h3>Registro de respuestas</h3><p class="sub">Cada fila es un cuestionario enviado.</p>
     <div class="tscroll"><table><thead><tr><th>Participante</th><th>Enviado</th><th>${esc(G.seg.label)}</th><th class="num">Ganancia</th><th></th></tr></thead><tbody>
     ${rows.map(x => { const r = x.r || {}; const gan = mean(items.B.rows.map((_, i) => (r.B?.[1]?.[i] ?? NaN) - (r.B?.[0]?.[i] ?? NaN)));
-      return `<tr><td>${esc(x.codigo || '—')}${x.r && x.r.A1c ? `<br><small class="updated">C.I. ${esc(x.r.A1c)}</small>` : ''}</td><td>${esc(fecha(x.enviado))}</td><td>${esc(textOf(items[G.seg.id], r[G.seg.id], r))}</td><td class="num">${sgn(gan)}</td><td class="num"><button class="btn ghost sm danger" data-del="${esc(x.id)}">Eliminar</button></td></tr>`; }).join('')}
+      return `<tr><td>${esc(x.codigo || '—')}${x.r && x.r.A1c ? `<br><small class="updated">C.I. ${esc(x.r.A1c)}</small>` : ''}</td><td>${esc(fecha(x.enviado))}</td><td>${esc(textOf(items[G.seg.id] || G.seg.item, r[G.seg.id], r))}</td><td class="num">${sgn(gan)}</td><td class="num"><button class="btn ghost sm danger" data-del="${esc(x.id)}">Eliminar</button></td></tr>`; }).join('')}
     </tbody></table></div></div>`;
 
   v.innerHTML = head + kpis + ipr + bPanel + `<div class="grid2">${c0Panel}${e3Panel}</div><div class="grid2">${f31Panel}${d1Panel}</div>` + e1Panel + segPanel + openPanel + listPanel;
